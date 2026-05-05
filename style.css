@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --pink-light:  #fce4ec;
+  --pink-mid:    #f8bbd0;
+  --pink-dark:   #f48fb1;
+  --pink-accent: #e91e7a;
+  --text-dark:   #2a1520;
+  --text-mid:    #5c2d3e;
+  --text-light:  #9e6070;
+  --border:      #f0a0bc;
+  --paper:       #fdf6f9;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: var(--paper);
+  color: var(--text-dark);
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════════════════════
+   SCREENS (fixed full-viewport overlays)
+══════════════════════════════════════════════════════ */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  z-index: 200;
+}
+.screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════
+   SCREEN 0 — LANGUAGE SELECT
+══════════════════════════════════════════════════════ */
+#lang-select {
+  background: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 20% 25%, rgba(248,187,208,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 75%, rgba(252,228,236,0.55) 0%, transparent 55%);
+  gap: 40px;
+}
+
+.lang-title {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(18px, 3.5vw, 28px);
+  color: var(--text-mid);
+  letter-spacing: 0.04em;
+  animation: fadeIn 0.8s ease both;
+}
+
+.lang-buttons {
+  display: flex;
+  gap: 20px;
+  animation: fadeIn 0.8s ease 0.2s both;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(18px, 3vw, 26px);
+  color: var(--text-dark);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 16px 36px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.lang-btn:hover {
+  background: var(--pink-mid);
+  border-color: var(--pink-dark);
+  transform: translateY(-2px);
+}
+.lang-btn .flag { font-size: 1.6em; line-height: 1; }
+
+/* ══════════════════════════════════════════════════════
+   SCREEN 1 — SPLASH
+══════════════════════════════════════════════════════ */
+#splash {
+  background: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 15% 30%, rgba(248,187,208,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 70%, rgba(252,228,236,0.5) 0%, transparent 55%);
+  overflow: hidden;
+  gap: 24px;
+  padding: 32px 16px;
+}
+
+.splash-name {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(64px, 17vw, 210px);
+  line-height: 0.9;
+  text-align: center;
+  color: var(--text-dark);
+  letter-spacing: -0.03em;
+  text-shadow: 2px 2px 0 rgba(233,30,122,0.07);
+  animation: splashDrop 1.2s cubic-bezier(0.16,1,0.3,1) both;
+  user-select: none;
+}
+.splash-name span { display: block; }
+
+.continue-btn {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(18px, 3vw, 26px);
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--pink-accent);
+  border: none;
+  padding: 18px 60px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  animation: fadeIn 1s ease 0.8s both;
+  box-shadow: 0 4px 28px rgba(233,30,122,0.3);
+  text-align: center;
+}
+.continue-btn:hover  { background: #c4135f; transform: translateY(-2px); }
+.continue-btn:active { transform: translateY(0); }
+
+/* the label above the button */
+.watch-label {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(16px, 2.6vw, 22px);
+  color: var(--text-mid);
+  letter-spacing: 0.03em;
+  animation: fadeIn 1s ease 0.5s both;
+  text-align: center;
+}
+
+.splash-handle {
+  position: fixed;
+  bottom: 22px;
+  left: 22px;
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: clamp(12px, 1.8vw, 15px);
+  color: var(--text-light);
+  letter-spacing: 0.04em;
+  animation: fadeIn 1s ease 1.2s both;
+}
+
+/* ══════════════════════════════════════════════════════
+   SCREEN 2 — VIDEO GATE
+══════════════════════════════════════════════════════ */
+#video-gate {
+  background: var(--pink-soft);
+  gap: 18px;
+  transition: background 3s ease;
+}
+
+/* smooth slow gradient using pseudo-element blend */
+#video-gate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 40%, rgba(248,187,208,0.7) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 70%, rgba(252,228,236,0.6) 0%, transparent 55%);
+  animation: softPulse 6s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+#video-gate > * { position: relative; z-index: 1; }
+
+@keyframes softPulse {
+  from {
+    background: radial-gradient(ellipse at 30% 40%, rgba(248,187,208,0.7) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 70%, rgba(252,228,236,0.6) 0%, transparent 55%);
+  }
+  to {
+    background: radial-gradient(ellipse at 70% 30%, rgba(244,143,177,0.5) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 75%, rgba(248,187,208,0.65) 0%, transparent 55%);
+  }
+}
+
+.video-wrap {
+  width: min(88vw, 82vh);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 8px 60px rgba(233,30,122,0.18), 0 2px 16px rgba(42,21,32,0.1);
+  flex-shrink: 0;
+}
+#gate-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+#countdown-text {
+  color: var(--text-light);
+  font-family: 'Crimson Text', serif;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#skip-btn {
+  padding: 10px 36px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+  font-family: 'Crimson Text', serif;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease, background 0.25s;
+  text-transform: uppercase;
+}
+#skip-btn.visible      { opacity: 1; pointer-events: auto; }
+#skip-btn:hover        { background: var(--pink-mid); }
+
+/* ══════════════════════════════════════════════════════
+   MAIN SITE
+══════════════════════════════════════════════════════ */
+#main-content {
+  opacity: 0;
+  transition: opacity 1s ease 0.1s;
+  position: relative;
+  z-index: 1;
+}
+#main-content.visible { opacity: 1; }
+
+header {
+  text-align: center;
+  padding: 72px 32px 56px;
+  border-bottom: 1px solid var(--border);
+}
+header::before {
+  content: '✦ ✦ ✦';
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.45em;
+  color: var(--pink-accent);
+  margin-bottom: 20px;
+  opacity: 0.55;
+}
+.site-name {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(46px, 8.5vw, 84px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--text-dark);
+}
+.site-handle {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: clamp(14px, 2.2vw, 19px);
+  color: var(--text-light);
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+}
+.header-rule {
+  margin: 26px auto 0;
+  width: 90px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--pink-dark), transparent);
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 32px 100px;
+}
+.section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+.section-title {
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(24px, 4vw, 38px);
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  position: relative;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 40px; height: 2px;
+  background: var(--pink-accent);
+}
+.section-body {
+  font-size: 19px;
+  color: var(--text-mid);
+  line-height: 1.85;
+}
+.section-body p { margin-bottom: 14px; }
+.section-body p:last-child { margin-bottom: 0; }
+
+footer {
+  text-align: center;
+  padding: 36px;
+  border-top: 1px solid var(--border);
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--text-light);
+  opacity: 0.65;
+}
+
+/* ══════════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════════ */
+@keyframes splashDrop {
+  from { opacity: 0; transform: translateY(-30px) scale(1.03); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE
+══════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  #splash { gap: 20px; padding: 24px 12px; }
+  .lang-buttons { flex-direction: column; gap: 14px; }
+  .lang-btn { padding: 14px 28px; }
+  .splash-handle { bottom: 16px; left: 14px; }
+  header { padding: 50px 18px 38px; }
+  main   { padding: 0 16px 80px; }
+  .section { padding: 44px 0; }
+  .continue-btn { padding: 16px 40px; }
+}

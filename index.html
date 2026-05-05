@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dexter Morgan</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       SCREEN 0 — LANGUAGE SELECT
+  ══════════════════════════════════════════════ -->
+  <div id="lang-select" class="screen">
+    <p class="lang-title" id="lang-prompt">choose your language</p>
+    <div class="lang-buttons">
+      <button class="lang-btn" data-lang="en">
+        <span class="flag">🇬🇧</span> english
+      </button>
+      <button class="lang-btn" data-lang="fi">
+        <span class="flag">🇫🇮</span> suomi
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SCREEN 1 — SPLASH
+  ══════════════════════════════════════════════ -->
+  <div id="splash" class="screen hidden">
+    <h1 class="splash-name">
+      <span>Dexter</span>
+      <span>Morgan</span>
+    </h1>
+    <p class="watch-label" id="watch-label">please watch an edit before continuing</p>
+    <button class="continue-btn" id="continue-btn">continue</button>
+    <p class="splash-handle">@thegayharborboykisser</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SCREEN 2 — VIDEO GATE
+  ══════════════════════════════════════════════ -->
+  <div id="video-gate" class="screen hidden">
+    <div class="video-wrap">
+      <video id="gate-video" playsinline>
+        <source src="edit.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <p id="countdown-text">
+      <span id="skip-label">skip available in</span> <span id="timer">10</span>s
+    </p>
+    <button id="skip-btn" id="skip-button"><span id="skip-word">skip</span> →</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       MAIN SITE
+  ══════════════════════════════════════════════ -->
+  <div id="main-content">
+
+    <header>
+      <h2 class="site-name">Dexter Morgan</h2>
+      <p class="site-handle">@thegayharborboykisser</p>
+      <div class="header-rule"></div>
+    </header>
+
+    <main>
+
+      <!-- ── SECTION 1 ────────────────────────────────────
+           To edit: change the text inside <span data-en="...">
+           and <span data-fi="..."> for each title and body.
+           For the body, edit the <p> tags inside .section-body.
+           For Finnish body text, duplicate the <p> tags and
+           wrap them: <p data-fi-only>Finnish text here</p>
+           and <p data-en-only>English text here</p>
+      ─────────────────────────────────────────────────── -->
+      <section class="section">
+        <h3 class="section-title">
+          <span data-en="TITLE1" data-fi="OTSIKKO1"></span>
+        </h3>
+        <div class="section-body">
+          <p data-en-only>LONGTEXT — Replace this with what you want people to know. Add more &lt;p data-en-only&gt; tags for extra paragraphs.</p>
+          <p data-fi-only>PITKÄTEKSTI — Korvaa tämä sillä, mitä haluat ihmisten tietävän. Lisää tarvittaessa lisää kappaleita.</p>
+        </div>
+      </section>
+
+      <!-- ── SECTION 2 ── -->
+      <section class="section">
+        <h3 class="section-title">
+          <span data-en="TITLE2" data-fi="OTSIKKO2"></span>
+        </h3>
+        <div class="section-body">
+          <p data-en-only>LONGTEXT — Replace this with what you want people to know.</p>
+          <p data-fi-only>PITKÄTEKSTI — Korvaa tämä omalla tekstilläsi.</p>
+        </div>
+      </section>
+
+      <!-- ── SECTION 3 ── -->
+      <section class="section">
+        <h3 class="section-title">
+          <span data-en="TITLE3" data-fi="OTSIKKO3"></span>
+        </h3>
+        <div class="section-body">
+          <p data-en-only>LONGTEXT — Replace this with what you want people to know.</p>
+          <p data-fi-only>PITKÄTEKSTI — Korvaa tämä omalla tekstilläsi.</p>
+        </div>
+      </section>
+
+      <!-- ── SECTION 4 — Edits showcase (add embed links etc here later) ── -->
+      <section class="section">
+        <h3 class="section-title">
+          <span data-en="TITLE4" data-fi="OTSIKKO4"></span>
+        </h3>
+        <div class="section-body">
+          <p data-en-only>LONGTEXT — Replace this with what you want people to know.</p>
+          <p data-fi-only>PITKÄTEKSTI — Korvaa tämä omalla tekstilläsi.</p>
+        </div>
+      </section>
+
+      <!-- ── SECTION 5 ── -->
+      <section class="section">
+        <h3 class="section-title">
+          <span data-en="TITLE5" data-fi="OTSIKKO5"></span>
+        </h3>
+        <div class="section-body">
+          <p data-en-only>LONGTEXT — Replace this with what you want people to know.</p>
+          <p data-fi-only>PITKÄTEKSTI — Korvaa tämä omalla tekstilläsi.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>— Dexter Morgan —</footer>
+
+  </div><!-- /main-content -->
+
+
+  <!-- ══════════════════════════════════════════════
+       RICKROLL OVERLAY — triggered by devtools open
+  ══════════════════════════════════════════════ -->
+  <div id="rickroll" style="display:none; position:fixed; inset:0; z-index:99999; background:#000;">
+    <video id="rickroll-video" style="width:100%; height:100%; object-fit:cover;" loop playsinline>
+      <source src="rickroll.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <script>
+    // ── Translations ───────────────────────────────────────
+    const t = {
+      en: {
+        langPrompt:    'choose your language',
+        watchLabel:    'please watch an edit before continuing',
+        continueBtn:   'continue',
+        skipAvailable: 'skip available in',
+        skip:          'skip',
+      },
+      fi: {
+        langPrompt:    'valitse kielesi',
+        watchLabel:    'katso editti ennen kuin jatkat',
+        continueBtn:   'jatka',
+        skipAvailable: 'ohitus saatavilla',
+        skip:          'ohita',
+      }
+    };
+
+    // ── Elements ───────────────────────────────────────────
+    const langSelect  = document.getElementById('lang-select');
+    const splash      = document.getElementById('splash');
+    const videoGate   = document.getElementById('video-gate');
+    const mainContent = document.getElementById('main-content');
+    const continueBtn = document.getElementById('continue-btn');
+    const skipBtn     = document.getElementById('skip-btn');
+    const timerEl     = document.getElementById('timer');
+    const countdownEl = document.getElementById('countdown-text');
+    const video       = document.getElementById('gate-video');
+
+    let lang = 'en';
+
+    // ── Apply language to the whole page ──────────────────
+    function applyLang(l) {
+      lang = l;
+      const tr = t[l];
+
+      document.getElementById('lang-prompt').textContent  = tr.langPrompt;
+      document.getElementById('watch-label').textContent  = tr.watchLabel;
+      document.getElementById('continue-btn').textContent = tr.continueBtn;
+      document.getElementById('skip-label').textContent   = tr.skipAvailable;
+      document.getElementById('skip-word').textContent    = tr.skip;
+
+      // Section titles
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + l) || el.getAttribute('data-en');
+      });
+
+      // Show/hide language-specific paragraphs
+      document.querySelectorAll('[data-en-only]').forEach(el => {
+        el.style.display = l === 'en' ? '' : 'none';
+      });
+      document.querySelectorAll('[data-fi-only]').forEach(el => {
+        el.style.display = l === 'fi' ? '' : 'none';
+      });
+
+      document.documentElement.lang = l;
+    }
+
+    // ── Screen 0: Language select ─────────────────────────
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyLang(btn.dataset.lang);
+        langSelect.classList.add('hidden');
+        splash.classList.remove('hidden');
+        // Scroll to top when entering main site later
+        window.scrollTo(0, 0);
+      });
+    });
+
+    // ── Screen 1: Continue → video ───────────────────────
+    continueBtn.addEventListener('click', () => {
+      splash.classList.add('hidden');
+      videoGate.classList.remove('hidden');
+
+      video.muted = false;
+      video.play().catch(() => {
+        video.muted = true;
+        video.play();
+      });
+
+      startCountdown();
+    });
+
+    // ── Screen 2: Countdown ──────────────────────────────
+    let secondsLeft = 10;
+
+    function startCountdown() {
+      const tick = setInterval(() => {
+        secondsLeft--;
+        timerEl.textContent = secondsLeft;
+        if (secondsLeft <= 0) {
+          clearInterval(tick);
+          countdownEl.style.display = 'none';
+          skipBtn.classList.add('visible');
+        }
+      }, 1000);
+    }
+
+    // ── Screen 2 → main site ─────────────────────────────
+    function showSite() {
+      video.pause();
+      videoGate.classList.add('hidden');
+      window.scrollTo(0, 0);
+      mainContent.classList.add('visible');
+    }
+
+    skipBtn.addEventListener('click', showSite);
+    video.addEventListener('ended', () => { if (secondsLeft <= 0) showSite(); });
+
+    // ── DevTools keyboard shortcut blocking → rickroll ────
+    const rickrollOverlay = document.getElementById('rickroll');
+    const rickrollVideo   = document.getElementById('rickroll-video');
+    let rickrolled = false;
+
+    function triggerRickroll() {
+      if (rickrolled) return;
+      rickrolled = true;
+      rickrollOverlay.style.display = 'block';
+      rickrollVideo.muted = false;
+      rickrollVideo.play().catch(() => {
+        rickrollVideo.muted = true;
+        rickrollVideo.play();
+      });
+    }
+
+    // Block F12 / Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+U
+    document.addEventListener('keydown', (e) => {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) ||
+        (e.ctrlKey && ['U','u'].includes(e.key))
+      ) {
+        e.preventDefault();
+        triggerRickroll();
+      }
+    });
+
+    // Right-click disabled
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+  </script>
+
+</body>
+</html>
