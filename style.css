@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-  --pink-light:  #fce4ec;
   --pink-mid:    #f8bbd0;
   --pink-dark:   #f48fb1;
   --pink-accent: #e91e7a;
@@ -14,17 +13,19 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; }
+
 body {
   background: var(--paper);
   color: var(--text-dark);
   font-family: 'Crimson Text', Georgia, serif;
   font-size: 18px;
   line-height: 1.8;
-  overflow-x: hidden;
+  overflow: hidden; /* locked until screens done */
 }
+body.unlocked { overflow-x: hidden; overflow-y: auto; }
 
 /* ══════════════════════════════════════════════════════
-   SCREENS (fixed full-viewport overlays)
+   SCREENS
 ══════════════════════════════════════════════════════ */
 .screen {
   position: fixed;
@@ -52,7 +53,6 @@ body {
     radial-gradient(ellipse at 80% 75%, rgba(252,228,236,0.55) 0%, transparent 55%);
   gap: 40px;
 }
-
 .lang-title {
   font-family: 'IM Fell English', serif;
   font-style: italic;
@@ -61,13 +61,11 @@ body {
   letter-spacing: 0.04em;
   animation: fadeIn 0.8s ease both;
 }
-
 .lang-buttons {
   display: flex;
   gap: 20px;
   animation: fadeIn 0.8s ease 0.2s both;
 }
-
 .lang-btn {
   display: flex;
   align-items: center;
@@ -100,7 +98,6 @@ body {
   gap: 24px;
   padding: 32px 16px;
 }
-
 .splash-name {
   font-family: 'IM Fell English', serif;
   font-style: italic;
@@ -114,7 +111,16 @@ body {
   user-select: none;
 }
 .splash-name span { display: block; }
-
+.watch-label {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(16px, 2.6vw, 22px);
+  color: var(--text-mid);
+  letter-spacing: 0.03em;
+  animation: fadeIn 1s ease 0.5s both;
+  text-align: center;
+  padding: 0 16px;
+}
 .continue-btn {
   font-family: 'IM Fell English', serif;
   font-style: italic;
@@ -128,22 +134,9 @@ body {
   transition: background 0.2s, transform 0.15s;
   animation: fadeIn 1s ease 0.8s both;
   box-shadow: 0 4px 28px rgba(233,30,122,0.3);
-  text-align: center;
 }
 .continue-btn:hover  { background: #c4135f; transform: translateY(-2px); }
 .continue-btn:active { transform: translateY(0); }
-
-/* the label above the button */
-.watch-label {
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: clamp(16px, 2.6vw, 22px);
-  color: var(--text-mid);
-  letter-spacing: 0.03em;
-  animation: fadeIn 1s ease 0.5s both;
-  text-align: center;
-}
-
 .splash-handle {
   position: fixed;
   bottom: 22px;
@@ -160,41 +153,47 @@ body {
    SCREEN 2 — VIDEO GATE
 ══════════════════════════════════════════════════════ */
 #video-gate {
-  background: var(--pink-soft);
-  gap: 18px;
-  transition: background 3s ease;
+  background: #fdf0f5;
+  gap: 14px;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 16px;
 }
-
-/* smooth slow gradient using pseudo-element blend */
-#video-gate::before {
+#video-gate::before,
+#video-gate::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 30% 40%, rgba(248,187,208,0.7) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 70%, rgba(252,228,236,0.6) 0%, transparent 55%);
-  animation: softPulse 6s ease-in-out infinite alternate;
   pointer-events: none;
-  z-index: 0;
 }
+#video-gate::before {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(248,187,208,0.8) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 70%, rgba(252,228,236,0.7) 0%, transparent 50%);
+  animation: glow1 7s ease-in-out infinite alternate;
+}
+#video-gate::after {
+  background:
+    radial-gradient(ellipse at 75% 25%, rgba(244,143,177,0.55) 0%, transparent 50%),
+    radial-gradient(ellipse at 25% 75%, rgba(248,187,208,0.6) 0%, transparent 55%);
+  animation: glow2 7s ease-in-out infinite alternate;
+}
+@keyframes glow1 { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes glow2 { 0% { opacity: 0; } 100% { opacity: 1; } }
 #video-gate > * { position: relative; z-index: 1; }
 
-@keyframes softPulse {
-  from {
-    background: radial-gradient(ellipse at 30% 40%, rgba(248,187,208,0.7) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 70%, rgba(252,228,236,0.6) 0%, transparent 55%);
-  }
-  to {
-    background: radial-gradient(ellipse at 70% 30%, rgba(244,143,177,0.5) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 75%, rgba(248,187,208,0.65) 0%, transparent 55%);
-  }
-}
-
 .video-wrap {
-  width: min(88vw, 82vh);
+  /* square that fits entirely on screen with room for controls below */
+  width: min(80vw, 70vh);
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 8px 60px rgba(233,30,122,0.18), 0 2px 16px rgba(42,21,32,0.1);
+  box-shadow: 0 8px 60px rgba(233,30,122,0.18), 0 2px 16px rgba(42,21,32,0.08);
   flex-shrink: 0;
 }
 #gate-video {
@@ -204,7 +203,6 @@ body {
   object-position: center;
   display: block;
 }
-
 #countdown-text {
   color: var(--text-light);
   font-family: 'Crimson Text', serif;
@@ -212,7 +210,6 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-
 #skip-btn {
   padding: 10px 36px;
   background: transparent;
@@ -227,19 +224,23 @@ body {
   transition: opacity 0.5s ease, background 0.25s;
   text-transform: uppercase;
 }
-#skip-btn.visible      { opacity: 1; pointer-events: auto; }
-#skip-btn:hover        { background: var(--pink-mid); }
+#skip-btn.visible   { opacity: 1; pointer-events: auto; }
+#skip-btn:hover     { background: var(--pink-mid); }
 
 /* ══════════════════════════════════════════════════════
    MAIN SITE
 ══════════════════════════════════════════════════════ */
 #main-content {
   opacity: 0;
-  transition: opacity 1s ease 0.1s;
+  visibility: hidden;
+  /* keeps it out of painted flow until screens are done */
   position: relative;
-  z-index: 1;
 }
-#main-content.visible { opacity: 1; }
+#main-content.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s ease 0.1s;
+}
 
 header {
   text-align: center;
@@ -312,6 +313,214 @@ main {
 .section-body p { margin-bottom: 14px; }
 .section-body p:last-child { margin-bottom: 0; }
 
+/* ── Expandable lists ── */
+.expand-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 17px;
+  padding: 8px 22px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.expand-toggle:hover { background: var(--pink-mid); }
+.expand-toggle .arrow { transition: transform 0.3s ease; display: inline-block; }
+.expand-toggle.open .arrow { transform: rotate(180deg); }
+
+.expandable {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+.expandable.open { max-height: 2000px; }
+
+.expand-list {
+  list-style: none;
+  margin-top: 8px;
+}
+.expand-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(240,160,188,0.25);
+  color: var(--text-mid);
+  font-size: 18px;
+}
+.expand-list li:last-child { border-bottom: none; }
+
+/* ── Spotify embeds ── */
+.spotify-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.spotify-grid iframe {
+  border-radius: 12px;
+  width: 100%;
+  border: none;
+}
+
+/* ── Language screen locked button ── */
+.lang-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.lang-btn--locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  position: relative;
+}
+.lock-badge {
+  font-size: 0.85em;
+  margin-left: 6px;
+}
+.wip-label {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-light);
+  letter-spacing: 0.06em;
+}
+
+/* ── Gold featured YouTuber ── */
+.yt-special a {
+  color: #b8860b !important;
+  font-weight: 600;
+}
+.yt-special a:hover {
+  color: #d4a017 !important;
+}
+
+/* ── YouTuber / show links and buttons ── */
+.expand-list a {
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.expand-list a:hover {
+  color: var(--pink-accent);
+}
+
+.show-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'Crimson Text', serif;
+  font-size: 18px;
+  color: var(--text-mid);
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s;
+}
+.show-btn:hover {
+  color: var(--pink-accent);
+}
+
+/* ── TV Show popup ── */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 21, 32, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.popup-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.popup-inner {
+  position: relative;
+  width: min(92vw, 90vh);
+  max-height: 90vh;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 8px 60px rgba(233,30,122,0.25);
+  display: flex;
+  flex-direction: column;
+}
+.popup-video {
+  width: 100%;
+  max-height: calc(90vh - 56px);
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+.popup-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(42,21,32,0.85);
+  gap: 12px;
+  flex-shrink: 0;
+}
+.popup-nav-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--pink-mid);
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  padding: 6px 16px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: background 0.2s;
+}
+.popup-nav-btn:hover { background: rgba(248,187,208,0.15); }
+#nav-counter {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-light);
+  letter-spacing: 0.1em;
+}
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  background: rgba(253,246,249,0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.popup-close:hover {
+  background: var(--pink-mid);
+}
+
+/* ── Inline text links ── */
+.inline-link {
+  color: var(--pink-accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(233,30,122,0.35);
+  transition: color 0.2s, border-color 0.2s;
+}
+.inline-link:hover {
+  color: #c4135f;
+  border-bottom-color: #c4135f;
+}
+
 footer {
   text-align: center;
   padding: 36px;
@@ -347,4 +556,5 @@ footer {
   main   { padding: 0 16px 80px; }
   .section { padding: 44px 0; }
   .continue-btn { padding: 16px 40px; }
+  .spotify-grid { grid-template-columns: 1fr; }
 }
