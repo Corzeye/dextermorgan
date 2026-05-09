@@ -76,7 +76,7 @@
 
           <!-- Intro -->
           <p>
-            Oon <span id="age-display">ladataan...</span>, sinkku ja neitsyt mlm.
+            Oon <span id="age-display">ladataan...</span>, sinkku ja neitsyt <span class="tooltip" data-tooltip="cisgender, eli syntyessä määritelty sukupuoli (mies) vastaa sukupuoli-identiteettiäni">cis</span> <span class="tooltip" data-tooltip="men loving men, eli miehiä rakastava mies">mlm</span>.
             Asun tällä hetkellä pääkaupunkiseudulla.
             Pelien pelaaminen on ihan kiva, mutta rakastan editoida ja tehdä videoita.
             Suurimmaksi osaksi haluun ja oon tehnyt YouTube-videoita, mutta oon myös tehnyt TikTok-edittejä.
@@ -417,6 +417,15 @@
     }, true); // capture phase — fires before anything else
 
     document.addEventListener('contextmenu', e => e.preventDefault());
+  </script>
+
+  <script>
+    // ── Tooltips ─────────────────────────────────────────────
+    document.querySelectorAll('.tooltip').forEach(el => {
+      el.addEventListener('click', () => {
+        el.classList.toggle('tooltip-visible');
+      });
+    });
   </script>
 
 </body>

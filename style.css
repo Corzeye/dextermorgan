@@ -521,6 +521,42 @@ main {
   border-bottom-color: #c4135f;
 }
 
+/* ── Tooltips ── */
+.tooltip {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px dotted var(--text-light);
+  transition: border-color 0.2s;
+}
+.tooltip:hover,
+.tooltip.tooltip-visible {
+  border-bottom-color: var(--pink-accent);
+}
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-dark);
+  color: var(--paper);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: 'Crimson Text', serif;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+  z-index: 100;
+}
+.tooltip:hover::after,
+.tooltip.tooltip-visible::after {
+  opacity: 1;
+  visibility: visible;
+}
+
 footer {
   text-align: center;
   padding: 36px;
