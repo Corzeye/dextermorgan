@@ -46,7 +46,7 @@
   <div id="video-gate" class="screen hidden">
     <div class="video-wrap">
       <video id="gate-video" playsinline>
-        <source src="https://archive.org/download/dextermorgan.gay/edit.mp4" type="video/mp4" />
+        <source src="edit.mp4" type="video/mp4" />
       </video>
     </div>
     <p id="countdown-text">
@@ -76,10 +76,10 @@
 
           <!-- Intro -->
           <p>
-            Oon <span id="age-display">ladataan...</span>, sinkku ja neitsyt cis mlm.
+            Oon <span id="age-display">ladataan...</span>, sinkku ja neitsyt mlm.
             Asun tällä hetkellä pääkaupunkiseudulla.
             Pelien pelaaminen on ihan kiva, mutta rakastan editoida ja tehdä videoita.
-            Suurimmaksi osaksi haluun ja oon tehnyt YouTube-videoita, mutta oon tehnyt myös TikTok-edittejä.
+            Suurimmaksi osaksi haluun ja oon tehnyt YouTube-videoita, mutta oon myös tehnyt TikTok-edittejä.
             Jonkin aikaa sitten tein aika paljon katsottujakin videoita suomeks <a href="https://www.tiktok.com/@lakkocentral" target="_blank" rel="noopener" class="inline-link">tänne</a>.
             (yritin olla tuff ja edgy sillon niin en nykypäivänä kaikkia niitä videoita olisi tehnyt)
             Monesta syystä sinne lopetin julkasemisen koska aloin YouTube-asioita tekemään ja tutkimaan enemmän ja se vaan jäi.
@@ -325,11 +325,8 @@
     let currentIndex = 1;
     let totalEdits   = 1;
 
-    const ARCHIVE_BASE = 'https://archive.org/download/dextermorgan.gay/';
-
     function buildSrc(base, index) {
-      const file = index === 1 ? `${base}.mp4` : `${base}${index}.mp4`;
-      return ARCHIVE_BASE + file;
+      return index === 1 ? `${base}.mp4` : `${base}${index}.mp4`;
     }
 
     function updateNav() {
