@@ -521,6 +521,18 @@ main {
   border-bottom-color: #c4135f;
 }
 
+/* ── Clickable spans ── */
+.clickable {
+  color: var(--pink-accent);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(233,30,122,0.35);
+  transition: color 0.2s, border-color 0.2s;
+}
+.clickable:hover {
+  color: #c4135f;
+  border-bottom-color: #c4135f;
+}
+
 footer {
   text-align: center;
   padding: 36px;
