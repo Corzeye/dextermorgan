@@ -76,7 +76,7 @@
 
           <!-- Intro -->
           <p>
-            Oon <span id="age-display">ladataan...</span>, sinkku ja neitsyt <span class="tooltip" data-tooltip="cisgender, eli syntyessä määritelty sukupuoli (mies) vastaa sukupuoli-identiteettiäni">cis</span> <span class="tooltip" data-tooltip="men loving men, eli miehiä rakastava mies">mlm</span>.
+            Oon <span id="age-display">ladataan...</span>, sinkku ja neitsyt <span onclick="alert('cisgender, eli syntyessä määritelty sukupuoli (mies) vastaa sukupuoli-identiteettiäni')">cis</span> <span onclick="alert('men loving men, eli miehiä rakastava mies')">mlm</span>.
             Asun tällä hetkellä pääkaupunkiseudulla.
             Pelien pelaaminen on ihan kiva, mutta rakastan editoida ja tehdä videoita.
             Suurimmaksi osaksi haluun ja oon tehnyt YouTube-videoita, mutta oon myös tehnyt TikTok-edittejä.
@@ -208,23 +208,29 @@
     const countdownEl = document.getElementById('countdown-text');
     const video       = document.getElementById('gate-video');
 
+    // ── Spam skip for gate video ─────────────────────────────
+    let clickCount = 0;
+    let lastClickTime = 0;
+    video.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastClickTime < 1000) { // within 1 second
+        clickCount++;
+        if (clickCount >= 3) {
+          showSite();
+          return;
+        }
+      } else {
+        clickCount = 1;
+      }
+      lastClickTime = now;
+    });
+
     // ── Show main site ────────────────────────────────────────
     let siteShown = false;
 
     // ── Language select — only Finnish works ─────────────────
-    let spaceSkip = false;
-    document.addEventListener('keydown', e => { if (e.code === 'Space') spaceSkip = true; });
-    document.addEventListener('keyup',   e => { if (e.code === 'Space') spaceSkip = false; });
-
     document.querySelectorAll('.lang-btn[data-lang]').forEach(btn => {
       btn.addEventListener('click', () => {
-        if (spaceSkip) {
-          langSelect.classList.add('hidden');
-          document.body.classList.add('unlocked');
-          mainContent.classList.add('visible');
-          siteShown = true;
-          return;
-        }
         langSelect.classList.add('hidden');
         splash.classList.remove('hidden');
       });
@@ -417,30 +423,6 @@
     }, true); // capture phase — fires before anything else
 
     document.addEventListener('contextmenu', e => e.preventDefault());
-  </script>
-
-  <script>
-    // ── Tooltips ─────────────────────────────────────────────
-    document.querySelectorAll('.tooltip').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent closing when clicking the tooltip trigger
-        // Close all other tooltips
-        document.querySelectorAll('.tooltip').forEach(other => {
-          if (other !== el) {
-            other.classList.remove('tooltip-visible');
-          }
-        });
-        // Toggle this one
-        el.classList.toggle('tooltip-visible');
-      });
-    });
-
-    // Close tooltips when clicking elsewhere
-    document.addEventListener('click', () => {
-      document.querySelectorAll('.tooltip').forEach(el => {
-        el.classList.remove('tooltip-visible');
-      });
-    });
   </script>
 
 </body>

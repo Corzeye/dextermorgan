@@ -443,8 +443,8 @@ main {
 }
 .popup-inner {
   position: relative;
-  width: min(92vw, 90vh);
-  max-height: 90vh;
+  width: min(90vw, 90vh);
+  height: min(90vw, 90vh);
   background: #000;
   border-radius: 4px;
   overflow: hidden;
@@ -454,7 +454,7 @@ main {
 }
 .popup-video {
   width: 100%;
-  max-height: calc(90vh - 56px);
+  height: calc(100% - 56px);
   object-fit: cover;
   display: block;
   background: #000;
@@ -521,45 +521,6 @@ main {
   border-bottom-color: #c4135f;
 }
 
-/* ── Tooltips ── */
-.tooltip {
-  position: relative;
-  cursor: help;
-  border-bottom: 1px dotted var(--text-light);
-  transition: border-color 0.2s;
-}
-.tooltip:hover,
-.tooltip.tooltip-visible {
-  border-bottom-color: var(--pink-accent);
-}
-.tooltip::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--text-dark);
-  color: var(--paper);
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: 'Crimson Text', serif;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  pointer-events: none;
-  z-index: 100;
-  max-width: 90vw; /* Prevent going off-screen horizontally */
-  word-wrap: break-word;
-  white-space: normal;
-}
-.tooltip:hover::after,
-.tooltip.tooltip-visible::after {
-  opacity: 1;
-  visibility: visible;
-}
-
 footer {
   text-align: center;
   padding: 36px;
@@ -596,11 +557,4 @@ footer {
   .section { padding: 44px 0; }
   .continue-btn { padding: 16px 40px; }
   .spotify-grid { grid-template-columns: 1fr; }
-
-  /* Mobile tooltip positioning */
-  .tooltip::after {
-    bottom: auto;
-    top: 100%;
-    margin-top: 4px;
-  }
 }
