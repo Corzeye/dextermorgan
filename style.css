@@ -550,6 +550,9 @@ main {
   transition: opacity 0.3s ease, visibility 0.3s ease;
   pointer-events: none;
   z-index: 100;
+  max-width: 90vw; /* Prevent going off-screen horizontally */
+  word-wrap: break-word;
+  white-space: normal;
 }
 .tooltip:hover::after,
 .tooltip.tooltip-visible::after {
@@ -593,4 +596,11 @@ footer {
   .section { padding: 44px 0; }
   .continue-btn { padding: 16px 40px; }
   .spotify-grid { grid-template-columns: 1fr; }
+
+  /* Mobile tooltip positioning */
+  .tooltip::after {
+    bottom: auto;
+    top: 100%;
+    margin-top: 4px;
+  }
 }

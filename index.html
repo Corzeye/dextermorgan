@@ -422,8 +422,23 @@
   <script>
     // ── Tooltips ─────────────────────────────────────────────
     document.querySelectorAll('.tooltip').forEach(el => {
-      el.addEventListener('click', () => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent closing when clicking the tooltip trigger
+        // Close all other tooltips
+        document.querySelectorAll('.tooltip').forEach(other => {
+          if (other !== el) {
+            other.classList.remove('tooltip-visible');
+          }
+        });
+        // Toggle this one
         el.classList.toggle('tooltip-visible');
+      });
+    });
+
+    // Close tooltips when clicking elsewhere
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.tooltip').forEach(el => {
+        el.classList.remove('tooltip-visible');
       });
     });
   </script>
