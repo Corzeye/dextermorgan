@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dexter Morgan</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<title>About Me</title>
 <style>
   :root{
     --bg-0:#141317;
@@ -49,11 +51,13 @@
     width:min(50vw, 480px); height:min(50vw, 480px);
     background:radial-gradient(circle, var(--pink-1), transparent 70%);
     top:-10%; left:-10%;
+    animation: driftBlobs 18s ease-in-out infinite alternate;
   }
   body::after{
     width:min(45vw, 420px); height:min(45vw, 420px);
     background:radial-gradient(circle, var(--pink-0), transparent 70%);
     bottom:-15%; right:-10%;
+    animation: driftBlobs 20s ease-in-out infinite alternate;
   }
 
   .wrap{
@@ -83,6 +87,7 @@
     pointer-events:none;
   }
 
+  /* ---------- pink jump / trigger links ---------- */
   .pink-link{
     color:var(--pink-0);
     text-decoration:underline;
@@ -97,10 +102,45 @@
   }
   .pink-link:hover{ color:var(--pink-soft); }
 
+  .term-tooltip{
+    position:relative;
+    cursor:help;
+    color:var(--pink-soft);
+    text-decoration:underline dotted;
+    text-underline-offset:2px;
+  }
+  .term-tooltip::after{
+    content: attr(data-tooltip);
+    position:absolute;
+    left:50%;
+    top:100%;
+    transform:translateX(-50%);
+    white-space:nowrap;
+    background:rgba(20,18,22,0.95);
+    color:#fff;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:0.78rem;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.15s ease;
+    margin-top:8px;
+    z-index:10;
+  }
+  .term-tooltip:hover::after{ opacity:1; }
+
   /* ---------- hero ---------- */
   .hero{
     padding: clamp(32px, 6vw, 64px) clamp(24px, 6vw, 56px);
-    display:flex; flex-direction:column; align-items:flex-start; gap:16px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+  }
+  .hero-heading{
+    display:flex;
+    align-items:center;
+    gap:18px;
   }
   .avatar{
     width:88px; height:88px; border-radius:50%;
@@ -109,56 +149,180 @@
     box-shadow: 0 6px 20px rgba(255,79,160,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
     flex-shrink:0;
   }
+  .hero-title{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
   .eyebrow{
     text-transform:uppercase; letter-spacing:0.16em; font-size:0.75rem;
     color:var(--pink-soft); font-weight:600;
   }
-  h1{
-    font-size: clamp(2rem, 5.5vw, 3.2rem);
-    line-height:1.08; font-weight:700; letter-spacing:-0.02em;
+  .hero-name{
+    font-size: 1.8rem;
+    font-weight:700;
+    line-height:1.02;
     color:var(--text-0);
   }
-  h1 .grad-text{
-    background:linear-gradient(120deg, #ffffff, var(--pink-soft) 70%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
+  .hero-handle{
+    color:var(--pink-soft);
+    font-size:0.78rem;
+    opacity:0.94;
+    letter-spacing:0.04em;
+    font-weight:600;
+  }
+  h1{
+    margin:0;
+    font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+    line-height:1.08;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--pink-soft);
   }
   .hero p{ max-width:65ch; color:var(--text-1); font-size: clamp(0.98rem, 1.4vw, 1.08rem); }
+  body{
+    min-height:100svh;
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+    color:var(--text-0);
+    background:
+      radial-gradient(60% 50% at 12% 8%, rgba(255,79,160,0.35), transparent 60%),
+      radial-gradient(55% 45% at 90% 12%, rgba(255,122,184,0.22), transparent 60%),
+      radial-gradient(65% 55% at 50% 100%, rgba(255,79,160,0.18), transparent 60%),
+      linear-gradient(160deg, var(--bg-0), var(--bg-1) 60%, #100f13);
+    background-attachment:fixed;
+    background-size: 120% 120%, 110% 110%, 105% 105%, auto;
+    background-position: 10% 10%, 90% 5%, 50% 100%, 0 0;
+    animation: shiftBackground 28s ease-in-out infinite;
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  @media (max-width:760px){
+    .hero{ grid-template-columns:1fr; }
+    .hero-heading{ flex-direction:column; align-items:flex-start; }
+  }
+  @keyframes driftBlobs{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(40px,-40px) scale(1.08); }
+  }
+  @keyframes shiftBackground{
+    0%,100%{ background-position: 10% 10%, 90% 5%, 50% 100%, 0 0; }
+    25%{ background-position: 5% 8%, 92% 2%, 45% 98%, 0 0; }
+    50%{ background-position: 0% 5%, 95% 15%, 55% 95%, 0 0; }
+    75%{ background-position: 12% 6%, 88% 12%, 60% 100%, 0 0; }
+  }
+
+  body::before,
+  body::after{
+    animation: driftBlobs 18s ease-in-out infinite alternate;
+    opacity:0.7;
+    filter: blur(72px) saturate(130%);
+  }
+
+  /* YouTube PFP preview button and modal */
+  .youtube-btn{ display:inline-block; margin-top:6px; border-radius:999px; padding:6px 10px; font-weight:700; font-size:0.9rem; color:var(--pink-soft); background:transparent; border:1px solid rgba(255,122,184,0.45); cursor:pointer; }
+  .youtube-btn:hover{ background:rgba(255,79,160,0.06); }
+
+  .yt-modal{ z-index:120; }
+  .yt-modal .modal-box{ width:min(60vw,420px); height:auto; aspect-ratio:auto; padding:12px; display:flex; align-items:center; justify-content:center; background:linear-gradient(155deg, var(--glass-fill-strong), var(--glass-fill)); }
+  .yt-modal img{ width:100%; height:100%; object-fit:contain; border-radius:12px; background:#000; }
+
+  /* ---------- YouTubers I watch (vertical list, pfp left) ---------- */
+  .yt-subs{ display:flex; flex-direction:column; gap:12px; }
+  .yt-sub{ display:flex; gap:12px; align-items:center; padding:8px 4px; }
+  .yt-sub a{ display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit; width:100%; }
+  .yt-sub img{ width:48px; height:48px; border-radius:8px; object-fit:cover; border:1px solid rgba(255,255,255,0.04); box-shadow:0 6px 18px rgba(0,0,0,0.35); transition: transform 0.16s ease, box-shadow 0.16s ease; background:linear-gradient(180deg,#0f0f11,#151415); }
+  .yt-sub:hover img{ transform:scale(1.06); box-shadow:0 12px 30px rgba(255,79,160,0.12); }
+  .yt-sub .meta{ display:flex; flex-direction:column; align-items:flex-start; }
+  .yt-sub .label{ font-size:0.95rem; font-weight:700; color:var(--text-0); }
+  .yt-sub .handle{ font-size:0.78rem; color:var(--text-1); opacity:0.95; margin-top:4px; }
+
+  /* TV shows grid & banner */
+  .tv-banner{ width:100%; height:180px; border-radius:14px; background-size:cover; background-position:center; margin-bottom:12px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }
+  .tv-banner[aria-hidden="true"]{ display:none; margin-bottom:0; }
+  .tv-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; align-items:start; }
+  @media (max-width:900px){ .tv-grid{ grid-template-columns:repeat(4,1fr);} }
+  @media (max-width:720px){ .tv-grid{ grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:460px){ .tv-grid{ grid-template-columns:repeat(2,1fr);} }
+  .tv-card{ display:flex; flex-direction:column; gap:8px; }
+  #tvShows{ position:relative; }
+  #tvShows.collapsed{ padding-bottom:12px; }
+  #tvShows .expandable-wrap{ max-height:0; overflow:hidden; transition:max-height 0.35s ease; display:flex; flex-direction:column; gap:16px; }
+  #tvShows .expandable-wrap.expanded{ max-height:2000px; }
+  #tvToggle.yt-toggle{
+    position:absolute; top:18px; right:18px; z-index:40;
+    transform:translateY(0);
+    width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+    border-radius:999px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+    color:var(--pink-soft); font-size:22px; cursor:pointer; padding:0; line-height:1;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  #tvToggle.yt-toggle:hover{ transform:translateY(-2px); background:rgba(255,79,160,0.06); }
+  .tv-poster{ border-radius:8px; overflow:hidden; background:#0f0f11; position:relative; aspect-ratio:2/3; transition: box-shadow 0.25s ease; }
+  .tv-poster a{ display:block; width:100%; height:100%; }
+  .tv-poster img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.24s ease; }
+  .tv-title{ font-size:0.88rem; font-weight:700; color:var(--text-0); line-height:1.2; text-align:center; padding:0 4px; }
+  .tv-poster::before{ content:''; position:absolute; inset:0; background:linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0) 100%); transform:translateX(-120%); opacity:0; transition: transform 0.45s ease, opacity 0.25s ease; pointer-events:none; z-index:1; }
+  .tv-poster:hover::before{ transform:translateX(120%); opacity:1; }
+  .tv-poster img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.24s ease; position:relative; z-index:0; }
+  .tv-poster:hover img{ transform:scale(1.05); }
+  .tv-card:hover .tv-poster{ box-shadow:0 18px 40px rgba(255,79,160,0.18); }
+
+  /* collapse the YouTuber list by default and provide a top-right toggle */
+  #subscriptions{ position:relative; }
+  #subscriptions.collapsed{ padding-bottom:12px; }
+  #subscriptions.collapsed .prose{ padding-top: clamp(12px, 3vw, 20px); padding-bottom:12px; }
+  #subscriptions.collapsed h2{ margin-bottom:6px; }
+  #subscriptions .expandable-wrap{ max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
+  #subscriptions .expandable-wrap.expanded{ max-height:2000px; }
+  /* compact arrow toggle */
+  #ytSubsToggle.yt-toggle{
+    position:absolute; top:18px; right:18px; z-index:40;
+    width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+    border-radius:999px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+    color:var(--pink-soft); font-size:22px; cursor:pointer; padding:0; line-height:1;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  #ytSubsToggle.yt-toggle:hover{ transform:translateY(-2px); background:rgba(255,79,160,0.06); }
 
   section h2{ font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom:14px; letter-spacing:-0.01em; }
   section.glass h2{ color:var(--pink-soft); }
   .prose{ padding: clamp(24px, 5vw, 44px); display:flex; flex-direction:column; gap:16px; }
   .prose p{ color:var(--text-1); font-size:0.98rem; }
 
-  /* ---------- collapsible sections (all closed by default) ---------- */
-  .collapsible{ padding: clamp(24px, 5vw, 44px); }
-  .collapsible-head{
-    display:flex; align-items:center; justify-content:space-between; gap:16px;
-    cursor:pointer;
-    user-select:none;
-  }
-  .collapsible-head h2{ margin-bottom:0; }
-  .chevron{
-    flex-shrink:0;
-    width:34px; height:34px;
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    background:rgba(255,255,255,0.08);
-    border:1px solid var(--glass-border);
-    transition: transform 0.3s ease, background 0.2s ease;
-  }
-  .collapsible[data-open="true"] .chevron{ transform:rotate(180deg); background:rgba(255,79,160,0.25); }
-  .chevron svg{ width:16px; height:16px; }
-
-  .collapsible-body{
-    max-height:0;
+  /* ---------- expandable prose section (show more / show less) ---------- */
+  .expandable-wrap{
+    max-height:280px;
     overflow:hidden;
-    transition:max-height 0.4s ease;
+    position:relative;
+    transition:max-height 0.35s ease;
     display:flex;
     flex-direction:column;
     gap:16px;
   }
-  .collapsible-body-inner{ padding-top:18px; display:flex; flex-direction:column; gap:16px; }
-  .collapsible-body p{ color:var(--text-1); font-size:0.98rem; }
+  .expandable-wrap.expanded{
+    max-height:4000px;
+  }
+  .expandable-toggle{
+    margin-top:16px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 18px;
+    border-radius:999px;
+    border:1px solid rgba(255,122,184,0.5);
+    background:rgba(255,79,160,0.08);
+    color:var(--pink-soft);
+    font-size:0.95rem;
+    font-weight:700;
+    text-transform:none;
+    letter-spacing:0.02em;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .expandable-toggle:hover{
+    background:rgba(255,79,160,0.16);
+    transform:translateY(-1px);
+    box-shadow:0 8px 18px rgba(255,79,160,0.12);
+  }
 
   .nsfw-placeholder{
     border:1px dashed var(--pink-1);
@@ -170,16 +334,58 @@
     background:rgba(255,79,160,0.06);
   }
 
-  /* ---------- more info: compact fact list ---------- */
-  .info-list{ display:flex; flex-direction:column; gap:18px; }
-  .info-item h3{
-    font-size:0.78rem; text-transform:uppercase; letter-spacing:0.1em;
-    color:var(--pink-soft); margin-bottom:6px; font-weight:700;
-  }
-  .info-item p{ color:var(--text-1); font-size:0.95rem; }
+  /* ---------- grid of glass cards ---------- */
+  .grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+  @media (max-width:720px){ .grid{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:460px){ .grid{ grid-template-columns:1fr; } }
 
-  /* ---------- self-harm heads-up ---------- */
-  .heads-up h2::before{ content:"⚠ "; }
+  /* ============================================================
+     CARD COMPONENT
+     Each .card is a fully self-contained, copy-pasteable block.
+     To add a new card: duplicate the whole <article class="card">
+     ...</article> element in the HTML and edit its text/icon.
+     Nothing else needs to change — the JS below wires up every
+     .card on the page automatically.
+     ============================================================ */
+  .card{
+    padding: clamp(18px, 3vw, 26px);
+    display:flex; flex-direction:column; gap:8px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow: 0 14px 40px rgba(255,79,160,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .card .icon{
+    width:38px; height:38px; border-radius:12px;
+    background:linear-gradient(140deg, var(--pink-0), var(--pink-1));
+    box-shadow:0 4px 14px rgba(255,79,160,0.35);
+  }
+  .card h3{ font-size:1rem; font-weight:600; }
+  .card .card-text{
+    font-size:0.88rem;
+    color:var(--text-1);
+    display:-webkit-box;
+    -webkit-line-clamp:4;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .card .card-text.expanded{
+    display:block;
+    -webkit-line-clamp:unset;
+  }
+  .card .show-more{
+    align-self:flex-start;
+    margin-top:2px;
+  }
+
+  /* ---------- self-harm / heads-up section ---------- */
+  .heads-up{
+    border-color: rgba(255,122,184,0.3);
+  }
+  .heads-up h2::before{
+    content:"⚠ ";
+  }
 
   /* ---------- contact ---------- */
   .contact{
@@ -202,18 +408,37 @@
   footer{ text-align:center; color:var(--text-1); font-size:0.82rem; opacity:0.7; padding-top:8px; }
 
   /* ---------- video modal (lightbox) ---------- */
+  html, body {
+    pointer-events: auto;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 0;
+  }
+
   .modal-overlay{
     position:fixed; inset:0;
+    visibility:hidden;
     background:rgba(10,8,10,0.72);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    display:flex; align-items:center; justify-content:center;
+    display:none !important;
+    align-items:center; justify-content:center;
     padding: 24px;
-    z-index:100;
-    opacity:0; pointer-events:none;
-    transition: opacity 0.25s ease;
+    z-index:-1;
+    opacity:0;
+    pointer-events:none !important;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s, z-index 0s linear 0.25s;
   }
-  .modal-overlay.open{ opacity:1; pointer-events:auto; }
+  .modal-overlay.open{
+    display:flex !important;
+    visibility:visible;
+    opacity:1;
+    pointer-events:auto;
+    z-index:100;
+    transition-delay: 0s;
+  }
 
   .modal-box{
     position:relative;
@@ -253,92 +478,452 @@
     z-index:5;
   }
   .modal-btn:hover{ background:rgba(255,79,160,0.5); transform:scale(1.06); }
+
   .modal-close{ top:12px; right:12px; }
 
   @media (prefers-reduced-motion: reduce){
-    .btn, .modal-overlay, .modal-box, .modal-btn, .chevron, .collapsible-body{ transition:none; }
+    .card, .btn, .modal-overlay, .modal-box, .modal-btn{ transition:none; }
   }
 </style>
 </head>
 <body>
-
-  <div class="wrap">
-
-    <header class="glass hero">
-      <img class="avatar" src="3d6907e68f35bd6d1c4a0d630f6a1979.png" alt="Profile photo">
-      <span class="eyebrow">Serious LTR &middot; 18 &middot; Finland &middot; MLM</span>
-      <h1><span class="grad-text">Hello :3 It is I, Dexter Morgan</span> 😭</h1>
-      <p>
+<div class="wrap">
+<header class="glass hero">
+  <div class="hero-heading">
+    <img alt="Profile photo" class="avatar" src="3d6907e68f35bd6d1c4a0d630f6a1979.png"/>
+      <div class="hero-title">
+      <div class="hero-name"><span class="grad-text">Dexter Morgan</span></div>
+      <div class="hero-handle">@thegayharborboykisser</div>
+    </div>
+  </div>
+  <h1><span class="grad-text">Hello :3 It is I, Dexter Morgan</span> 😭</h1>
+  <p>
         I'm tired of talking to people and then realizing it's not gonna work out, so I'm making this thing. All I really care about is authenticity, honesty and trying to understand the other person, BUT here's some more direction as to who I'm looking for, and who I am. Not a checklist, just direction if you are looking for a partner and want to see if I could be the right one (and if you know someone who might like me you can tell them about me 😭🙏)
       </p>
-    </header>
+</header>
+<section class="glass prose">
+<h2>Who am I and what am I looking for</h2>
+<div class="expandable-wrap">
+<p>I'm looking for a long term serious relationship. I'm <span class="term-tooltip" data-tooltip="Same gender identity as birth sex">cisgender</span>, 18yo (currently, but that will change with time 😭😭😭) and <span class="term-tooltip" data-tooltip="Male loving male">MLM</span>. I'm not fully opposed to dating someone a bit older, but I'm not sure about anything more than like 20. Even if it is, it has to be like, you like me and I happen to be 18 rather than you like me BECAUSE I'm 18, if you catch my drift. I'm looking for other gay <span class="term-tooltip" data-tooltip="Same gender identity as birth sex">cis</span> men. I feel like I'm TECHNICALLY, TECHNICALLY bisexual but men are just ugh 🤤</p>
+<p>** I am VERY freaky, I used to think it's wrong and be super duper insecure about it but now I'm owning it. And I'm basically up for anything, I couldn't care less if you have some "weird" kinks, or what kind of porn you watch. Or I do care but in a good way. Well, there's a FEW that i would go, what the fuck, but thats like the actually fucked up shit, not like, idfk, Fortnite rule34 😭 I love kinky. The only thing I hate is normal 😭😭😭 I don't like feet but you can suck on my toes all day and night if you so please. And you can tie me up 😏🥺😛</p>
+<p>Now, even though I want one serious partner at a time, and have romantic feelings for one person at a time, I am NOT dying before going to AT LEAST one furry orgy 😭 Preferably more than one. And whether you're coming or not, that's up to you, but I'm going. And if you don't approve of that, then we're not gonna work out. I'm probably not gonna be okay with you being poly. Nothing wrong with it, but I want to be the only person you have romantic feelings for. Now again sex is different, but I want to be the only person you come home to and talk to about how weird or awkward something was, you know? And it should be more of like a, "hey there's this thing next month," rather than "hey I'm gonna go fuck our neighbor again bye."</p>
+<p>I couldn't care less what you look like, the closer to average the better 😭 If you're fat / chubby, which I am too, (I feel like I'm more chubby than fat but people have different things for it) that's okay, but I am going to lose weight eventually and I would hope you do too. We can go to the gym together :3 If I'm still chubby by 25, then we've got a problem, or like, I've got a problem. But right now, I'm not doing super great mentally and I'm not ready to, y'know, lose the weight yet. But like, chubby isn't a turn off for me. And yes, I'm not doing super great mentally, but I'm not in like critical condition or anything, and I wrote more about my mental stuff <a class="pink-link" href="#self-harm">here</a>.</p>
+<p>The closer you live to Finland the better, and ideally I'd like to keep living in Finland, but anything could happen obviously. The only thing that matters is that we would eventually live together, even if that's not anytime soon. Or in Finland.</p>
+<p>Having a, whatever sized, house next to a river or some body of water so we can go swim and stuff, that would be GREAT. But you aren't going to catch me DEAD in an outhouse 😭 I'll just shit in the woods, thank you very much.</p>
+<p>I think I'm really kind, or I try to be at least. I can probably come off as kinda blunt too sometimes tho. And honestly sometimes I'm a bit too "kind" even, like I can't kill even mosquitos and I feel REALLY REALLY bad about throwing food away 😭</p>
+<p>I'm definitely more of a bottom, but I can switch too, I think. (I don't really know, I'm still a virgin 😭) but I'd assume I can. I feel like all I really care about is sex, not whether it's me dicking someone down or me getting dicked down.</p>
+</div>
+<button class="pink-link expandable-toggle show-more" type="button">Show more</button>
+</section>
+<section class="glass prose" id="youtube">
+<h2>The YouTube thing</h2>
+<div class="expandable-wrap">
+<p>I REALLY fucking like making YouTube videos and editing. If you're into that stuff too that would be fucking awesome (even if that means just playing games with me on camera) but if you're not, that's maybe fine? I care too much about it and it's like the only thing I actually care about, if I'm honest. But even if you aren't super interested in it you gotta be fine with me liking it obviously, same way that I'll be fine with whatever you're interested in. But if you're into like, biology, I WILL call you a nerd every chance I get :3 even though I'm probably more of a nerd with all of the YouTube stuff 😭 and you can tease me by calling me YouTube boy or something, the same way I would call you a nerd, BUT, look out, because if you do, you might suddenly find that you no longer have your foreskin. I am the Bay Harbor Foreskin Stealer.</p>
+<p>But genuinely YouTube is the only thing that even remotely interests me and I've been trying to do it forever, and I know I'm pretty close to making great videos. (Again, cringe as fuck probably but I DON'T CARE) I don't have any good YouTube videos I could showcase, so I'll instead show an edit I've made, <button class="pink-link" data-video-open="" type="button">here</button>. I know how to edit, I know how to keep the flow in videos. I've been editing since I was seven years old. (Also if you say "preset warrior" about the edit I will sue)</p>
+<p>Fun fact, assuming I would have an RPM of, say, 3€, which I'm pretty sure is not unrealistic for gaming content (RPM means the amount of ad revenue you get after YouTube's cut) before taxes, if I got a video with 10 million views, that's fucking 30,000€. That's so much! And that's just one video! And high-RPM niches like finance, I'm pretty sure can have an RPM of up to 30€ or something. That's fucking 300,000€, almost half a million! The amount of RPM you have is based on how much money advertisers are willing to pay to have their ads on your videos, so if you make like, Minecraft noob vs pro vs hacker, that's gonna have a low ass RPM because the only people watching it are kids who are NOT going to buy the ugly ass car you're promoting. Unlike something like finance. I'm such a nerd 😭</p>
+<p>Also I have had some success on YouTube, I have one Short, not long form, which Shorts are so fucking easy but still, that has 14 million views. I would've made like 500-700€ I'm pretty sure if I was monetized and the content was fair use. Which it was NOT 😭 So I know it's possible. Also some long form videos with like a thousand views here and there, but nothing crazy.</p>
+<p>If YouTube doesn't work out I'd probably edit for other people or maybe do some coding stuff, but I am NOT sitting in some office for my entire life. I'm in school for programming, or should be, but the little while I was there, until I stopped going because of depression, I was like the top of my class, and I know I could be at least a decent coder. (But like I said, I don't know shit, and this whole fucking website is AI generated 😭 obviously the text you're reading isn't) I'm going to a different school now that's still programming but it's like all the "failures" who couldn't handle regular school, which is perfect.</p>
+<p>Also I am VERY awkward right now but I feel like in 5 years I'll be very confident, but we'll see. But I'm only awkward in real life, even like on camera I'm super confident.</p>
+</div>
+<button class="pink-link expandable-toggle show-more" type="button">Show more</button>
+</section>
+<section class="glass prose" id="subscriptions">
+<h2>YouTubers I watch</h2>
+<div class="expandable-wrap">
+  <div class="yt-subs" id="ytSubs" aria-live="polite"></div>
+</div>
+<button id="ytSubsToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open YouTubers I watch">▾</button>
+</section>
 
-    <!-- ============ Who am I ============ -->
-    <section class="glass collapsible" data-open="false">
-      <div class="collapsible-head" data-toggle>
-        <h2>Who am I and what am I looking for</h2>
-        <span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-      </div>
-      <div class="collapsible-body">
-        <div class="collapsible-body-inner">
-          <p>I'm looking for a long term serious relationship. I'm cisgender, 18yo (currently, but that will change with time 😭😭😭) and MLM. I'm not fully opposed to dating someone a bit older, but I'm not sure about anything more than like 20. Even if it is, it has to be like, you like me and I happen to be 18 rather than you like me BECAUSE I'm 18, if you catch my drift. I'm looking for other gay cis men. I feel like I'm TECHNICALLY, TECHNICALLY bisexual but men are just ugh 🤤</p>
+<section class="glass prose" id="tvShows">
+<h2>TV shows I like</h2>
+<div class="expandable-wrap">
+  <div class="tv-banner" id="tvBanner" aria-hidden="true"></div>
+  <div class="tv-grid" id="tvGrid" aria-live="polite"></div>
+  <p style="font-size:0.86rem; color:var(--text-1); margin-top:14px;">I haven’t finished all the shows listed yet.</p>
+</div>
+<button id="tvToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open TV shows">▾</button>
+</section>
 
-          <div class="nsfw-placeholder">[ leave this space for you to add your own NSFW section ]</div>
+<section class="glass prose">
+<h2>Random stuff I like</h2>
+<div class="expandable-wrap">
+<p><strong>Travel:</strong> I'd love to travel a lot.</p>
+<p><strong>YouTubers I like:</strong> Markiplier, DougDoug, MartinCitoPants, Joe Bartolozzi, CaseOh, Chadoy, 8-Bit Ryan. I want to become basically MartinCitoPants but also a gay furry and just less edgy jokes.</p>
+<p><strong>TV shows:</strong> Breaking Bad, Dexter (duh), The Mentalist, Supernatural, The Boys, Stranger Things, The Walking Dead, 13 Reasons Why, The End of the F***ing World, Severance, You.</p>
+<p><strong>Dream car:</strong> Probably a Hellcat. I don't know jack shit about cars and I don't care if it drives like shit, it looks cool.</p>
+</div>
+<button class="pink-link expandable-toggle show-more" type="button">Show more</button>
+</section>
+<section class="glass prose">
+<h2>Music taste</h2>
+<div class="expandable-wrap">
+<p>I couldn't give two shits what kind of music you listen to, BUT it would be cool if some of the stuff you listen to I also listen to.</p>
+<p>Michael Jackson is KING! I only started listening to him after I watched the movie but he's fucking peak and I believe he's innocent and his music is fucking peak, except Chicago which is lowkey buns but other than that, PEAK. And I know he would think furries are cute 🥹 I don't know, to name a few good songs from him: Bad, Billie Jean, Beat It, Thriller, Smooth Criminal, Black or White, They Don't Care About Us.</p>
+<p>I also do like some phonk 😭 I do not give a fuck if it's cringe, it's fucking peak. The whole concept of cringe is fucking stupid, if I'm honest. Or should I say that it's cringe? Anyway, I also listen to some "unc ass" songs, songs that my dad also listens to 😭😭😭😭 which might be partially why I like them, but for example, Hall of Fame, Counting Stars, and, I don't think my dad listens to this one but, High Hopes. Also Nope You're Too Late by Wifisfuneral is good, lowkey Industry Baby is good, and white girl songs like Call Me Maybe and You Belong With Me are FUCKING PEAK! Also some more like, rock? Or whatever, songs like I Was Made for Lovin' You, or Burning Heart are good too, or Eye of the Tiger. I don't know, give me any niche of music and just let me listen to it enough and I'll probably start liking it.</p>
+</div>
+<button class="pink-link expandable-toggle show-more" type="button">Show more</button>
+</section>
+<section class="glass prose heads-up" id="self-harm">
+<h2>A heads up (TW: self-harm)</h2>
+<div class="expandable-wrap">
+<p>Most people who I talk to who are submissive little furry femboys have at least some history of self harm, which I will be discussing now, so tw. I just want to put everything on the table, you know. Well, not EVERYTHING, I do have secrets, but nothing that I feel like a good person wouldn't understand. I haven't hurt anyone or anything, and I'm not going to.</p>
+<p>But yeah, so, I've heard some people joke about it, like how they've hurt themselves. What. I don't do that, don't do that. I might in the right group say the occasional "omg I'm gonna kill myself," or something, but like, you know, it's not a topic that should actually be joked about, suicide or self harm. Now, have I done self harm? Technically yes, but only when medications were changing which causes mood swings, and so little that it's not even noticeable, there's no scars or anything. And if you have done self harm that's obviously okay, but a lot of people I talk to are always super weird about it and even like flex about it, do not be like that. Or, if that's who you are then be like that so I know now not to talk to you. But if you're doing so badly mentally that I'm constantly worried if you're gonna kill yourself, that's too much stress for me. And yes, I'm not doing so good mentally in general, but I'm not going to kill myself.</p>
+</div>
+<button class="pink-link expandable-toggle show-more" type="button">Show more</button>
+</section>
+<section class="glass prose">
+<h2>One more thing</h2>
+<p>I'm sure this will DRASTICALLY change in the future, but right now I consider myself the most insecure and nervous yet confident person, and also the stupidest smart person, or smartest stupid person? On earth, I don't know. I suck at stuff like, I don't know, nerd stuff like math or biology, but then, I think I'm socially smart? I think I understand people fairly well, and I really want to try to understand people, even if they're super fucked up, I find evil people, well, scary but also kind of fascinating because what the fuck has to happen to a person for them to do that. But I am NOT street smart 😭</p>
+<p>Also I don't give a fuck how much it'll cost or how stupid it is, my house will have at least one secret room.</p>
+</section>
+<footer>Dexter Morgan · I'm fucking gay idk, what an I supposed to put on this. All rights reserved 😭</footer>
+</div>
+<!-- ---------- video modal (lightbox) ---------- -->
+<!-- ---------- YouTube PFP modal (temporary) ---------- -->
+<!-- YouTube PFP preview removed -->
 
-          <p>Now, even though I want one serious partner at a time, and have romantic feelings for one person at a time, I am NOT dying before going to AT LEAST one furry orgy 😭 Preferably more than one. And whether you're coming or not, that's up to you, but I'm going. And if you don't approve of that, then we're not gonna work out. I'm probably not gonna be okay with you being poly. Nothing wrong with it, but I want to be the only person you have romantic feelings for. Now again sex is different, but I want to be the only person you come home to and talk to about how weird or awkward something was, you know? And it should be more of like a, "hey there's this thing next month," rather than "hey I'm gonna go fuck our neighbor again bye."</p>
+<div class="modal-overlay" id="videoModal">
+<div class="modal-box">
+<button aria-label="Close" class="modal-btn modal-close" id="modalClose" type="button">×</button>
+<video id="modalVideo" loop="" playsinline=""></video>
+</div>
+</div>
 
-          <p>I couldn't care less what you look like, the closer to average the better 😭 If you're fat / chubby, which I am too, (I feel like I'm more chubby than fat but people have different things for it) that's okay, but I am going to lose weight eventually and I would hope you do too. We can go to the gym together :3 If I'm still chubby by 25, then we've got a problem, or like, I've got a problem. But right now, I'm not doing super great mentally and I'm not ready to, y'know, lose the weight yet. But like, chubby isn't a turn off for me. And yes, I'm not doing super great mentally, but I'm not in like critical condition or anything, and I wrote more about my mental stuff <a href="#self-harm" class="pink-link">here</a>.</p>
+<div class="modal-overlay" id="tvInfoModal">
+<div class="modal-box tv-info-box">
+<button aria-label="Close" class="modal-btn modal-close" id="tvModalClose" type="button">×</button>
+<div class="tv-modal-content">
+<h3 id="tvModalTitle"></h3>
+<p id="tvModalText"></p>
+</div>
+</div>
+</div>
+<script>
+    // ---------- Reset page state on refresh ----------
+    function resetPageState(){
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-          <p>The closer you live to Finland the better, and ideally I'd like to keep living in Finland, but anything could happen obviously. The only thing that matters is that we would eventually live together, even if that's not anytime soon. Or in Finland.</p>
+      document.querySelectorAll('.expandable-wrap.expanded').forEach(function(wrap){
+        wrap.classList.remove('expanded');
+      });
+      document.querySelectorAll('.card .card-text.expanded').forEach(function(text){
+        text.classList.remove('expanded');
+      });
+      document.querySelectorAll('.show-more, .expandable-toggle').forEach(function(btn){
+        btn.textContent = 'Show more';
+      });
+    }
 
-          <p>Having a, whatever sized, house next to a river or some body of water so we can go swim and stuff, that would be GREAT. But you aren't going to catch me DEAD in an outhouse 😭 I'll just shit in the woods, thank you very much.</p>
+    window.addEventListener('pageshow', function(event){
+      if (event.persisted) resetPageState();
+    });
+    window.addEventListener('load', function(){
+      resetPageState();
+      document.querySelectorAll('.modal-overlay').forEach(function(overlay){
+        overlay.classList.remove('open');
+        overlay.style.visibility = 'hidden';
+        overlay.style.pointerEvents = 'none';
+        overlay.style.display = 'none';
+      });
+    });
 
-          <p>I think I'm really kind, or I try to be at least. I can probably come off as kinda blunt too sometimes tho. And honestly sometimes I'm a bit too "kind" even, like I can't kill even mosquitos and I feel REALLY REALLY bad about throwing food away 😭</p>
+    // ---------- Show more / show less for every .card ----------
+    document.querySelectorAll('.card').forEach(function(card){
+      var text = card.querySelector('.card-text');
+      var btn = card.querySelector('.show-more');
+      if(!text || !btn) return;
+      btn.addEventListener('click', function(){
+        var isExpanded = text.classList.toggle('expanded');
+        btn.textContent = isExpanded ? 'Show less' : 'Show more';
+      });
+    });
 
-          <p>I'm definitely more of a bottom, but I can switch too, I think. (I don't really know, I'm still a virgin 😭) but I'd assume I can. I feel like all I really care about is sex, not whether it's me dicking someone down or me getting dicked down.</p>
-        </div>
-      </div>
-    </section>
+    // ---------- Show more / show less for full prose sections ----------
+    document.querySelectorAll('.expandable-toggle').forEach(function(btn){
+      var wrap = btn.previousElementSibling;
+      if(!wrap || !wrap.classList.contains('expandable-wrap')) return;
+      btn.addEventListener('click', function(){
+        var isExpanded = wrap.classList.toggle('expanded');
+        btn.textContent = isExpanded ? 'Show less' : 'Show more';
+      });
+    });
 
-    <!-- ============ YouTube ============ -->
-    <section class="glass collapsible" data-open="false" id="youtube">
-      <div class="collapsible-head" data-toggle>
-        <h2>The YouTube thing</h2>
-        <span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-      </div>
-      <div class="collapsible-body">
-        <div class="collapsible-body-inner">
-          <p>I REALLY fucking like making YouTube videos and editing. If you're into that stuff too that would be fucking awesome (even if that means just playing games with me on camera) but if you're not, that's maybe fine? I care too much about it and it's like the only thing I actually care about, if I'm honest. But even if you aren't super interested in it you gotta be fine with me liking it obviously, same way that I'll be fine with whatever you're interested in. But if you're into like, biology, I WILL call you a nerd every chance I get :3 even though I'm probably more of a nerd with all of the YouTube stuff 😭 and you can tease me by calling me YouTube boy or something, the same way I would call you a nerd, BUT, look out, because if you do, you might suddenly find that you no longer have your foreskin. I am the Bay Harbor Foreskin Stealer.</p>
+    // ---------- Video lightbox ----------
+    // Single video file, loops automatically, no native controls —
+    // the only way to stop it is the pink X in the corner.
+    var VIDEO_SRC = '84851919c2a6d055687fadc735be2358.mp4';
 
-          <p>But genuinely YouTube is the only thing that even remotely interests me and I've been trying to do it forever, and I know I'm pretty close to making great videos. (Again, cringe as fuck probably but I DON'T CARE) I don't have any good YouTube videos I could showcase, so I'll instead show an edit I've made, <button type="button" class="pink-link" data-video-open>here</button>. I know how to edit, I know how to keep the flow in videos. I've been editing since I was seven years old. (Also if you say "preset warrior" about the edit I will sue)</p>
+    var modal = document.getElementById('videoModal');
+    var modalVideo = document.getElementById('modalVideo');
 
-          <p>Fun fact, assuming I would have an RPM of, say, 3€, which I'm pretty sure is not unrealistic for gaming content (RPM means the amount of ad revenue you get after YouTube's cut) — before taxes, if I got a video with 10 million views, that's fucking 30,000€. That's so much! And that's just one video! And high-RPM niches like finance, I'm pretty sure can have an RPM of up to 30€ or something. That's fucking 300,000€, almost half a million! The amount of RPM you have is based on how much money advertisers are willing to pay to have their ads on your videos, so if you make like, Minecraft noob vs pro vs hacker, that's gonna have a low ass RPM because the only people watching it are kids who are NOT going to buy the ugly ass car you're promoting. Unlike something like finance. I'm such a nerd 😭</p>
+    function openModal(){
+      modalVideo.src = VIDEO_SRC;
+      modalVideo.play().catch(function(){ /* autoplay may be blocked until user interacts */ });
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
-          <p>Also I have had some success on YouTube, I have one Short, not long form, which Shorts are so fucking easy but still, that has 14 million views. I would've made like 500-700€ I'm pretty sure if I was monetized and the content was fair use. Which it was NOT 😭 So I know it's possible. Also some long form videos with like a thousand views here and there, but nothing crazy.</p>
+    function closeModal(){
+      modal.classList.remove('open');
+      modalVideo.pause();
+      modalVideo.removeAttribute('src');
+      modalVideo.load();
+      document.body.style.overflow = '';
+    }
 
-          <p>If YouTube doesn't work out I'd probably edit for other people or maybe do some coding stuff, but I am NOT sitting in some office for my entire life. I'm in school for programming, or should be, but the little while I was there, until I stopped going because of depression, I was like the top of my class, and I know I could be at least a decent coder. (But like I said, I don't know shit, and this whole fucking website is AI generated 😭 obviously the text you're reading isn't) I'm going to a different school now that's still programming but it's like all the "failures" who couldn't handle regular school, which is perfect.</p>
+    document.querySelectorAll('[data-video-open]').forEach(function(trigger){
+      trigger.addEventListener('click', openModal);
+    });
 
-          <p>Also I am VERY awkward right now but I feel like in 5 years I'll be very confident, but we'll see. But I'm only awkward in real life, even like on camera I'm super confident.</p>
-        </div>
-      </div>
-    </section>
+    document.getElementById('modalClose').addEventListener('click', closeModal);
 
-    <!-- ============ Values ============ -->
-    <section class="glass collapsible" data-open="false">
-      <div class="collapsible-head" data-toggle>
-        <h2>Values &amp; random stuff</h2>
-        <span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-      </div>
-      <div class="collapsible-body">
-        <div class="collapsible-body-inner">
-          <p>I have no fucking clue where I land on the political compass, I do not know two things about politics, although again I wouldn't be too surprised if I do in 5 years. I just cannot care right now, if I'm honest.</p>
+    modal.addEventListener('click', function(e){
+      if(e.target === modal) closeModal();
+    });
 
-          <p>I don't fully consider myself a femboy, but I am not opposed to wearing feminine stuff at all, I would like it more but I just think I don't look good in feminine clothes. Social norms are made up bullshit that I don't care to follow. Also the conservative bullshit of the father GIVING their daughter to another man when they get married is the stupidest shit I've ever heard and it pisses me the fuck off.</p>
+    document.addEventListener('keydown', function(e){
+      if(!modal.classList.contains('open')) return;
+      if(e.key === 'Escape') closeModal();
+    });
 
-          <p>If you think there's a superior race or gender or sexuality you're a dumbass and I don't want to see your face. Oh also we're not gonna work out if you're religious. I think religion is human-made because no one knows what the fuck they're doing on this dumbass floating rock so they came up with some bullshit to give meaning to things and to also have people behave. Why do you pray for change if it's all God's plan? It's basically like Santa Claus but for adults. Anyway, and all religions are also equal, I don't hate Jews, religiously or ethnicity-wise, and honestly there's SO much antisemitic shit online and it pisses me off. All religions are equal, they're just all equally wrong 😭 and also I don't know too much about religions, obviously if there's some religion that's like "hey, so men own women," that's fucking stupid and horrible and please stop, but you get what I mean.</p>
+    // YouTube PFP preview removed.
 
-          <p>Also yes I'm a furry, I don't have a fursona, probably never will, but I will definitely get a fursuit someday, google "narpy fursuit," FUCKING PEAK! And yes I'm a puppy boy. I do know how to bark 😭</p>
+  // ---------- Static subscription feed (local PFPs, graceful fallback) ----------
+  (function(){
+    var subs = [
+      { name: 'Joe Bartolozzi', handle: 'JoeBartolozzi' },
+      { name: 'Markiplier', handle: 'markiplier' },
+      { name: 'DougDoug', handle: 'DougDoug' },
+      { name: 'martincitopants', handle: 'martincitopants' },
+      { name: 'Chadoy', handle: 'Chadoy' },
+      { name: '8-BitRyan', handle: '8BitRyan' },
+      { name: 'Family Friendly', handle: 'FamilyFriendlyYT' },
+      { name: 'Vivilly', handle: 'Vivilly' },
+      { name: "Let's Game it Out", handle: 'LetsGameItOut' },
+      { name: 'Tranium', handle: 'Tranium' }
+    ];
 
-          <p>And if we are both serious about each other, there WILL be a time where I or you do some bullshit that is very regrettable, rather than saying "fuck you" and leaving, we figure it out and talk it out and try to understand the other person. And we will NOT go to bed until it's solved, no going to bed mad. And I see so many married people who actually just hate each other but are still married. What.</p>
+    var container = document.getElementById('ytSubs');
+    if(!container) return;
 
-          <p>Also I do kinda have trust issues 😭 I've noticed that confident people scare me, which is probably partially why I'm looking
+    var placeholder = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="100%" height="100%" fill="#141317"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ff7ab8" font-family="Segoe UI, system-ui, sans-serif" font-size="16">YT</text></svg>'
+    );
+
+    subs.forEach(function(s){
+      var wrap = document.createElement('div'); wrap.className = 'yt-sub';
+      var a = document.createElement('a');
+      a.href = 'https://www.youtube.com/@' + s.handle;
+      a.target = '_blank'; a.rel = 'noopener';
+
+      var img = document.createElement('img');
+      img.alt = s.name + ' avatar';
+
+      var tried = 0;
+      var exts = ['.png','.jpg','.webp','.jpeg'];
+      function tryNext(){
+        if(tried >= exts.length){ img.src = placeholder; return; }
+        var src = s.handle + exts[tried];
+        tried++;
+        img.src = src;
+      }
+      img.addEventListener('error', tryNext);
+      // kick off with .png
+      tryNext();
+
+      var meta = document.createElement('div'); meta.className = 'meta';
+      var label = document.createElement('div'); label.className='label'; label.textContent = s.name;
+      var handleEl = document.createElement('div'); handleEl.className='handle'; handleEl.textContent = '@' + s.handle;
+      meta.appendChild(label);
+      meta.appendChild(handleEl);
+      a.appendChild(img);
+      a.appendChild(meta);
+
+      wrap.appendChild(a);
+      container.appendChild(wrap);
+
+      // optional: try oEmbed as a non-blocking fallback (may be CORS-blocked)
+      fetch('https://www.youtube.com/oembed?url=' + encodeURIComponent('https://www.youtube.com/@' + s.handle) + '&format=json').then(function(res){
+        if(!res.ok) throw new Error('no oembed');
+        return res.json();
+      }).then(function(data){
+        if(data && data.thumbnail_url) img.src = data.thumbnail_url;
+      }).catch(function(){ /* ignore */ });
+    });
+    // ensure the subscription list is initially closed and toggle is wired
+    var subsWrap = document.querySelector('#subscriptions .expandable-wrap');
+    var subsBtn = document.getElementById('ytSubsToggle');
+    if(subsWrap && subsBtn){
+      var section = document.getElementById('subscriptions');
+      // make sure closed on load
+      subsWrap.classList.remove('expanded');
+      if(section) section.classList.add('collapsed');
+      subsBtn.setAttribute('aria-expanded','false');
+      subsBtn.textContent = '▾';
+      subsBtn.setAttribute('aria-label','Open YouTubers I watch');
+      subsBtn.addEventListener('click', function(){
+        var is = subsWrap.classList.toggle('expanded');
+        // toggle collapsed class on section to reduce bottom padding when closed
+        if(section) {
+          if(is) section.classList.remove('collapsed'); else section.classList.add('collapsed');
+        }
+        subsBtn.setAttribute('aria-expanded', is ? 'true' : 'false');
+        subsBtn.textContent = is ? '▴' : '▾';
+        subsBtn.setAttribute('aria-label', is ? 'Close YouTubers I watch' : 'Open YouTubers I watch');
+        // scroll into view when opening
+        if(is) subsWrap.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    }
+
+    var tvWrap = document.querySelector('#tvShows .expandable-wrap');
+    var tvBtn = document.getElementById('tvToggle');
+    if(tvWrap && tvBtn){
+      var tvSection = document.getElementById('tvShows');
+      tvWrap.classList.remove('expanded');
+      if(tvSection) tvSection.classList.add('collapsed');
+      tvBtn.setAttribute('aria-expanded','false');
+      tvBtn.textContent = '▾';
+      tvBtn.setAttribute('aria-label','Open TV shows');
+      tvBtn.addEventListener('click', function(){
+        var is = tvWrap.classList.toggle('expanded');
+        if(tvSection) {
+          if(is) tvSection.classList.remove('collapsed'); else tvSection.classList.add('collapsed');
+        }
+        tvBtn.setAttribute('aria-expanded', is ? 'true' : 'false');
+        tvBtn.textContent = is ? '▴' : '▾';
+        tvBtn.setAttribute('aria-label', is ? 'Close TV shows' : 'Open TV shows');
+        if(is) tvWrap.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    }
+  })();
+
+  // ---------- TV shows poster grid + banner (tries TMDB if you set an API key) ----------
+  (function(){
+    // If you want the script to try fetching posters from TMDB, set TMDB_API_KEY to your key below.
+    var TMDB_API_KEY = '';
+    var shows = [
+      { title: 'Breaking Bad', slug: 'BreakingBad' },
+      { title: 'Better Call Saul', slug: 'BetterCallSaul' },
+      { title: 'Dexter (Duh)', slug: 'Dexter' },
+      { title: 'The Boys', slug: 'TheBoys' },
+      { title: 'The Mentalist', slug: 'TheMentalist' },
+      { title: 'Supernatural', slug: 'Supernatural' },
+      { title: 'Stranger Things', slug: 'StrangerThings' },
+      { title: 'You', slug: 'You' },
+      { title: 'The Sopranos', slug: 'TheSopranos' },
+      { title: 'The Office', slug: 'TheOffice' },
+      { title: '13 Reasons Why', slug: '13ReasonsWhy' },
+      { title: 'The Walking Dead', slug: 'TheWalkingDead' },
+      { title: 'Severance', slug: 'Severance' },
+      { title: 'Young Sheldon', slug: 'YoungSheldon' },
+      { title: 'The End of the F***ing World', slug: 'TheEndoftheFuckingWorld' }
+    ];
+
+    var tvNotes = {
+      BreakingBad: 'Fucking cinema. Watched the whole thing plenty of times.',
+      BetterCallSaul: 'Peak. Watched it a few times.',
+      Dexter: 'Tonight\'s The Night. Peak except the ending.',
+      TheBoys: 'Really fucked up but still great.',
+      TheMentalist: 'Great so far. I\'m on like season 2.',
+      Supernatural: 'Amazing. (I watched it before it was popular on TikTok btw ✌️)',
+      StrangerThings: 'Great. Execpt the ending.',
+      You: 'Hello, you. I\'m on like season two and I forgot where I was and I just haven\'t kept watching it.',
+      TheSopranos: 'No idea where I\'m even at, haven\'t watched it in a while, but it\'s good.',
+      TheOffice: 'It was good even tho I was really suprised I liked it.',
+      13ReasonsWhy: 'Just watched it. It was good.',
+      TheWalkingDead: 'WE CAN OLIVE TOGHETER! Yea it was good, haven\'t finished the whole thing and again I have no idea where I left off but still.',
+      Severance: 'Yea it was good.',
+      YoungSheldon: 'WE\'RE LOOKING FOR BRISKET! I started watching it kinda as a joke but it\'s lowkey good.',
+      'TheEndoftheF***ingWorld': 'I didin\'t know what to except when I watched it, someone reccomended it to me, but yea it was good.'
+    };
+
+    function slug(s){ return s.replace(/[^a-z0-9]/gi,'').replace(/\s+/g,''); }
+
+    var grid = document.getElementById('tvGrid');
+    var banner = document.getElementById('tvBanner');
+    if(!grid) return;
+
+    var placeholder = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450"><rect width="100%" height="100%" fill="#0f0f11"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ff7ab8" font-family="Segoe UI, system-ui, sans-serif" font-size="28">Poster</text></svg>');
+
+    shows.forEach(function(show, idx){
+      var id = show.slug;
+      var cell = document.createElement('div'); cell.className = 'tv-card';
+      var poster = document.createElement('div'); poster.className = 'tv-poster';
+      var a = document.createElement('a'); a.href = '#'; a.target = '_blank'; a.rel = 'noopener';
+      var img = document.createElement('img'); img.alt = show.title + ' poster';
+      img.dataset.title = show.title;
+      img.dataset.idx = String(idx);
+
+      // try local files first (common extensions)
+      var exts = ['.png','.jpg','.webp','.jpeg']; var t = 0;
+      function tryLocal(){
+        if(t >= exts.length){ img.src = placeholder; return; }
+        img.src = id + exts[t++];
+      }
+      img.addEventListener('error', tryLocal);
+      tryLocal();
+
+      a.appendChild(img);
+      poster.appendChild(a);
+      var titleEl = document.createElement('div');
+      titleEl.className = 'tv-title';
+      titleEl.textContent = show.title;
+      cell.appendChild(poster);
+      cell.appendChild(titleEl);
+      grid.appendChild(cell);
+
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        showTvInfo(show.slug, show.title);
+      });
+
+      // if no key yet, use local image for banner (first show)
+      if(!TMDB_API_KEY && idx === 0 && banner){
+        var testImg = new Image();
+        testImg.src = id + '.jpg';
+        testImg.onload = function(){ banner.style.backgroundImage = 'url(' + testImg.src + ')'; banner.setAttribute('aria-hidden','false'); };
+      }
+    });
+
+    var tvModal = document.getElementById('tvInfoModal');
+    var tvModalTitle = document.getElementById('tvModalTitle');
+    var tvModalText = document.getElementById('tvModalText');
+    var tvModalClose = document.getElementById('tvModalClose');
+
+    function openTvModal(){
+      if(!tvModal) return;
+      tvModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeTvModal(){
+      if(!tvModal) return;
+      tvModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function showTvInfo(slug, title){
+      if(tvModalTitle) tvModalTitle.textContent = title;
+      if(tvModalText) tvModalText.textContent = tvNotes[slug] || 'No note available yet.';
+      openTvModal();
+    }
+
+    if(tvModalClose){
+      tvModalClose.addEventListener('click', closeTvModal);
+    }
+    if(tvModal){
+      tvModal.addEventListener('click', function(e){
+        if(e.target === tvModal) closeTvModal();
+      });
+    }
+    document.addEventListener('keydown', function(e){
+      if(!tvModal || !tvModal.classList.contains('open')) return;
+      if(e.key === 'Escape') closeTvModal();
+    });
+
+  })();
+  </script>
+</body>
+</html>
