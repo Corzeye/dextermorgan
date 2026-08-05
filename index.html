@@ -218,7 +218,7 @@
     letter-spacing:-0.01em;
     color:var(--pink-soft);
   }
-  .hero p{ max-width:65ch; color:var(--text-1); font-size: clamp(0.98rem, 1.4vw, 1.08rem); }
+  .hero p{ max-width:none; width:100%; color:var(--text-1); font-size: clamp(0.98rem, 1.4vw, 1.08rem); }
   @media (max-width:760px){
     .hero{ grid-template-columns:1fr; }
     .hero-heading{ flex-direction:column; align-items:flex-start; }
@@ -233,14 +233,14 @@
   .yt-modal img{ width:100%; height:100%; object-fit:contain; border-radius:12px; background:#000; }
 
   /* ---------- YouTubers I watch (vertical list, pfp left) ---------- */
-  .yt-subs{ display:flex; flex-direction:column; gap:12px; }
-  .yt-sub{ display:flex; gap:12px; align-items:center; padding:8px 4px; }
+  .yt-subs{ display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:8px 16px; }
+  .yt-sub{ display:flex; gap:12px; align-items:center; padding:8px 4px; min-width:0; }
   .yt-sub a{ display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit; width:100%; }
   .yt-sub img{ width:48px; height:48px; border-radius:8px; object-fit:cover; border:1px solid rgba(255,255,255,0.04); box-shadow:0 6px 18px rgba(0,0,0,0.35); transition: transform 0.16s ease, box-shadow 0.16s ease; background:linear-gradient(180deg,#0f0f11,#151415); }
   .yt-sub:hover img{ transform:scale(1.06); box-shadow:0 12px 30px rgba(255,79,160,0.12); }
-  .yt-sub .meta{ display:flex; flex-direction:column; align-items:flex-start; }
-  .yt-sub .label{ font-size:0.95rem; font-weight:700; color:var(--text-0); }
-  .yt-sub .handle{ font-size:0.78rem; color:var(--text-1); opacity:0.95; margin-top:4px; }
+  .yt-sub .meta{ display:flex; flex-direction:column; align-items:flex-start; min-width:0; }
+  .yt-sub .label{ font-size:0.95rem; font-weight:700; color:var(--text-0); max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .yt-sub .handle{ font-size:0.78rem; color:var(--text-1); opacity:0.95; margin-top:4px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
   /* TV shows grid & banner */
   .tv-banner{ width:100%; height:200px; border-radius:16px; background-size:cover; background-position:center; margin-bottom:20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }
@@ -263,20 +263,8 @@
   .tv-card:hover .tv-poster{ box-shadow:0 18px 40px rgba(255,79,160,0.18); transform:translateY(-3px); }
 
   /* header row shared by the collapsible sections: heading left, arrow pinned right + vertically centered on the row itself (not the whole card) */
-  .section-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    min-height:44px;
-  }
-  .section-header h2{
-    margin:0;
-    padding:0;
-    line-height:1;
-    display:flex;
-    align-items:center;
-  }
+  .section-header{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .section-header h2{ margin-bottom:0; line-height:1; transform:translateY(-1px); }
   #subscriptions.collapsed{ padding-bottom:12px; }
   #subscriptions .expandable-wrap{ max-height:0; overflow:hidden; transition:max-height 0.35s ease; margin-top:0; }
   #subscriptions .expandable-wrap.expanded{ max-height:2000px; margin-top:6px; }
@@ -293,22 +281,9 @@
       inset 0 -3px 5px rgba(0,0,0,0.45),
       inset 0 0 0 1px rgba(0,0,0,0.15);
     transition: transform 0.18s ease, background-color 0.18s ease;
-    position:relative;
   }
-  .yt-toggle .arrow{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    height:100%;
-    transform:translateY(-0.6px);
-    line-height:1;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.4);
-    margin:0;
-    padding:0;
-    font-size:18px;
-  }
-  .yt-toggle:hover{ transform:translateY(-1px) scale(1.03); }
+  .yt-toggle .arrow{ display:inline-block; transform:translateY(-4px); text-shadow: 0 1px 0 rgba(0,0,0,0.4); }
+  .yt-toggle:hover{ transform:translateY(-2px) scale(1.05); }
 
   section h2{ font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom:14px; letter-spacing:-0.01em; }
   section.glass h2{ color:var(--pink-soft); }
@@ -450,7 +425,7 @@
   .modal-box{
     position:relative;
     width:min(78vw, 520px);
-    min-height:180px;
+    aspect-ratio: 1 / 1;
     background: linear-gradient(155deg, var(--glass-fill-strong), var(--glass-fill));
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
@@ -458,25 +433,8 @@
     -webkit-backdrop-filter: blur(22px) saturate(140%);
     box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.18);
     overflow:hidden;
-    padding: 28px 24px 24px;
     transform: scale(0.94);
     transition: transform 0.25s ease;
-  }
-  .tv-info-box{
-    width:min(78vw, 560px);
-    max-width:560px;
-  }
-  .tv-modal-content{
-    padding-top:12px;
-  }
-  .tv-modal-content h3{
-    margin:0 0 10px;
-    font-size:1.25rem;
-  }
-  .tv-modal-content p{
-    margin:0;
-    color:var(--text-1);
-    line-height:1.6;
   }
   .modal-overlay.open .modal-box{ transform:scale(1); }
 
@@ -574,36 +532,22 @@
 </section>
 
 <section class="glass prose">
-<h2>Random stuff I like</h2>
-<div class="expandable-wrap">
-<p><strong>Travel:</strong> I'd love to travel a lot.</p>
-<p><strong>YouTubers I like:</strong> Markiplier, DougDoug, MartinCitoPants, Joe Bartolozzi, CaseOh, Chadoy, 8-Bit Ryan. I want to become basically MartinCitoPants but also a gay furry and just less edgy jokes.</p>
-<p><strong>TV shows:</strong> Breaking Bad, Dexter (duh), The Mentalist, Supernatural, The Boys, Stranger Things, The Walking Dead, 13 Reasons Why, The End of the F***ing World, Severance, You.</p>
-<p><strong>Dream car:</strong> Probably a Hellcat. I don't know jack shit about cars and I don't care if it drives like shit, it looks cool.</p>
-</div>
-<button class="pink-link expandable-toggle show-more" type="button">Show more</button>
-</section>
-<section class="glass prose">
 <h2>Music taste</h2>
-<div class="expandable-wrap">
 <p>I couldn't give two shits what kind of music you listen to, BUT it would be cool if some of the stuff you listen to I also listen to.</p>
 <p>Michael Jackson is KING! I only started listening to him after I watched the movie but he's fucking peak and I believe he's innocent and his music is fucking peak, except Chicago which is lowkey buns but other than that, PEAK. And I know he would think furries are cute 🥹 I don't know, to name a few good songs from him: Bad, Billie Jean, Beat It, Thriller, Smooth Criminal, Black or White, They Don't Care About Us.</p>
 <p>I also do like some phonk 😭 I do not give a fuck if it's cringe, it's fucking peak. The whole concept of cringe is fucking stupid, if I'm honest. Or should I say that it's cringe? Anyway, I also listen to some "unc ass" songs, songs that my dad also listens to 😭😭😭😭 which might be partially why I like them, but for example, Hall of Fame, Counting Stars, and, I don't think my dad listens to this one but, High Hopes. Also Nope You're Too Late by Wifisfuneral is good, lowkey Industry Baby is good, and white girl songs like Call Me Maybe and You Belong With Me are FUCKING PEAK! Also some more like, rock? Or whatever, songs like I Was Made for Lovin' You, or Burning Heart are good too, or Eye of the Tiger. I don't know, give me any niche of music and just let me listen to it enough and I'll probably start liking it.</p>
-</div>
-<button class="pink-link expandable-toggle show-more" type="button">Show more</button>
 </section>
 <section class="glass prose heads-up" id="self-harm">
 <h2>A heads up (TW: self-harm)</h2>
-<div class="expandable-wrap">
 <p>Most people who I talk to who are submissive little furry femboys have at least some history of self harm, which I will be discussing now, so tw. I just want to put everything on the table, you know. Well, not EVERYTHING, I do have secrets, but nothing that I feel like a good person wouldn't understand. I haven't hurt anyone or anything, and I'm not going to.</p>
 <p>But yeah, so, I've heard some people joke about it, like how they've hurt themselves. What. I don't do that, don't do that. I might in the right group say the occasional "omg I'm gonna kill myself," or something, but like, you know, it's not a topic that should actually be joked about, suicide or self harm. Now, have I done self harm? Technically yes, but only when medications were changing which causes mood swings, and so little that it's not even noticeable, there's no scars or anything. And if you have done self harm that's obviously okay, but a lot of people I talk to are always super weird about it and even like flex about it, do not be like that. Or, if that's who you are then be like that so I know now not to talk to you. But if you're doing so badly mentally that I'm constantly worried if you're gonna kill yourself, that's too much stress for me. And yes, I'm not doing so good mentally in general, but I'm not going to kill myself.</p>
-</div>
-<button class="pink-link expandable-toggle show-more" type="button">Show more</button>
 </section>
 <section class="glass prose">
 <h2>One more thing</h2>
 <p>I'm sure this will DRASTICALLY change in the future, but right now I consider myself the most insecure and nervous yet confident person, and also the stupidest smart person, or smartest stupid person? On earth, I don't know. I suck at stuff like, I don't know, nerd stuff like math or biology, but then, I think I'm socially smart? I think I understand people fairly well, and I really want to try to understand people, even if they're super fucked up, I find evil people, well, scary but also kind of fascinating because what the fuck has to happen to a person for them to do that. But I am NOT street smart 😭</p>
+<p>I'd love to travel a lot.</p>
 <p>Also I don't give a fuck how much it'll cost or how stupid it is, my house will have at least one secret room.</p>
+<p>My dream car is probably a Hellcat. I don't know jack shit about cars and I don't care if it drives like shit, it looks cool.</p>
 </section>
 <footer>Dexter Morgan · I'm fucking gay idk, what an I supposed to put on this. All rights reserved 😭</footer>
 </div>
@@ -722,24 +666,12 @@
       { name: 'Family Friendly', handle: 'FamilyFriendlyYT' },
       { name: 'Vivilly', handle: 'Vivilly' },
       { name: "Let's Game it Out", handle: 'LetsGameItOut' },
-      { name: 'Tranium', handle: 'Tranium' }
+      { name: 'Tranium', handle: 'Tranium' },
+      { name: 'SB737', handle: 'SB737', file: 'sb737' }
     ];
 
     var container = document.getElementById('ytSubs');
     if(!container) return;
-
-    var ytFiles = {
-      JoeBartolozzi: 'joebartolozzi.png',
-      markiplier: 'markiplier.png',
-      DougDoug: 'dougdoug.png',
-      martincitopants: 'martincitopants.png',
-      Chadoy: 'chadoy.png',
-      '8BitRyan': '8bitryan.png',
-      FamilyFriendlyYT: 'familyfriendlyyt.png',
-      Vivilly: 'vivilly.png',
-      LetsGameItOut: 'letsgameitout.png',
-      Tranium: 'tranium.png'
-    };
 
     var placeholder = 'data:image/svg+xml;utf8,' + encodeURIComponent(
       '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="100%" height="100%" fill="#141317"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ff7ab8" font-family="Segoe UI, system-ui, sans-serif" font-size="16">YT</text></svg>'
@@ -754,17 +686,18 @@
       var img = document.createElement('img');
       img.alt = s.name + ' avatar';
 
-      var fileName = ytFiles[s.handle] || (s.handle.toLowerCase() + '.png');
-      img.src = fileName;
       var tried = 0;
       var exts = ['.png','.jpg','.webp','.jpeg'];
+      var base = s.file || s.handle;
       function tryNext(){
         if(tried >= exts.length){ img.src = placeholder; return; }
-        var src = ytFiles[s.handle] || (s.handle.toLowerCase() + exts[tried]);
+        var src = base + exts[tried];
         tried++;
         img.src = src;
       }
       img.addEventListener('error', tryNext);
+      // kick off with .png
+      tryNext();
 
       var meta = document.createElement('div'); meta.className = 'meta';
       var label = document.createElement('div'); label.className='label'; label.textContent = s.name;
@@ -791,59 +724,42 @@
     var subsArrow = subsBtn ? subsBtn.querySelector('.arrow') : null;
     if(subsWrap && subsBtn){
       var section = document.getElementById('subscriptions');
-      var subsHeader = document.querySelector('#subscriptions .section-header');
       // make sure closed on load
       subsWrap.classList.remove('expanded');
       if(section) section.classList.add('collapsed');
       subsBtn.setAttribute('aria-expanded','false');
       if(subsArrow) subsArrow.textContent = '▾';
       subsBtn.setAttribute('aria-label','Open YouTubers I watch');
-      function toggleSubs(){
+      subsBtn.addEventListener('click', function(){
         var is = subsWrap.classList.toggle('expanded');
+        // toggle collapsed class on section to reduce bottom padding when closed
         if(section) {
           if(is) section.classList.remove('collapsed'); else section.classList.add('collapsed');
         }
         subsBtn.setAttribute('aria-expanded', is ? 'true' : 'false');
         if(subsArrow) subsArrow.textContent = is ? '▴' : '▾';
         subsBtn.setAttribute('aria-label', is ? 'Close YouTubers I watch' : 'Open YouTubers I watch');
+        // scroll into view when opening
         if(is) subsWrap.scrollIntoView({behavior:'smooth', block:'start'});
-      }
-      subsBtn.addEventListener('click', function(e){
-        e.stopPropagation();
-        toggleSubs();
       });
-      if(subsHeader){
-        subsHeader.addEventListener('click', toggleSubs);
-      }
     }
+
     var tvWrap = document.querySelector('#tvShows .expandable-wrap');
     var tvBtn = document.getElementById('tvToggle');
     var tvArrow = tvBtn ? tvBtn.querySelector('.arrow') : null;
     if(tvWrap && tvBtn){
       var tvSection = document.getElementById('tvShows');
-      var tvHeader = document.querySelector('#tvShows .section-header');
       tvWrap.classList.remove('expanded');
       if(tvSection) tvSection.classList.add('collapsed');
       tvBtn.setAttribute('aria-expanded','false');
       if(tvArrow) tvArrow.textContent = '▾';
       tvBtn.setAttribute('aria-label','Open TV shows');
-      function toggleTv(){
+      tvBtn.addEventListener('click', function(){
         var is = tvWrap.classList.toggle('expanded');
         if(tvSection) {
           if(is) tvSection.classList.remove('collapsed'); else tvSection.classList.add('collapsed');
         }
         tvBtn.setAttribute('aria-expanded', is ? 'true' : 'false');
-        if(tvArrow) tvArrow.textContent = is ? '▴' : '▾';
-        tvBtn.setAttribute('aria-label', is ? 'Close TV shows' : 'Open TV shows');
-        if(is) tvWrap.scrollIntoView({behavior:'smooth', block:'start'});
-      }
-      tvBtn.addEventListener('click', function(e){
-        e.stopPropagation();
-        toggleTv();
-      });
-      if(tvHeader){
-        tvHeader.addEventListener('click', toggleTv);
-      }
         if(tvArrow) tvArrow.textContent = is ? '▴' : '▾';
         tvBtn.setAttribute('aria-label', is ? 'Close TV shows' : 'Open TV shows');
         if(is) tvWrap.scrollIntoView({behavior:'smooth', block:'start'});
@@ -899,26 +815,8 @@
 
     var placeholder = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450"><rect width="100%" height="100%" fill="#0f0f11"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ff7ab8" font-family="Segoe UI, system-ui, sans-serif" font-size="28">Poster</text></svg>');
 
-    var tvFiles = {
-      BreakingBad: 'breakingbad.png',
-      BetterCallSaul: 'bettercallsaul.png',
-      Dexter: 'dexter.png',
-      TheBoys: 'theboys.png',
-      TheMentalist: 'thementalist.png',
-      Supernatural: 'supernatural.png',
-      StrangerThings: 'strangerthings.png',
-      You: 'you.png',
-      TheSopranos: 'thesopranos.png',
-      TheOffice: 'theoffice.png',
-      '13ReasonsWhy': '13reasonswhy.png',
-      TheWalkingDead: 'thewalkingdead.png',
-      Severance: 'severance.png',
-      YoungSheldon: 'youngsheldon.png',
-      TheEndoftheFuckingWorld: 'theendofthefuckingworld.webp'
-    };
-
     shows.forEach(function(show, idx){
-      var fileName = tvFiles[show.slug] || (slug(show.slug).toLowerCase() + '.png');
+      var id = show.slug;
       var cell = document.createElement('div'); cell.className = 'tv-card';
       var poster = document.createElement('div'); poster.className = 'tv-poster';
       var a = document.createElement('button'); a.type = 'button';
@@ -926,11 +824,11 @@
       img.dataset.title = show.title;
       img.dataset.idx = String(idx);
 
-      img.src = fileName;
+      // try local files first (common extensions)
       var exts = ['.png','.jpg','.webp','.jpeg']; var t = 0;
       function tryLocal(){
         if(t >= exts.length){ img.src = placeholder; return; }
-        img.src = (tvFiles[show.slug] || (slug(show.slug).toLowerCase() + exts[t++]));
+        img.src = id + exts[t++];
       }
       img.addEventListener('error', tryLocal);
       tryLocal();
