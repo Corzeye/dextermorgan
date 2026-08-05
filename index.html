@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Me</title>
+<title>Dexter Morgan</title>
 <style>
   :root{
     --bg-0:#141317;
@@ -34,7 +34,7 @@
       linear-gradient(160deg, var(--bg-0), var(--bg-1) 60%, #100f13);
     background-attachment:fixed;
     overflow-x:hidden;
-    line-height:1.5;
+    line-height:1.6;
   }
 
   body::before, body::after{
@@ -83,7 +83,6 @@
     pointer-events:none;
   }
 
-  /* ---------- pink jump / trigger links ---------- */
   .pink-link{
     color:var(--pink-0);
     text-decoration:underline;
@@ -105,7 +104,7 @@
   }
   .avatar{
     width:88px; height:88px; border-radius:50%;
-    background: linear-gradient(140deg, var(--pink-0), var(--pink-1));
+    object-fit:cover;
     border:1px solid rgba(255,255,255,0.35);
     box-shadow: 0 6px 20px rgba(255,79,160,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
     flex-shrink:0;
@@ -117,65 +116,70 @@
   h1{
     font-size: clamp(2rem, 5.5vw, 3.2rem);
     line-height:1.08; font-weight:700; letter-spacing:-0.02em;
+    color:var(--text-0);
+  }
+  h1 .grad-text{
     background:linear-gradient(120deg, #ffffff, var(--pink-soft) 70%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .hero p{ max-width:60ch; color:var(--text-1); font-size: clamp(0.98rem, 1.4vw, 1.08rem); }
-  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
-  .tag{
-    padding:7px 16px; border-radius:999px; background:var(--glass-fill);
-    border:1px solid var(--glass-border); font-size:0.85rem; color:var(--text-0);
-    backdrop-filter: blur(10px);
-  }
+  .hero p{ max-width:65ch; color:var(--text-1); font-size: clamp(0.98rem, 1.4vw, 1.08rem); }
 
   section h2{ font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom:14px; letter-spacing:-0.01em; }
-  section > p{ color:var(--text-1); font-size:0.98rem; }
-  .about-card{ padding: clamp(24px, 5vw, 44px); }
+  section.glass h2{ color:var(--pink-soft); }
+  .prose{ padding: clamp(24px, 5vw, 44px); display:flex; flex-direction:column; gap:16px; }
+  .prose p{ color:var(--text-1); font-size:0.98rem; }
 
-  /* ---------- grid of glass cards ---------- */
-  .grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
-  @media (max-width:720px){ .grid{ grid-template-columns:repeat(2, 1fr); } }
-  @media (max-width:460px){ .grid{ grid-template-columns:1fr; } }
+  /* ---------- collapsible sections (all closed by default) ---------- */
+  .collapsible{ padding: clamp(24px, 5vw, 44px); }
+  .collapsible-head{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .collapsible-head h2{ margin-bottom:0; }
+  .chevron{
+    flex-shrink:0;
+    width:34px; height:34px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.08);
+    border:1px solid var(--glass-border);
+    transition: transform 0.3s ease, background 0.2s ease;
+  }
+  .collapsible[data-open="true"] .chevron{ transform:rotate(180deg); background:rgba(255,79,160,0.25); }
+  .chevron svg{ width:16px; height:16px; }
 
-  /* ============================================================
-     CARD COMPONENT
-     Each .card is a fully self-contained, copy-pasteable block.
-     To add a new card: duplicate the whole <article class="card">
-     ...</article> element in the HTML and edit its text/icon.
-     Nothing else needs to change — the JS below wires up every
-     .card on the page automatically.
-     ============================================================ */
-  .card{
-    padding: clamp(18px, 3vw, 26px);
-    display:flex; flex-direction:column; gap:8px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .card:hover{
-    transform:translateY(-4px);
-    box-shadow: 0 14px 40px rgba(255,79,160,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-  .card .icon{
-    width:38px; height:38px; border-radius:12px;
-    background:linear-gradient(140deg, var(--pink-0), var(--pink-1));
-    box-shadow:0 4px 14px rgba(255,79,160,0.35);
-  }
-  .card h3{ font-size:1rem; font-weight:600; }
-  .card .card-text{
-    font-size:0.88rem;
-    color:var(--text-1);
-    display:-webkit-box;
-    -webkit-line-clamp:3;
-    -webkit-box-orient:vertical;
+  .collapsible-body{
+    max-height:0;
     overflow:hidden;
+    transition:max-height 0.4s ease;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
   }
-  .card .card-text.expanded{
-    display:block;
-    -webkit-line-clamp:unset;
+  .collapsible-body-inner{ padding-top:18px; display:flex; flex-direction:column; gap:16px; }
+  .collapsible-body p{ color:var(--text-1); font-size:0.98rem; }
+
+  .nsfw-placeholder{
+    border:1px dashed var(--pink-1);
+    border-radius:16px;
+    padding:16px 20px;
+    color:var(--pink-soft);
+    font-style:italic;
+    font-size:0.9rem;
+    background:rgba(255,79,160,0.06);
   }
-  .card .show-more{
-    align-self:flex-start;
-    margin-top:2px;
+
+  /* ---------- more info: compact fact list ---------- */
+  .info-list{ display:flex; flex-direction:column; gap:18px; }
+  .info-item h3{
+    font-size:0.78rem; text-transform:uppercase; letter-spacing:0.1em;
+    color:var(--pink-soft); margin-bottom:6px; font-weight:700;
   }
+  .info-item p{ color:var(--text-1); font-size:0.95rem; }
+
+  /* ---------- self-harm heads-up ---------- */
+  .heads-up h2::before{ content:"⚠ "; }
 
   /* ---------- contact ---------- */
   .contact{
@@ -249,14 +253,10 @@
     z-index:5;
   }
   .modal-btn:hover{ background:rgba(255,79,160,0.5); transform:scale(1.06); }
-
   .modal-close{ top:12px; right:12px; }
-  .modal-prev{ left:12px; top:50%; transform:translateY(-50%); }
-  .modal-next{ right:12px; top:50%; transform:translateY(-50%); }
-  .modal-prev:hover, .modal-next:hover{ transform:translateY(-50%) scale(1.06); }
 
   @media (prefers-reduced-motion: reduce){
-    .card, .btn, .modal-overlay, .modal-box, .modal-btn{ transition:none; }
+    .btn, .modal-overlay, .modal-box, .modal-btn, .chevron, .collapsible-body{ transition:none; }
   }
 </style>
 </head>
@@ -265,152 +265,80 @@
   <div class="wrap">
 
     <header class="glass hero">
-      <div class="avatar"></div>
-      <span class="eyebrow">Placeholder Title</span>
-      <h1>Lorem Ipsum Dolor</h1>
+      <img class="avatar" src="3d6907e68f35bd6d1c4a0d630f6a1979.png" alt="Profile photo">
+      <span class="eyebrow">Serious LTR &middot; 18 &middot; Finland &middot; MLM</span>
+      <h1><span class="grad-text">Hello :3 It is I, Dexter Morgan</span> 😭</h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti.
-        Nulla facilisi — check out my
-        <a href="#highlights" class="pink-link">highlights below</a>,
-        or <button type="button" class="pink-link" data-video-open data-video-index="0">watch a quick clip</button>.
+        I'm tired of talking to people and then realizing it's not gonna work out, so I'm making this thing. All I really care about is authenticity, honesty and trying to understand the other person, BUT here's some more direction as to who I'm looking for, and who I am. Not a checklist, just direction if you are looking for a partner and want to see if I could be the right one (and if you know someone who might like me you can tell them about me 😭🙏)
       </p>
-      <div class="tags">
-        <span class="tag">Lorem Ipsum</span>
-        <span class="tag">Dolor Sit</span>
-        <span class="tag">Amet Consectetur</span>
-        <span class="tag">Adipiscing</span>
-      </div>
     </header>
 
-    <section class="glass about-card">
-      <h2>About</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum euismod, nunc ac fermentum aliquet, sem risus dictum sapien, nec sollicitudin justo velit at nunc. Praesent malesuada, nisl vel tincidunt aliquam, nunc nisl aliquet nunc, nec fermentum sem nunc nec nunc. Curabitur ac justo sit amet elit fermentum aliquet.</p>
-    </section>
+    <!-- ============ Who am I ============ -->
+    <section class="glass collapsible" data-open="false">
+      <div class="collapsible-head" data-toggle>
+        <h2>Who am I and what am I looking for</h2>
+        <span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-body-inner">
+          <p>I'm looking for a long term serious relationship. I'm cisgender, 18yo (currently, but that will change with time 😭😭😭) and MLM. I'm not fully opposed to dating someone a bit older, but I'm not sure about anything more than like 20. Even if it is, it has to be like, you like me and I happen to be 18 rather than you like me BECAUSE I'm 18, if you catch my drift. I'm looking for other gay cis men. I feel like I'm TECHNICALLY, TECHNICALLY bisexual but men are just ugh 🤤</p>
 
-    <section id="highlights">
-      <h2>Highlights</h2>
-      <div class="grid">
+          <div class="nsfw-placeholder">[ leave this space for you to add your own NSFW section ]</div>
 
-        <!-- ===== CARD (copy this whole <article> block to add another) ===== -->
-        <article class="glass card">
-          <div class="icon"></div>
-          <h3>Lorem Ipsum</h3>
-          <p class="card-text">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
-          <button type="button" class="pink-link show-more">Show more</button>
-        </article>
-        <!-- ===== END CARD ===== -->
+          <p>Now, even though I want one serious partner at a time, and have romantic feelings for one person at a time, I am NOT dying before going to AT LEAST one furry orgy 😭 Preferably more than one. And whether you're coming or not, that's up to you, but I'm going. And if you don't approve of that, then we're not gonna work out. I'm probably not gonna be okay with you being poly. Nothing wrong with it, but I want to be the only person you have romantic feelings for. Now again sex is different, but I want to be the only person you come home to and talk to about how weird or awkward something was, you know? And it should be more of like a, "hey there's this thing next month," rather than "hey I'm gonna go fuck our neighbor again bye."</p>
 
-        <!-- ===== CARD (copy this whole <article> block to add another) ===== -->
-        <article class="glass card">
-          <div class="icon"></div>
-          <h3>Dolor Sit</h3>
-          <p class="card-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Also, here's a
-            <button type="button" class="pink-link" data-video-open data-video-index="1">clip worth watching</button>.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-          <button type="button" class="pink-link show-more">Show more</button>
-        </article>
-        <!-- ===== END CARD ===== -->
+          <p>I couldn't care less what you look like, the closer to average the better 😭 If you're fat / chubby, which I am too, (I feel like I'm more chubby than fat but people have different things for it) that's okay, but I am going to lose weight eventually and I would hope you do too. We can go to the gym together :3 If I'm still chubby by 25, then we've got a problem, or like, I've got a problem. But right now, I'm not doing super great mentally and I'm not ready to, y'know, lose the weight yet. But like, chubby isn't a turn off for me. And yes, I'm not doing super great mentally, but I'm not in like critical condition or anything, and I wrote more about my mental stuff <a href="#self-harm" class="pink-link">here</a>.</p>
 
-        <!-- ===== CARD (copy this whole <article> block to add another) ===== -->
-        <article class="glass card">
-          <div class="icon"></div>
-          <h3>Amet Consectetur</h3>
-          <p class="card-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <button type="button" class="pink-link show-more">Show more</button>
-        </article>
-        <!-- ===== END CARD ===== -->
+          <p>The closer you live to Finland the better, and ideally I'd like to keep living in Finland, but anything could happen obviously. The only thing that matters is that we would eventually live together, even if that's not anytime soon. Or in Finland.</p>
 
+          <p>Having a, whatever sized, house next to a river or some body of water so we can go swim and stuff, that would be GREAT. But you aren't going to catch me DEAD in an outhouse 😭 I'll just shit in the woods, thank you very much.</p>
+
+          <p>I think I'm really kind, or I try to be at least. I can probably come off as kinda blunt too sometimes tho. And honestly sometimes I'm a bit too "kind" even, like I can't kill even mosquitos and I feel REALLY REALLY bad about throwing food away 😭</p>
+
+          <p>I'm definitely more of a bottom, but I can switch too, I think. (I don't really know, I'm still a virgin 😭) but I'd assume I can. I feel like all I really care about is sex, not whether it's me dicking someone down or me getting dicked down.</p>
+        </div>
       </div>
     </section>
 
-    <section class="glass contact">
-      <div>
-        <h2>Get in touch</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+    <!-- ============ YouTube ============ -->
+    <section class="glass collapsible" data-open="false" id="youtube">
+      <div class="collapsible-head" data-toggle>
+        <h2>The YouTube thing</h2>
+        <span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
       </div>
-      <a href="#" class="btn">Contact Me</a>
+      <div class="collapsible-body">
+        <div class="collapsible-body-inner">
+          <p>I REALLY fucking like making YouTube videos and editing. If you're into that stuff too that would be fucking awesome (even if that means just playing games with me on camera) but if you're not, that's maybe fine? I care too much about it and it's like the only thing I actually care about, if I'm honest. But even if you aren't super interested in it you gotta be fine with me liking it obviously, same way that I'll be fine with whatever you're interested in. But if you're into like, biology, I WILL call you a nerd every chance I get :3 even though I'm probably more of a nerd with all of the YouTube stuff 😭 and you can tease me by calling me YouTube boy or something, the same way I would call you a nerd, BUT, look out, because if you do, you might suddenly find that you no longer have your foreskin. I am the Bay Harbor Foreskin Stealer.</p>
+
+          <p>But genuinely YouTube is the only thing that even remotely interests me and I've been trying to do it forever, and I know I'm pretty close to making great videos. (Again, cringe as fuck probably but I DON'T CARE) I don't have any good YouTube videos I could showcase, so I'll instead show an edit I've made, <button type="button" class="pink-link" data-video-open>here</button>. I know how to edit, I know how to keep the flow in videos. I've been editing since I was seven years old. (Also if you say "preset warrior" about the edit I will sue)</p>
+
+          <p>Fun fact, assuming I would have an RPM of, say, 3€, which I'm pretty sure is not unrealistic for gaming content (RPM means the amount of ad revenue you get after YouTube's cut) — before taxes, if I got a video with 10 million views, that's fucking 30,000€. That's so much! And that's just one video! And high-RPM niches like finance, I'm pretty sure can have an RPM of up to 30€ or something. That's fucking 300,000€, almost half a million! The amount of RPM you have is based on how much money advertisers are willing to pay to have their ads on your videos, so if you make like, Minecraft noob vs pro vs hacker, that's gonna have a low ass RPM because the only people watching it are kids who are NOT going to buy the ugly ass car you're promoting. Unlike something like finance. I'm such a nerd 😭</p>
+
+          <p>Also I have had some success on YouTube, I have one Short, not long form, which Shorts are so fucking easy but still, that has 14 million views. I would've made like 500-700€ I'm pretty sure if I was monetized and the content was fair use. Which it was NOT 😭 So I know it's possible. Also some long form videos with like a thousand views here and there, but nothing crazy.</p>
+
+          <p>If YouTube doesn't work out I'd probably edit for other people or maybe do some coding stuff, but I am NOT sitting in some office for my entire life. I'm in school for programming, or should be, but the little while I was there, until I stopped going because of depression, I was like the top of my class, and I know I could be at least a decent coder. (But like I said, I don't know shit, and this whole fucking website is AI generated 😭 obviously the text you're reading isn't) I'm going to a different school now that's still programming but it's like all the "failures" who couldn't handle regular school, which is perfect.</p>
+
+          <p>Also I am VERY awkward right now but I feel like in 5 years I'll be very confident, but we'll see. But I'm only awkward in real life, even like on camera I'm super confident.</p>
+        </div>
+      </div>
     </section>
 
-    <footer>Lorem ipsum &middot; placeholder footer text</footer>
+    <!-- ============ Values ============ -->
+    <section class="glass collapsible" data-open="false">
+      <div class="collapsible-head" data-toggle>
+        <h2>Values &amp; random stuff</h2>
+        <span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-body-inner">
+          <p>I have no fucking clue where I land on the political compass, I do not know two things about politics, although again I wouldn't be too surprised if I do in 5 years. I just cannot care right now, if I'm honest.</p>
 
-  </div>
+          <p>I don't fully consider myself a femboy, but I am not opposed to wearing feminine stuff at all, I would like it more but I just think I don't look good in feminine clothes. Social norms are made up bullshit that I don't care to follow. Also the conservative bullshit of the father GIVING their daughter to another man when they get married is the stupidest shit I've ever heard and it pisses me the fuck off.</p>
 
-  <!-- ---------- video modal (lightbox) ---------- -->
-  <div class="modal-overlay" id="videoModal">
-    <div class="modal-box">
-      <button type="button" class="modal-btn modal-close" id="modalClose" aria-label="Close">&times;</button>
-      <button type="button" class="modal-btn modal-prev" id="modalPrev" aria-label="Previous">&#8249;</button>
-      <button type="button" class="modal-btn modal-next" id="modalNext" aria-label="Next">&#8250;</button>
-      <video id="modalVideo" playsinline controls></video>
-    </div>
-  </div>
+          <p>If you think there's a superior race or gender or sexuality you're a dumbass and I don't want to see your face. Oh also we're not gonna work out if you're religious. I think religion is human-made because no one knows what the fuck they're doing on this dumbass floating rock so they came up with some bullshit to give meaning to things and to also have people behave. Why do you pray for change if it's all God's plan? It's basically like Santa Claus but for adults. Anyway, and all religions are also equal, I don't hate Jews, religiously or ethnicity-wise, and honestly there's SO much antisemitic shit online and it pisses me off. All religions are equal, they're just all equally wrong 😭 and also I don't know too much about religions, obviously if there's some religion that's like "hey, so men own women," that's fucking stupid and horrible and please stop, but you get what I mean.</p>
 
-  <script>
-    // ---------- Show more / show less for every .card ----------
-    document.querySelectorAll('.card').forEach(function(card){
-      var text = card.querySelector('.card-text');
-      var btn = card.querySelector('.show-more');
-      if(!text || !btn) return;
-      btn.addEventListener('click', function(){
-        var isExpanded = text.classList.toggle('expanded');
-        btn.textContent = isExpanded ? 'Show less' : 'Show more';
-      });
-    });
+          <p>Also yes I'm a furry, I don't have a fursona, probably never will, but I will definitely get a fursuit someday, google "narpy fursuit," FUCKING PEAK! And yes I'm a puppy boy. I do know how to bark 😭</p>
 
-    // ---------- Video lightbox ----------
-    // Replace/add entries here — each one just needs a src.
-    // All three point at ryanedit.mp4 as a placeholder; swap in
-    // real filenames when you have them.
-    var videos = [
-      { src: '84851919c2a6d055687fadc735be2358.mp4', title: '8-BitRyan Edi' }
-    ];
+          <p>And if we are both serious about each other, there WILL be a time where I or you do some bullshit that is very regrettable, rather than saying "fuck you" and leaving, we figure it out and talk it out and try to understand the other person. And we will NOT go to bed until it's solved, no going to bed mad. And I see so many married people who actually just hate each other but are still married. What.</p>
 
-    var modal = document.getElementById('videoModal');
-    var modalVideo = document.getElementById('modalVideo');
-    var currentIndex = 0;
-
-    function loadVideo(index){
-      currentIndex = (index + videos.length) % videos.length;
-      modalVideo.src = videos[currentIndex].src;
-      modalVideo.play().catch(function(){ /* autoplay may be blocked until user interacts */ });
-    }
-
-    function openModal(index){
-      loadVideo(index);
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(){
-      modal.classList.remove('open');
-      modalVideo.pause();
-      modalVideo.removeAttribute('src');
-      modalVideo.load();
-      document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('[data-video-open]').forEach(function(trigger){
-      trigger.addEventListener('click', function(){
-        var idx = parseInt(trigger.getAttribute('data-video-index') || '0', 10);
-        openModal(idx);
-      });
-    });
-
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    document.getElementById('modalPrev').addEventListener('click', function(){ loadVideo(currentIndex - 1); });
-    document.getElementById('modalNext').addEventListener('click', function(){ loadVideo(currentIndex + 1); });
-
-    modal.addEventListener('click', function(e){
-      if(e.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', function(e){
-      if(!modal.classList.contains('open')) return;
-      if(e.key === 'Escape') closeModal();
-      if(e.key === 'ArrowLeft') loadVideo(currentIndex - 1);
-      if(e.key === 'ArrowRight') loadVideo(currentIndex + 1);
-    });
-  </script>
-
-</body>
-</html>
+          <p>Also I do kinda have trust issues 😭 I've noticed that confident people scare me, which is probably partially why I'm looking
