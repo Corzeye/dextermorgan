@@ -282,7 +282,9 @@
       inset 0 0 0 1px rgba(0,0,0,0.15);
     transition: transform 0.18s ease, background-color 0.18s ease;
   }
-  .yt-toggle .arrow{ display:inline-block; transform:translateY(-4px); text-shadow: 0 1px 0 rgba(0,0,0,0.4); }
+  .yt-toggle .arrow{ display:flex; align-items:center; justify-content:center; width:18px; height:18px; transition: transform 0.25s ease; }
+  .yt-toggle .arrow svg{ display:block; width:100%; height:100%; }
+  .yt-toggle .arrow.open{ transform:rotate(180deg); }
   .yt-toggle:hover{ transform:translateY(-2px) scale(1.05); }
 
   section h2{ font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom:14px; letter-spacing:-0.01em; }
@@ -512,7 +514,7 @@
 <section class="glass prose" id="subscriptions">
 <div class="section-header">
   <h2>YouTubers I watch</h2>
-  <button id="ytSubsToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open YouTubers I watch"><span class="arrow">▾</span></button>
+  <button id="ytSubsToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open YouTubers I watch"><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"></polyline></svg></span></button>
 </div>
 <div class="expandable-wrap">
   <div class="yt-subs" id="ytSubs" aria-live="polite"></div>
@@ -522,7 +524,7 @@
 <section class="glass prose" id="tvShows">
 <div class="section-header">
   <h2>TV shows I like</h2>
-  <button id="tvToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open TV shows"><span class="arrow">▾</span></button>
+  <button id="tvToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open TV shows"><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"></polyline></svg></span></button>
 </div>
 <div class="expandable-wrap">
   <div class="tv-banner" id="tvBanner" aria-hidden="true"></div>
@@ -667,7 +669,7 @@
       { name: 'Vivilly', handle: 'Vivilly' },
       { name: "Let's Game it Out", handle: 'LetsGameItOut' },
       { name: 'Tranium', handle: 'Tranium' },
-      { name: 'SB737', handle: 'SB737', file: 'sb737' }
+      { name: 'SB737', handle: 'SB737' }
     ];
 
     var container = document.getElementById('ytSubs');
@@ -688,7 +690,7 @@
 
       var tried = 0;
       var exts = ['.png','.jpg','.webp','.jpeg'];
-      var base = s.file || s.handle;
+      var base = (s.file || s.handle).toLowerCase();
       function tryNext(){
         if(tried >= exts.length){ img.src = placeholder; return; }
         var src = base + exts[tried];
@@ -728,7 +730,7 @@
       subsWrap.classList.remove('expanded');
       if(section) section.classList.add('collapsed');
       subsBtn.setAttribute('aria-expanded','false');
-      if(subsArrow) subsArrow.textContent = '▾';
+      if(subsArrow) subsArrow.classList.remove('open');
       subsBtn.setAttribute('aria-label','Open YouTubers I watch');
       subsBtn.addEventListener('click', function(){
         var is = subsWrap.classList.toggle('expanded');
@@ -737,7 +739,7 @@
           if(is) section.classList.remove('collapsed'); else section.classList.add('collapsed');
         }
         subsBtn.setAttribute('aria-expanded', is ? 'true' : 'false');
-        if(subsArrow) subsArrow.textContent = is ? '▴' : '▾';
+        if(subsArrow) subsArrow.classList.toggle('open', is);
         subsBtn.setAttribute('aria-label', is ? 'Close YouTubers I watch' : 'Open YouTubers I watch');
         // scroll into view when opening
         if(is) subsWrap.scrollIntoView({behavior:'smooth', block:'start'});
@@ -752,7 +754,7 @@
       tvWrap.classList.remove('expanded');
       if(tvSection) tvSection.classList.add('collapsed');
       tvBtn.setAttribute('aria-expanded','false');
-      if(tvArrow) tvArrow.textContent = '▾';
+      if(tvArrow) tvArrow.classList.remove('open');
       tvBtn.setAttribute('aria-label','Open TV shows');
       tvBtn.addEventListener('click', function(){
         var is = tvWrap.classList.toggle('expanded');
@@ -760,7 +762,7 @@
           if(is) tvSection.classList.remove('collapsed'); else tvSection.classList.add('collapsed');
         }
         tvBtn.setAttribute('aria-expanded', is ? 'true' : 'false');
-        if(tvArrow) tvArrow.textContent = is ? '▴' : '▾';
+        if(tvArrow) tvArrow.classList.toggle('open', is);
         tvBtn.setAttribute('aria-label', is ? 'Close TV shows' : 'Open TV shows');
         if(is) tvWrap.scrollIntoView({behavior:'smooth', block:'start'});
       });
@@ -824,11 +826,12 @@
       img.dataset.title = show.title;
       img.dataset.idx = String(idx);
 
-      // try local files first (common extensions)
+      // try local files first (common extensions) — poster files are saved lowercase
+      var fileBase = id.toLowerCase();
       var exts = ['.png','.jpg','.webp','.jpeg']; var t = 0;
       function tryLocal(){
         if(t >= exts.length){ img.src = placeholder; return; }
-        img.src = id + exts[t++];
+        img.src = fileBase + exts[t++];
       }
       img.addEventListener('error', tryLocal);
       tryLocal();
@@ -850,7 +853,7 @@
       // if no key yet, use local image for banner (first show)
       if(!TMDB_API_KEY && idx === 0 && banner){
         var testImg = new Image();
-        testImg.src = id + '.jpg';
+        testImg.src = fileBase + '.jpg';
         testImg.onload = function(){ banner.style.backgroundImage = 'url(' + testImg.src + ')'; banner.setAttribute('aria-hidden','false'); };
       }
     });
