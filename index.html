@@ -1,416 +1,417 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dexter Morgan</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me</title>
+<style>
+  :root{
+    --bg-0:#141317;
+    --bg-1:#1c1a20;
+    --pink-0:#ff7ab8;
+    --pink-1:#ff4fa0;
+    --pink-soft:#ffc7e3;
+    --glass-fill: rgba(255,255,255,0.06);
+    --glass-fill-strong: rgba(255,255,255,0.1);
+    --glass-border: rgba(255,255,255,0.14);
+    --text-0:#f5f2f4;
+    --text-1:#c8c2c9;
+    --radius-lg: 28px;
+    --radius-md: 18px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+
+  body{
+    min-height:100svh;
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+    color:var(--text-0);
+    background:
+      radial-gradient(60% 50% at 12% 8%, rgba(255,79,160,0.35), transparent 60%),
+      radial-gradient(55% 45% at 90% 12%, rgba(255,122,184,0.22), transparent 60%),
+      radial-gradient(65% 55% at 50% 100%, rgba(255,79,160,0.18), transparent 60%),
+      linear-gradient(160deg, var(--bg-0), var(--bg-1) 60%, #100f13);
+    background-attachment:fixed;
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+
+  body::before, body::after{
+    content:"";
+    position:fixed;
+    border-radius:50%;
+    filter:blur(80px);
+    z-index:-1;
+    opacity:0.55;
+  }
+  body::before{
+    width:min(50vw, 480px); height:min(50vw, 480px);
+    background:radial-gradient(circle, var(--pink-1), transparent 70%);
+    top:-10%; left:-10%;
+  }
+  body::after{
+    width:min(45vw, 420px); height:min(45vw, 420px);
+    background:radial-gradient(circle, var(--pink-0), transparent 70%);
+    bottom:-15%; right:-10%;
+  }
+
+  .wrap{
+    max-width:1000px;
+    margin:0 auto;
+    padding: clamp(20px, 5vw, 56px) clamp(16px, 6vw, 48px) clamp(48px, 8vw, 96px);
+    display:flex;
+    flex-direction:column;
+    gap: clamp(20px, 4vw, 32px);
+  }
+
+  .glass{
+    background: linear-gradient(155deg, var(--glass-fill-strong), var(--glass-fill));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+    position:relative;
+  }
+  .glass::before{
+    content:"";
+    position:absolute; inset:0; border-radius:inherit; padding:1px;
+    background:linear-gradient(155deg, rgba(255,255,255,0.35), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    pointer-events:none;
+  }
+
+  /* ---------- pink jump / trigger links ---------- */
+  .pink-link{
+    color:var(--pink-0);
+    text-decoration:underline;
+    text-decoration-color:var(--pink-1);
+    text-underline-offset:4px;
+    font-weight:600;
+    cursor:pointer;
+    background:none;
+    border:none;
+    font:inherit;
+    padding:0;
+  }
+  .pink-link:hover{ color:var(--pink-soft); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding: clamp(32px, 6vw, 64px) clamp(24px, 6vw, 56px);
+    display:flex; flex-direction:column; align-items:flex-start; gap:16px;
+  }
+  .avatar{
+    width:88px; height:88px; border-radius:50%;
+    background: linear-gradient(140deg, var(--pink-0), var(--pink-1));
+    border:1px solid rgba(255,255,255,0.35);
+    box-shadow: 0 6px 20px rgba(255,79,160,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+    flex-shrink:0;
+  }
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:0.16em; font-size:0.75rem;
+    color:var(--pink-soft); font-weight:600;
+  }
+  h1{
+    font-size: clamp(2rem, 5.5vw, 3.2rem);
+    line-height:1.08; font-weight:700; letter-spacing:-0.02em;
+    background:linear-gradient(120deg, #ffffff, var(--pink-soft) 70%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p{ max-width:60ch; color:var(--text-1); font-size: clamp(0.98rem, 1.4vw, 1.08rem); }
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .tag{
+    padding:7px 16px; border-radius:999px; background:var(--glass-fill);
+    border:1px solid var(--glass-border); font-size:0.85rem; color:var(--text-0);
+    backdrop-filter: blur(10px);
+  }
+
+  section h2{ font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom:14px; letter-spacing:-0.01em; }
+  section > p{ color:var(--text-1); font-size:0.98rem; }
+  .about-card{ padding: clamp(24px, 5vw, 44px); }
+
+  /* ---------- grid of glass cards ---------- */
+  .grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+  @media (max-width:720px){ .grid{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:460px){ .grid{ grid-template-columns:1fr; } }
+
+  /* ============================================================
+     CARD COMPONENT
+     Each .card is a fully self-contained, copy-pasteable block.
+     To add a new card: duplicate the whole <article class="card">
+     ...</article> element in the HTML and edit its text/icon.
+     Nothing else needs to change — the JS below wires up every
+     .card on the page automatically.
+     ============================================================ */
+  .card{
+    padding: clamp(18px, 3vw, 26px);
+    display:flex; flex-direction:column; gap:8px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow: 0 14px 40px rgba(255,79,160,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .card .icon{
+    width:38px; height:38px; border-radius:12px;
+    background:linear-gradient(140deg, var(--pink-0), var(--pink-1));
+    box-shadow:0 4px 14px rgba(255,79,160,0.35);
+  }
+  .card h3{ font-size:1rem; font-weight:600; }
+  .card .card-text{
+    font-size:0.88rem;
+    color:var(--text-1);
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .card .card-text.expanded{
+    display:block;
+    -webkit-line-clamp:unset;
+  }
+  .card .show-more{
+    align-self:flex-start;
+    margin-top:2px;
+  }
+
+  /* ---------- contact ---------- */
+  .contact{
+    padding: clamp(28px, 5vw, 48px);
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px;
+  }
+  .contact p{ max-width:42ch; color:var(--text-1); }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:13px 28px; border-radius:999px;
+    background:linear-gradient(135deg, var(--pink-0), var(--pink-1));
+    color:#1a0d15; font-weight:700; font-size:0.95rem; text-decoration:none;
+    border:1px solid rgba(255,255,255,0.4);
+    box-shadow:0 8px 24px rgba(255,79,160,0.4);
+    white-space:nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 12px 32px rgba(255,79,160,0.55); }
+
+  footer{ text-align:center; color:var(--text-1); font-size:0.82rem; opacity:0.7; padding-top:8px; }
+
+  /* ---------- video modal (lightbox) ---------- */
+  .modal-overlay{
+    position:fixed; inset:0;
+    background:rgba(10,8,10,0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    padding: 24px;
+    z-index:100;
+    opacity:0; pointer-events:none;
+    transition: opacity 0.25s ease;
+  }
+  .modal-overlay.open{ opacity:1; pointer-events:auto; }
+
+  .modal-box{
+    position:relative;
+    width:min(78vw, 520px);
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(155deg, var(--glass-fill-strong), var(--glass-fill));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.18);
+    overflow:hidden;
+    transform: scale(0.94);
+    transition: transform 0.25s ease;
+  }
+  .modal-overlay.open .modal-box{ transform:scale(1); }
+
+  .modal-box video{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    background:#000;
+  }
+
+  .modal-btn{
+    position:absolute;
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px;
+    border-radius:50%;
+    background:rgba(20,18,22,0.55);
+    border:1px solid rgba(255,255,255,0.25);
+    color:var(--text-0);
+    font-size:1.1rem;
+    cursor:pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index:5;
+  }
+  .modal-btn:hover{ background:rgba(255,79,160,0.5); transform:scale(1.06); }
+
+  .modal-close{ top:12px; right:12px; }
+  .modal-prev{ left:12px; top:50%; transform:translateY(-50%); }
+  .modal-next{ right:12px; top:50%; transform:translateY(-50%); }
+  .modal-prev:hover, .modal-next:hover{ transform:translateY(-50%) scale(1.06); }
+
+  @media (prefers-reduced-motion: reduce){
+    .card, .btn, .modal-overlay, .modal-box, .modal-btn{ transition:none; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════════════
-       SCREEN 0 — LANGUAGE SELECT
-  ══════════════════════════════════════════════ -->
-  <div id="lang-select" class="screen">
-    <p class="lang-title">valitse kieli</p>
-    <div class="lang-buttons">
-      <div class="lang-btn-wrap">
-        <button class="lang-btn lang-btn--locked" disabled>
-          <span class="flag">🇬🇧</span> english
-          <span class="lock-badge">🔒</span>
-        </button>
-        <span class="wip-label">work in progress</span>
+  <div class="wrap">
+
+    <header class="glass hero">
+      <div class="avatar"></div>
+      <span class="eyebrow">Placeholder Title</span>
+      <h1>Lorem Ipsum Dolor</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti.
+        Nulla facilisi — check out my
+        <a href="#highlights" class="pink-link">highlights below</a>,
+        or <button type="button" class="pink-link" data-video-open data-video-index="0">watch a quick clip</button>.
+      </p>
+      <div class="tags">
+        <span class="tag">Lorem Ipsum</span>
+        <span class="tag">Dolor Sit</span>
+        <span class="tag">Amet Consectetur</span>
+        <span class="tag">Adipiscing</span>
       </div>
-      <button class="lang-btn" data-lang="fi">
-        <span class="flag">🇫🇮</span> suomi
-      </button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════
-       SCREEN 1 — SPLASH
-  ══════════════════════════════════════════════ -->
-  <div id="splash" class="screen hidden">
-    <h1 class="splash-name">
-      <span>Dexter</span>
-      <span>Morgan</span>
-    </h1>
-    <p class="watch-label" id="watch-label">katso editti ennen kuin jatkat</p>
-    <button class="continue-btn" id="continue-btn">jatka</button>
-    <p class="splash-handle">@thegayharborboykisser</p>
-  </div>
-
-  <!-- ══════════════════════════════════════════════
-       SCREEN 2 — VIDEO GATE
-  ══════════════════════════════════════════════ -->
-  <div id="video-gate" class="screen hidden">
-    <div class="video-wrap">
-      <video id="gate-video" playsinline>
-        <source src="edit.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <p id="countdown-text">
-      ohitus saatavilla <span id="timer">10</span>s
-    </p>
-    <button id="skip-btn">ohita</button>
-  </div>
-
-  <!-- ══════════════════════════════════════════════
-       MAIN SITE
-  ══════════════════════════════════════════════ -->
-  <div id="main-content">
-
-    <header>
-      <h2 class="site-name"><a href="https://femboynews.com" style="text-decoration:none;color:inherit;">Dexter Morgan</a></h2>
-      <p class="site-handle">@thegayharborboykisser</p>
-      <div class="header-rule"></div>
     </header>
 
-    <main>
+    <section class="glass about-card">
+      <h2>About</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum euismod, nunc ac fermentum aliquet, sem risus dictum sapien, nec sollicitudin justo velit at nunc. Praesent malesuada, nisl vel tincidunt aliquam, nunc nisl aliquet nunc, nec fermentum sem nunc nec nunc. Curabitur ac justo sit amet elit fermentum aliquet.</p>
+    </section>
 
-      <section class="section">
+    <section id="highlights">
+      <h2>Highlights</h2>
+      <div class="grid">
 
-        <h3 class="section-title">Moiii :3</h3>
+        <!-- ===== CARD (copy this whole <article> block to add another) ===== -->
+        <article class="glass card">
+          <div class="icon"></div>
+          <h3>Lorem Ipsum</h3>
+          <p class="card-text">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+          <button type="button" class="pink-link show-more">Show more</button>
+        </article>
+        <!-- ===== END CARD ===== -->
 
-        <div class="section-body">
+        <!-- ===== CARD (copy this whole <article> block to add another) ===== -->
+        <article class="glass card">
+          <div class="icon"></div>
+          <h3>Dolor Sit</h3>
+          <p class="card-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Also, here's a
+            <button type="button" class="pink-link" data-video-open data-video-index="1">clip worth watching</button>.
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+          <button type="button" class="pink-link show-more">Show more</button>
+        </article>
+        <!-- ===== END CARD ===== -->
 
-          <!-- Intro -->
-          <p>
-            Oon <span id="age-display">ladataan...</span>, sinkku ja neitsyt <span class="clickable" onclick="alert('cisgender, eli syntyessä määritelty sukupuoli (mies) vastaa sukupuoli-identiteettiäni')">cis</span> <span class="clickable" onclick="alert('men loving men, eli miehiä rakastava mies')">mlm</span>.
-            Asun tällä hetkellä pääkaupunkiseudulla.
-            Pelien pelaaminen on ihan kiva, mutta rakastan editoida ja tehdä videoita.
-            Suurimmaksi osaksi haluun ja oon tehnyt YouTube-videoita, mutta oon myös tehnyt TikTok-edittejä.
-            Jonkin aikaa sitten tein aika paljon katsottujakin videoita suomeks <a href="https://www.tiktok.com/@lakkocentral" target="_blank" rel="noopener" class="inline-link">tänne</a>.
-            Monesta syystä sinne lopetin julkasemisen koska aloin YouTube-asioita tekemään ja tutkimaan enemmän ja se vaan jäi.
-            Ja oon <span style="text-decoration:line-through;opacity:0.45;pointer-events:none;user-select:none;" aria-hidden="true">tänne</span> tehnyt videoita jonkin aikaa ja just aloin tekee <span style="text-decoration:line-through;opacity:0.45;pointer-events:none;user-select:none;" aria-hidden="true">tänne</span> myös. Vihdoin vuoden englanniks tekien jälkeen uskallan vihdoin tehdä suomeks.
-            Tykkäisin koodata ja luulen että siihen pystyisin jos opettelisin, ja olen amiksessa ohjelmistokehittäjän alalla mutta mielenterveyssyistä en ole paikalle mennyt ja mut todennäköisesti heitetään pois sieltä ja joudun varmaan tuvaan mutta ei se mitään.
-          </p>
+        <!-- ===== CARD (copy this whole <article> block to add another) ===== -->
+        <article class="glass card">
+          <div class="icon"></div>
+          <h3>Amet Consectetur</h3>
+          <p class="card-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <button type="button" class="pink-link show-more">Show more</button>
+        </article>
+        <!-- ===== END CARD ===== -->
 
-          <p style="margin-top:20px;">
-            Tosiaan, oon sinäänsä kai vähän femboy? En silleen mitenkään super naisellisesti pueuedu, varsinkaan ulkona, mutta omistan kyllä sellasen femboy hameen ja tykkään sitä aina välillä pitää, plus välillä kynsilakkaa on ja näin. Ja tykkäisin kyl pitää enemmän mut tuntuu vaa et en näytä hyvältä ne päällä joka ei sillee kiinnosta mut sit myös kiinnostaa.
-          </p>
-
-          <p style="margin-top:20px;">
-            Ihmisten ympärillä oon melkeen aina super hiljanen, ihan vaan sen takia koska oon introvert ja social anxiety, mutta pystyn olee super adhd energinen myös, ja aika usein oon jos oon esim yksin tai kuvaan videota.
-            Yritän parhaani olla hyvä ihminen, ja luulen että deep down olen, mutta ainakin välillä oon vahingossa tosi ilkee, varsinkin jos oon vihanen. Mutta luulen että osittain teini-ikäisyys tai jotain.
-          </p>
-
-          <p style="margin-top:20px;">
-            Ja tosiaan etsin kavereita / poikaystävää ect. Jos mun profiilin jossain servulla esim näit, niin älä pelkää laittaa DM :3
-            (vaikka asuisit jossain lapissa niin silti. En vaan tiiä että pystynkö long distance suhteessa olla mutta kuitenkin)
-          </p>
-
-          <!-- YouTubers -->
-          <p style="margin-top:24px;"><strong>YouTuberit joita katson</strong></p>
-          <button class="expand-toggle" onclick="toggleList(this)">
-            näytä lista <span class="arrow">▾</span>
-          </button>
-          <div class="expandable">
-            <ul class="expand-list">
-              <li class="yt-special"><a href="https://youtube.com/@JulienHimself" target="_blank" rel="noopener">JulienHimself</a></li>
-              <li><a href="https://youtube.com/@JoeBartolozzi" target="_blank" rel="noopener">Joe Bartolozzi</a></li>
-              <li><a href="https://youtube.com/@DougDoug" target="_blank" rel="noopener">DougDoug</a></li>
-              <li><a href="https://youtube.com/@Markiplier" target="_blank" rel="noopener">Markiplier</a></li>
-              <li><a href="https://youtube.com/@Chadoy" target="_blank" rel="noopener">Chadoy</a></li>
-              <li><a href="https://youtube.com/@CoDTupakkalakko" target="_blank" rel="noopener">Lakko</a></li>
-              <li><a href="https://youtube.com/@FamilyFriendlyYT" target="_blank" rel="noopener">FamilyFriendly</a></li>
-              <li><a href="https://youtube.com/@CaseOh_" target="_blank" rel="noopener">CaseOh</a></li>
-              <li><a href="https://youtube.com/@Vivilly" target="_blank" rel="noopener">Vivilly</a></li>
-              <li><a href="https://youtube.com/@martincitopants" target="_blank" rel="noopener">Martincitopants</a></li>
-            </ul>
-          </div>
-
-          <!-- TV Shows -->
-          <p style="margin-top:28px;"><strong>TV-sarjat joista tykkään</strong></p>
-          <button class="expand-toggle" onclick="toggleList(this)">
-            näytä lista <span class="arrow">▾</span>
-          </button>
-          <div class="expandable">
-            <ul class="expand-list">
-              <li><button class="show-btn" onclick="openShow('breakingbad', 4)">Breaking Bad</button></li>
-              <li><button class="show-btn" onclick="openShow('dexter', 13)">Dexter</button></li>
-              <li><button class="show-btn" onclick="openShow('theboys', 8)">The Boys</button></li>
-              <li><button class="show-btn" onclick="openShow('strangerthings', 4)">Stranger Things</button></li>
-              <li><button class="show-btn" onclick="openShow('supernatural', 7)">Supernatural</button></li>
-              <li><button class="show-btn" onclick="openShow('bettercallsaul', 2)">Better Call Saul</button></li>
-              <li><button class="show-btn" onclick="openShow('you', 2)">You <span style="font-size:14px;color:var(--text-light);font-style:italic;">(en oo kattonu kokonaan)</span></button></li>
-              <li><button class="show-btn" onclick="openShow('prisonbreak', 3)">Prison Break <span style="font-size:14px;color:var(--text-light);font-style:italic;">(nähny vaan pari jaksoo vielä)</span></button></li>
-              <li><button class="show-btn" onclick="openShow('thesopranos', 1)">The Sopranos</button></li>
-              <li><button class="show-btn" onclick="openShow('theoffice', 1)">The Office</button></li>
-            </ul>
-          </div>
-
-          <!-- Spotify -->
-          <p style="margin-top:28px;"><strong>Hyviä biisejä</strong></p>
-          <p style="margin-top:8px;"><a href="https://open.spotify.com/playlist/2NithzwBaictn7ijsMpjk8" target="_blank" rel="noopener">Avaa Spotify-soittolista</a></p>
-
-        </div>
-      </section>
-
-      <!-- Lisää osioita tähän alle tarvittaessa:
-      <section class="section">
-        <h3 class="section-title">Otsikko</h3>
-        <div class="section-body">
-          <p>Teksti tähän.</p>
-        </div>
-      </section>
-      -->
-
-    </main>
-
-    <footer>Dexter Morgan</footer>
-
-  </div><!-- /main-content -->
-
-  <!-- TV SHOW POPUP -->
-  <div id="show-popup" class="popup-overlay hidden">
-    <div class="popup-inner">
-      <button class="popup-close" onclick="closeShow()">✕</button>
-      <video id="show-video" class="popup-video" playsinline>
-        <source id="show-source" src="" type="video/mp4" />
-      </video>
-      <div class="popup-nav" id="popup-nav">
-        <button class="popup-nav-btn" id="nav-prev" onclick="navShow(-1)">← takaisin</button>
-        <span id="nav-counter"></span>
-        <button class="popup-nav-btn" id="nav-next" onclick="navShow(1)">seuraava →</button>
       </div>
-    </div>
+    </section>
+
+    <section class="glass contact">
+      <div>
+        <h2>Get in touch</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+      <a href="#" class="btn">Contact Me</a>
+    </section>
+
+    <footer>Lorem ipsum &middot; placeholder footer text</footer>
+
   </div>
 
-  <!-- RICKROLL OVERLAY -->
-  <div id="rickroll" style="display:none; position:fixed; inset:0; z-index:99999; background:#000;">
-    <video id="rickroll-video" style="width:100%; height:100%; object-fit:cover;" loop playsinline>
-      <source src="rickroll.mp4" type="video/mp4" />
-    </video>
+  <!-- ---------- video modal (lightbox) ---------- -->
+  <div class="modal-overlay" id="videoModal">
+    <div class="modal-box">
+      <button type="button" class="modal-btn modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <button type="button" class="modal-btn modal-prev" id="modalPrev" aria-label="Previous">&#8249;</button>
+      <button type="button" class="modal-btn modal-next" id="modalNext" aria-label="Next">&#8250;</button>
+      <video id="modalVideo" playsinline controls></video>
+    </div>
   </div>
 
   <script>
-    // ── Elements ─────────────────────────────────────────────
-    const langSelect  = document.getElementById('lang-select');
-    const splash      = document.getElementById('splash');
-    const videoGate   = document.getElementById('video-gate');
-    const mainContent = document.getElementById('main-content');
-    const continueBtn = document.getElementById('continue-btn');
-    const skipBtn     = document.getElementById('skip-btn');
-    const timerEl     = document.getElementById('timer');
-    const countdownEl = document.getElementById('countdown-text');
-    const video       = document.getElementById('gate-video');
-
-    // ── Spam skip for gate video ─────────────────────────────
-    let clickCount = 0;
-    let lastClickTime = 0;
-    video.addEventListener('click', () => {
-      const now = Date.now();
-      if (now - lastClickTime < 1000) { // within 1 second
-        clickCount++;
-        if (clickCount >= 3) {
-          showSite();
-          return;
-        }
-      } else {
-        clickCount = 1;
-      }
-      lastClickTime = now;
-    });
-
-    // ── Show main site ────────────────────────────────────────
-    let siteShown = false;
-
-    // ── Language select — only Finnish works ─────────────────
-    document.querySelectorAll('.lang-btn[data-lang]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        langSelect.classList.add('hidden');
-        splash.classList.remove('hidden');
+    // ---------- Show more / show less for every .card ----------
+    document.querySelectorAll('.card').forEach(function(card){
+      var text = card.querySelector('.card-text');
+      var btn = card.querySelector('.show-more');
+      if(!text || !btn) return;
+      btn.addEventListener('click', function(){
+        var isExpanded = text.classList.toggle('expanded');
+        btn.textContent = isExpanded ? 'Show less' : 'Show more';
       });
     });
 
-    // ── Continue → video ─────────────────────────────────────
-    continueBtn.addEventListener('click', () => {
-      splash.classList.add('hidden');
-      videoGate.classList.remove('hidden');
-      video.load();
-      video.muted = false;
-      video.play().catch(() => { video.muted = true; video.play(); });
-      startCountdown();
-    });
-
-    // ── Countdown ────────────────────────────────────────────
-    let secondsLeft = 10;
-    function startCountdown() {
-      const tick = setInterval(() => {
-        secondsLeft--;
-        timerEl.textContent = secondsLeft;
-        if (secondsLeft <= 0) {
-          clearInterval(tick);
-          countdownEl.style.display = 'none';
-          skipBtn.classList.add('visible');
-        }
-      }, 1000);
-    }
-
-    function showSite() {
-      if (siteShown) return;
-      siteShown = true;
-      video.pause();
-      videoGate.classList.add('hidden');
-      document.body.classList.add('unlocked');
-      window.scrollTo(0, 0);
-      mainContent.classList.add('visible');
-    }
-    skipBtn.addEventListener('click', showSite);
-    video.addEventListener('ended', showSite);
-    // fallback: if ended doesn't fire, catch via timeupdate
-    video.addEventListener('timeupdate', () => {
-      if (video.duration && video.currentTime >= video.duration - 0.15) {
-        showSite();
-      }
-    });
-
-    // ── Age calculation (born June 1 2009) ───────────────────
-    function calcAge() {
-      const born = new Date(2009, 5, 1);
-      const now  = new Date();
-      let years  = now.getFullYear() - born.getFullYear();
-      let months = now.getMonth() - born.getMonth();
-      if (now.getDate() < born.getDate()) months--;
-      if (months < 0) { years--; months += 12; }
-      return { years, months };
-    }
-    function updateAge() {
-      const { years, months } = calcAge();
-      const el = document.getElementById('age-display');
-      if (el) el.textContent = `${years} vuotta ja ${months} kuukautta vanha`;
-    }
-    updateAge();
-
-    // ── Expandable toggle ─────────────────────────────────────
-    function toggleList(btn) {
-      btn.classList.toggle('open');
-      btn.nextElementSibling.classList.toggle('open');
-      const isOpen = btn.classList.contains('open');
-      // replace just the text node, preserve the arrow span
-      btn.childNodes[0].textContent = isOpen ? 'piilota lista ' : 'näytä lista ';
-    }
-
-    // ── TV Show popup ─────────────────────────────────────────
-    const showPopup  = document.getElementById('show-popup');
-    const showVideo  = document.getElementById('show-video');
-    const showSource = document.getElementById('show-source');
-    const popupNav   = document.getElementById('popup-nav');
-    const navPrev    = document.getElementById('nav-prev');
-    const navNext    = document.getElementById('nav-next');
-    const navCounter = document.getElementById('nav-counter');
-
-    // Show order — must match the list in HTML
-    const showOrder = [
-      { base: 'breakingbad',   count: 4  },
-      { base: 'dexter',        count: 13 },
-      { base: 'theboys',       count: 8  },
-      { base: 'strangerthings',count: 4  },
-      { base: 'supernatural',  count: 7  },
-      { base: 'bettercallsaul',count: 2  },
-      { base: 'you',           count: 2  },
-      { base: 'prisonbreak',   count: 3  },
-      { base: 'thesopranos',   count: 1  },
-      { base: 'theoffice',     count: 1  },
+    // ---------- Video lightbox ----------
+    // Replace/add entries here — each one just needs a src.
+    // All three point at ryanedit.mp4 as a placeholder; swap in
+    // real filenames when you have them.
+    var videos = [
+      { src: 'ryanedit.mp4', title: 'Clip 1' },
+      { src: 'ryanedit.mp4', title: 'Clip 2' },
+      { src: 'ryanedit.mp4', title: 'Clip 3' }
     ];
 
-    let currentShow  = null;
-    let currentIndex = 1;
-    let totalEdits   = 1;
+    var modal = document.getElementById('videoModal');
+    var modalVideo = document.getElementById('modalVideo');
+    var currentIndex = 0;
 
-    function buildSrc(base, index) {
-      return index === 1 ? `${base}.mp4` : `${base}${index}.mp4`;
+    function loadVideo(index){
+      currentIndex = (index + videos.length) % videos.length;
+      modalVideo.src = videos[currentIndex].src;
+      modalVideo.play().catch(function(){ /* autoplay may be blocked until user interacts */ });
     }
 
-    function updateNav() {
-      if (totalEdits <= 1) {
-        popupNav.style.display = 'none';
-      } else {
-        popupNav.style.display = 'flex';
-        navCounter.textContent = `${currentIndex} / ${totalEdits}`;
-        navPrev.style.display = currentIndex === 1 ? 'none' : 'inline-block';
-        navNext.style.display = 'inline-block';
-        navNext.textContent = currentIndex === totalEdits ? 'takaisin alkuun' : 'seuraava →';
-      }
-    }
-
-    function loadEdit(index) {
-      currentIndex = index;
-      showVideo.removeAttribute('loop');
-      showSource.src = buildSrc(currentShow, index);
-      showVideo.load();
-      showVideo.play().catch(() => {});
-      updateNav();
-    }
-
-    // When video ends naturally — close the popup
-    showVideo.addEventListener('ended', () => {
-      closeShow();
-    });
-
-    function navShow(dir) {
-      if (dir === 1 && currentIndex === totalEdits) {
-        loadEdit(1);
-        return;
-      }
-      let next = currentIndex + dir;
-      if (next < 1) next = 1;
-      loadEdit(next);
-    }
-
-    function openShow(base, count) {
-      currentShow = base;
-      totalEdits  = count || 1;
-      loadEdit(1);
-      showPopup.classList.remove('hidden');
+    function openModal(index){
+      loadVideo(index);
+      modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
-    function closeShow() {
-      showVideo.pause();
-      showVideo.removeAttribute('loop');
-      showSource.src = '';
-      showPopup.classList.add('hidden');
+
+    function closeModal(){
+      modal.classList.remove('open');
+      modalVideo.pause();
+      modalVideo.removeAttribute('src');
+      modalVideo.load();
       document.body.style.overflow = '';
     }
-    showPopup.addEventListener('click', e => {
-      if (e.target === showPopup) closeShow();
+
+    document.querySelectorAll('[data-video-open]').forEach(function(trigger){
+      trigger.addEventListener('click', function(){
+        var idx = parseInt(trigger.getAttribute('data-video-index') || '0', 10);
+        openModal(idx);
+      });
     });
 
-    // ── Rickroll — block devtools shortcuts immediately ───────
-    const rickrollOverlay = document.getElementById('rickroll');
-    const rickrollVideo   = document.getElementById('rickroll-video');
-    let rickrolled = false;
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalPrev').addEventListener('click', function(){ loadVideo(currentIndex - 1); });
+    document.getElementById('modalNext').addEventListener('click', function(){ loadVideo(currentIndex + 1); });
 
-    function triggerRickroll() {
-      if (rickrolled) return;
-      rickrolled = true;
-      // pause all spotify iframes
-      document.querySelectorAll('iframe').forEach(f => {
-        try { f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); } catch(e){}
-        // reload the iframe src to kill audio
-        const src = f.src;
-        f.src = '';
-        f.src = src;
-      });
-      rickrollOverlay.style.display = 'block';
-      rickrollVideo.muted = false;
-      rickrollVideo.play().catch(() => { rickrollVideo.muted = true; rickrollVideo.play(); });
-    }
+    modal.addEventListener('click', function(e){
+      if(e.target === modal) closeModal();
+    });
 
-    document.addEventListener('keydown', e => {
-      if (
-        e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) ||
-        (e.ctrlKey && ['U','u'].includes(e.key))
-      ) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        triggerRickroll();
-      }
-    }, true); // capture phase — fires before anything else
-
-    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e){
+      if(!modal.classList.contains('open')) return;
+      if(e.key === 'Escape') closeModal();
+      if(e.key === 'ArrowLeft') loadVideo(currentIndex - 1);
+      if(e.key === 'ArrowRight') loadVideo(currentIndex + 1);
+    });
   </script>
 
 </body>
