@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<meta name="theme-color" content="#141317"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="color-scheme" content="dark"/>
+<link rel="icon" type="image/png" href="favicon.png"/>
 <title>About Me</title>
+<script>
+  // If this file is being served for the /socialanxiety path, bounce immediately.
+  if (/\/socialanxiety\/?$/.test(window.location.pathname)) {
+    window.location.replace("https://youtu.be/AqlhRFUYCM8");
+  }
+</script>
 <style>
   :root{
     --bg-0:#141317;
@@ -23,7 +31,7 @@
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
-  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; background:var(--bg-0); }
 
   body{
     min-height:100svh;
@@ -35,6 +43,9 @@
       radial-gradient(65% 55% at 50% 100%, rgba(255,79,160,0.18), transparent 60%),
       linear-gradient(160deg, var(--bg-0), var(--bg-1) 60%, #100f13);
     background-attachment:fixed;
+    background-size: 130% 130%, 120% 120%, 115% 115%, auto;
+    background-position: 10% 10%, 90% 5%, 50% 100%, 0 0;
+    animation: shiftBackground 46s ease-in-out infinite;
     overflow-x:hidden;
     line-height:1.6;
   }
@@ -43,21 +54,44 @@
     content:"";
     position:fixed;
     border-radius:50%;
-    filter:blur(80px);
+    filter: blur(80px) saturate(130%);
     z-index:-1;
-    opacity:0.55;
+    opacity:0.6;
+    will-change: transform;
   }
   body::before{
     width:min(50vw, 480px); height:min(50vw, 480px);
     background:radial-gradient(circle, var(--pink-1), transparent 70%);
     top:-10%; left:-10%;
-    animation: driftBlobs 18s ease-in-out infinite alternate;
+    animation: driftBlobsA 38s ease-in-out infinite;
   }
   body::after{
     width:min(45vw, 420px); height:min(45vw, 420px);
     background:radial-gradient(circle, var(--pink-0), transparent 70%);
     bottom:-15%; right:-10%;
-    animation: driftBlobs 20s ease-in-out infinite alternate;
+    animation: driftBlobsB 46s ease-in-out infinite;
+  }
+
+  @keyframes driftBlobsA{
+    0%{ transform: translate(0,0) scale(1) rotate(0deg); }
+    25%{ transform: translate(70px,-50px) scale(1.12) rotate(10deg); }
+    50%{ transform: translate(30px,60px) scale(0.94) rotate(-6deg); }
+    75%{ transform: translate(-60px,10px) scale(1.06) rotate(6deg); }
+    100%{ transform: translate(0,0) scale(1) rotate(0deg); }
+  }
+  @keyframes driftBlobsB{
+    0%{ transform: translate(0,0) scale(1) rotate(0deg); }
+    30%{ transform: translate(-60px,40px) scale(1.1) rotate(-8deg); }
+    60%{ transform: translate(-20px,-60px) scale(0.92) rotate(5deg); }
+    85%{ transform: translate(50px,-15px) scale(1.05) rotate(-4deg); }
+    100%{ transform: translate(0,0) scale(1) rotate(0deg); }
+  }
+  @keyframes shiftBackground{
+    0%{ background-position: 10% 10%, 90% 5%, 50% 100%, 0 0; }
+    25%{ background-position: 4% 6%, 94% 0%, 44% 96%, 0 0; }
+    50%{ background-position: 0% 2%, 96% 14%, 56% 92%, 0 0; }
+    75%{ background-position: 14% 4%, 86% 12%, 62% 100%, 0 0; }
+    100%{ background-position: 10% 10%, 90% 5%, 50% 100%, 0 0; }
   }
 
   .wrap{
@@ -75,7 +109,12 @@
     border-radius: var(--radius-lg);
     backdrop-filter: blur(22px) saturate(140%);
     -webkit-backdrop-filter: blur(22px) saturate(140%);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.22),
+      inset 0 2px 5px rgba(255,255,255,0.06),
+      inset 0 -1px 0 rgba(0,0,0,0.3),
+      inset 0 -6px 14px rgba(0,0,0,0.28);
     position:relative;
   }
   .glass::before{
@@ -180,42 +219,9 @@
     color:var(--pink-soft);
   }
   .hero p{ max-width:65ch; color:var(--text-1); font-size: clamp(0.98rem, 1.4vw, 1.08rem); }
-  body{
-    min-height:100svh;
-    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
-    color:var(--text-0);
-    background:
-      radial-gradient(60% 50% at 12% 8%, rgba(255,79,160,0.35), transparent 60%),
-      radial-gradient(55% 45% at 90% 12%, rgba(255,122,184,0.22), transparent 60%),
-      radial-gradient(65% 55% at 50% 100%, rgba(255,79,160,0.18), transparent 60%),
-      linear-gradient(160deg, var(--bg-0), var(--bg-1) 60%, #100f13);
-    background-attachment:fixed;
-    background-size: 120% 120%, 110% 110%, 105% 105%, auto;
-    background-position: 10% 10%, 90% 5%, 50% 100%, 0 0;
-    animation: shiftBackground 28s ease-in-out infinite;
-    overflow-x:hidden;
-    line-height:1.6;
-  }
   @media (max-width:760px){
     .hero{ grid-template-columns:1fr; }
     .hero-heading{ flex-direction:column; align-items:flex-start; }
-  }
-  @keyframes driftBlobs{
-    0%,100%{ transform: translate(0,0) scale(1); }
-    50%{ transform: translate(40px,-40px) scale(1.08); }
-  }
-  @keyframes shiftBackground{
-    0%,100%{ background-position: 10% 10%, 90% 5%, 50% 100%, 0 0; }
-    25%{ background-position: 5% 8%, 92% 2%, 45% 98%, 0 0; }
-    50%{ background-position: 0% 5%, 95% 15%, 55% 95%, 0 0; }
-    75%{ background-position: 12% 6%, 88% 12%, 60% 100%, 0 0; }
-  }
-
-  body::before,
-  body::after{
-    animation: driftBlobs 18s ease-in-out infinite alternate;
-    opacity:0.7;
-    filter: blur(72px) saturate(130%);
   }
 
   /* YouTube PFP preview button and modal */
@@ -237,52 +243,47 @@
   .yt-sub .handle{ font-size:0.78rem; color:var(--text-1); opacity:0.95; margin-top:4px; }
 
   /* TV shows grid & banner */
-  .tv-banner{ width:100%; height:180px; border-radius:14px; background-size:cover; background-position:center; margin-bottom:12px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }
+  .tv-banner{ width:100%; height:200px; border-radius:16px; background-size:cover; background-position:center; margin-bottom:20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }
   .tv-banner[aria-hidden="true"]{ display:none; margin-bottom:0; }
-  .tv-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; align-items:start; }
+  .tv-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:24px 20px; align-items:start; padding:6px 4px 12px; }
   @media (max-width:900px){ .tv-grid{ grid-template-columns:repeat(4,1fr);} }
-  @media (max-width:720px){ .tv-grid{ grid-template-columns:repeat(3,1fr);} }
-  @media (max-width:460px){ .tv-grid{ grid-template-columns:repeat(2,1fr);} }
-  .tv-card{ display:flex; flex-direction:column; gap:8px; }
-  #tvShows{ position:relative; }
+  @media (max-width:720px){ .tv-grid{ grid-template-columns:repeat(3,1fr); gap:20px 16px;} }
+  @media (max-width:460px){ .tv-grid{ grid-template-columns:repeat(2,1fr); gap:18px 14px;} }
+  .tv-card{ display:flex; flex-direction:column; gap:10px; }
   #tvShows.collapsed{ padding-bottom:12px; }
-  #tvShows .expandable-wrap{ max-height:0; overflow:hidden; transition:max-height 0.35s ease; display:flex; flex-direction:column; gap:16px; }
-  #tvShows .expandable-wrap.expanded{ max-height:2000px; }
-  #tvToggle.yt-toggle{
-    position:absolute; top:18px; right:18px; z-index:40;
-    transform:translateY(0);
-    width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
-    border-radius:999px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
-    color:var(--pink-soft); font-size:22px; cursor:pointer; padding:0; line-height:1;
-    box-shadow:0 6px 18px rgba(0,0,0,0.35);
-  }
-  #tvToggle.yt-toggle:hover{ transform:translateY(-2px); background:rgba(255,79,160,0.06); }
-  .tv-poster{ border-radius:8px; overflow:hidden; background:#0f0f11; position:relative; aspect-ratio:2/3; transition: box-shadow 0.25s ease; }
-  .tv-poster a{ display:block; width:100%; height:100%; }
-  .tv-poster img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.24s ease; }
-  .tv-title{ font-size:0.88rem; font-weight:700; color:var(--text-0); line-height:1.2; text-align:center; padding:0 4px; }
-  .tv-poster::before{ content:''; position:absolute; inset:0; background:linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0) 100%); transform:translateX(-120%); opacity:0; transition: transform 0.45s ease, opacity 0.25s ease; pointer-events:none; z-index:1; }
-  .tv-poster:hover::before{ transform:translateX(120%); opacity:1; }
+  #tvShows .expandable-wrap{ max-height:0; overflow:hidden; transition:max-height 0.35s ease; display:flex; flex-direction:column; gap:16px; margin-top:0; }
+  #tvShows .expandable-wrap.expanded{ max-height:2000px; margin-top:6px; }
+  .tv-poster{ border-radius:12px; overflow:hidden; background:#0f0f11; position:relative; aspect-ratio:2/3; transition: box-shadow 0.25s ease, transform 0.25s ease; border:1px solid rgba(255,255,255,0.06); }
+  .tv-poster button{ display:block; width:100%; height:100%; border:none; background:transparent; padding:0; margin:0; cursor:pointer; }
   .tv-poster img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.24s ease; position:relative; z-index:0; }
+  .tv-title{ font-size:0.88rem; font-weight:700; color:var(--text-0); line-height:1.2; text-align:center; padding:0 4px; margin-top:2px; }
+  .tv-poster::before{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,255,255,0) 15%, rgba(255,255,255,0.14) 38%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0.14) 62%, rgba(255,255,255,0) 85%); mix-blend-mode:overlay; transform:translateX(-140%); opacity:0; transition: transform 0.45s ease, opacity 0.25s ease; pointer-events:none; z-index:1; }
+  .tv-poster:hover::before{ transform:translateX(140%); opacity:1; }
   .tv-poster:hover img{ transform:scale(1.05); }
-  .tv-card:hover .tv-poster{ box-shadow:0 18px 40px rgba(255,79,160,0.18); }
+  .tv-card:hover .tv-poster{ box-shadow:0 18px 40px rgba(255,79,160,0.18); transform:translateY(-3px); }
 
-  /* collapse the YouTuber list by default and provide a top-right toggle */
-  #subscriptions{ position:relative; }
+  /* header row shared by the collapsible sections: heading left, arrow pinned right + vertically centered on the row itself (not the whole card) */
+  .section-header{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .section-header h2{ margin-bottom:0; line-height:1; }
   #subscriptions.collapsed{ padding-bottom:12px; }
-  #subscriptions.collapsed .prose{ padding-top: clamp(12px, 3vw, 20px); padding-bottom:12px; }
-  #subscriptions.collapsed h2{ margin-bottom:6px; }
-  #subscriptions .expandable-wrap{ max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
-  #subscriptions .expandable-wrap.expanded{ max-height:2000px; }
-  /* compact arrow toggle */
-  #ytSubsToggle.yt-toggle{
-    position:absolute; top:18px; right:18px; z-index:40;
+  #subscriptions .expandable-wrap{ max-height:0; overflow:hidden; transition:max-height 0.35s ease; margin-top:0; }
+  #subscriptions .expandable-wrap.expanded{ max-height:2000px; margin-top:6px; }
+  .yt-toggle{
+    flex-shrink:0;
     width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
-    border-radius:999px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+    border-radius:999px;
+    background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.02) 55%, rgba(0,0,0,0.12));
+    border:1px solid rgba(255,255,255,0.1);
     color:var(--pink-soft); font-size:22px; cursor:pointer; padding:0; line-height:1;
-    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    box-shadow:
+      0 6px 18px rgba(0,0,0,0.35),
+      inset 0 2px 2px rgba(255,255,255,0.35),
+      inset 0 -3px 5px rgba(0,0,0,0.45),
+      inset 0 0 0 1px rgba(0,0,0,0.15);
+    transition: transform 0.18s ease, background-color 0.18s ease;
   }
-  #ytSubsToggle.yt-toggle:hover{ transform:translateY(-2px); background:rgba(255,79,160,0.06); }
+  .yt-toggle .arrow{ display:inline-block; transform:translateY(-2px); text-shadow: 0 1px 0 rgba(0,0,0,0.4); }
+  .yt-toggle:hover{ transform:translateY(-2px) scale(1.05); }
 
   section h2{ font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom:14px; letter-spacing:-0.01em; }
   section.glass h2{ color:var(--pink-soft); }
@@ -408,37 +409,18 @@
   footer{ text-align:center; color:var(--text-1); font-size:0.82rem; opacity:0.7; padding-top:8px; }
 
   /* ---------- video modal (lightbox) ---------- */
-  html, body {
-    pointer-events: auto;
-  }
-
-  .wrap {
-    position: relative;
-    z-index: 0;
-  }
-
   .modal-overlay{
     position:fixed; inset:0;
-    visibility:hidden;
     background:rgba(10,8,10,0.72);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    display:none !important;
-    align-items:center; justify-content:center;
+    display:none; align-items:center; justify-content:center;
     padding: 24px;
-    z-index:-1;
-    opacity:0;
-    pointer-events:none !important;
-    transition: opacity 0.25s ease, visibility 0s linear 0.25s, z-index 0s linear 0.25s;
-  }
-  .modal-overlay.open{
-    display:flex !important;
-    visibility:visible;
-    opacity:1;
-    pointer-events:auto;
     z-index:100;
-    transition-delay: 0s;
+    opacity:0; pointer-events:none;
+    transition: opacity 0.25s ease;
   }
+  .modal-overlay.open{ display:flex; opacity:1; pointer-events:auto; }
 
   .modal-box{
     position:relative;
@@ -516,7 +498,7 @@
 <button class="pink-link expandable-toggle show-more" type="button">Show more</button>
 </section>
 <section class="glass prose" id="youtube">
-<h2>Hobbies?</h2>
+<h2>The YouTube thing</h2>
 <div class="expandable-wrap">
 <p>I REALLY fucking like making YouTube videos and editing. If you're into that stuff too that would be fucking awesome (even if that means just playing games with me on camera) but if you're not, that's maybe fine? I care too much about it and it's like the only thing I actually care about, if I'm honest. But even if you aren't super interested in it you gotta be fine with me liking it obviously, same way that I'll be fine with whatever you're interested in. But if you're into like, biology, I WILL call you a nerd every chance I get :3 even though I'm probably more of a nerd with all of the YouTube stuff 😭 and you can tease me by calling me YouTube boy or something, the same way I would call you a nerd, BUT, look out, because if you do, you might suddenly find that you no longer have your foreskin. I am the Bay Harbor Foreskin Stealer.</p>
 <p>But genuinely YouTube is the only thing that even remotely interests me and I've been trying to do it forever, and I know I'm pretty close to making great videos. (Again, cringe as fuck probably but I DON'T CARE) I don't have any good YouTube videos I could showcase, so I'll instead show an edit I've made, <button class="pink-link" data-video-open="" type="button">here</button>. I know how to edit, I know how to keep the flow in videos. I've been editing since I was seven years old. (Also if you say "preset warrior" about the edit I will sue)</p>
@@ -528,21 +510,25 @@
 <button class="pink-link expandable-toggle show-more" type="button">Show more</button>
 </section>
 <section class="glass prose" id="subscriptions">
-<h2>YouTubers I watch</h2>
+<div class="section-header">
+  <h2>YouTubers I watch</h2>
+  <button id="ytSubsToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open YouTubers I watch"><span class="arrow">▾</span></button>
+</div>
 <div class="expandable-wrap">
   <div class="yt-subs" id="ytSubs" aria-live="polite"></div>
 </div>
-<button id="ytSubsToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open YouTubers I watch">▾</button>
 </section>
 
 <section class="glass prose" id="tvShows">
-<h2>TV shows I like</h2>
+<div class="section-header">
+  <h2>TV shows I like</h2>
+  <button id="tvToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open TV shows"><span class="arrow">▾</span></button>
+</div>
 <div class="expandable-wrap">
   <div class="tv-banner" id="tvBanner" aria-hidden="true"></div>
   <div class="tv-grid" id="tvGrid" aria-live="polite"></div>
   <p style="font-size:0.86rem; color:var(--text-1); margin-top:14px;">I haven’t finished all the shows listed yet.</p>
 </div>
-<button id="tvToggle" class="yt-toggle" type="button" aria-expanded="false" aria-label="Open TV shows">▾</button>
 </section>
 
 <section class="glass prose">
@@ -619,15 +605,7 @@
     window.addEventListener('pageshow', function(event){
       if (event.persisted) resetPageState();
     });
-    window.addEventListener('load', function(){
-      resetPageState();
-      document.querySelectorAll('.modal-overlay').forEach(function(overlay){
-        overlay.classList.remove('open');
-        overlay.style.visibility = 'hidden';
-        overlay.style.pointerEvents = 'none';
-        overlay.style.display = 'none';
-      });
-    });
+    window.addEventListener('load', resetPageState);
 
     // ---------- Show more / show less for every .card ----------
     document.querySelectorAll('.card').forEach(function(card){
@@ -755,13 +733,14 @@
     // ensure the subscription list is initially closed and toggle is wired
     var subsWrap = document.querySelector('#subscriptions .expandable-wrap');
     var subsBtn = document.getElementById('ytSubsToggle');
+    var subsArrow = subsBtn ? subsBtn.querySelector('.arrow') : null;
     if(subsWrap && subsBtn){
       var section = document.getElementById('subscriptions');
       // make sure closed on load
       subsWrap.classList.remove('expanded');
       if(section) section.classList.add('collapsed');
       subsBtn.setAttribute('aria-expanded','false');
-      subsBtn.textContent = '▾';
+      if(subsArrow) subsArrow.textContent = '▾';
       subsBtn.setAttribute('aria-label','Open YouTubers I watch');
       subsBtn.addEventListener('click', function(){
         var is = subsWrap.classList.toggle('expanded');
@@ -770,7 +749,7 @@
           if(is) section.classList.remove('collapsed'); else section.classList.add('collapsed');
         }
         subsBtn.setAttribute('aria-expanded', is ? 'true' : 'false');
-        subsBtn.textContent = is ? '▴' : '▾';
+        if(subsArrow) subsArrow.textContent = is ? '▴' : '▾';
         subsBtn.setAttribute('aria-label', is ? 'Close YouTubers I watch' : 'Open YouTubers I watch');
         // scroll into view when opening
         if(is) subsWrap.scrollIntoView({behavior:'smooth', block:'start'});
@@ -779,12 +758,13 @@
 
     var tvWrap = document.querySelector('#tvShows .expandable-wrap');
     var tvBtn = document.getElementById('tvToggle');
+    var tvArrow = tvBtn ? tvBtn.querySelector('.arrow') : null;
     if(tvWrap && tvBtn){
       var tvSection = document.getElementById('tvShows');
       tvWrap.classList.remove('expanded');
       if(tvSection) tvSection.classList.add('collapsed');
       tvBtn.setAttribute('aria-expanded','false');
-      tvBtn.textContent = '▾';
+      if(tvArrow) tvArrow.textContent = '▾';
       tvBtn.setAttribute('aria-label','Open TV shows');
       tvBtn.addEventListener('click', function(){
         var is = tvWrap.classList.toggle('expanded');
@@ -792,7 +772,7 @@
           if(is) tvSection.classList.remove('collapsed'); else tvSection.classList.add('collapsed');
         }
         tvBtn.setAttribute('aria-expanded', is ? 'true' : 'false');
-        tvBtn.textContent = is ? '▴' : '▾';
+        if(tvArrow) tvArrow.textContent = is ? '▴' : '▾';
         tvBtn.setAttribute('aria-label', is ? 'Close TV shows' : 'Open TV shows');
         if(is) tvWrap.scrollIntoView({behavior:'smooth', block:'start'});
       });
@@ -832,11 +812,11 @@
       You: 'Hello, you. I\'m on like season two and I forgot where I was and I just haven\'t kept watching it.',
       TheSopranos: 'No idea where I\'m even at, haven\'t watched it in a while, but it\'s good.',
       TheOffice: 'It was good even tho I was really suprised I liked it.',
-      13ReasonsWhy: 'Just watched it. It was good.',
+      '13ReasonsWhy': 'Just watched it. It was good.',
       TheWalkingDead: 'WE CAN OLIVE TOGHETER! Yea it was good, haven\'t finished the whole thing and again I have no idea where I left off but still.',
       Severance: 'Yea it was good.',
       YoungSheldon: 'WE\'RE LOOKING FOR BRISKET! I started watching it kinda as a joke but it\'s lowkey good.',
-      'TheEndoftheF***ingWorld': 'I didin\'t know what to except when I watched it, someone reccomended it to me, but yea it was good.'
+      TheEndoftheFuckingWorld: 'I didin\'t know what to except when I watched it, someone reccomended it to me, but yea it was good.'
     };
 
     function slug(s){ return s.replace(/[^a-z0-9]/gi,'').replace(/\s+/g,''); }
@@ -851,7 +831,7 @@
       var id = show.slug;
       var cell = document.createElement('div'); cell.className = 'tv-card';
       var poster = document.createElement('div'); poster.className = 'tv-poster';
-      var a = document.createElement('a'); a.href = '#'; a.target = '_blank'; a.rel = 'noopener';
+      var a = document.createElement('button'); a.type = 'button';
       var img = document.createElement('img'); img.alt = show.title + ' poster';
       img.dataset.title = show.title;
       img.dataset.idx = String(idx);
