@@ -1,169 +1,652 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Player</title>
-<style>
-  html, body {
-    margin: 0;
-    height: 100%;
-    background: #0e0e10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12100f">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="color-scheme" content="dark">
+  <title>Dexter Morgan</title>
+  <link rel="icon" href="pfp.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #12100f;
+      --panel: #1c1716;
+      --line: #322a29;
+      --pink: #ef6d9a;
+      --pink-2: #ff9fbd;
+      --text: #f3ece8;
+      --muted: #c9bdb7;
+    }
 
-  .player {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
-  }
+    * { box-sizing: border-box; }
 
-  #playBtn {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    border: none;
-    background: #f2f2f2;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.15s ease, background 0.15s ease;
-  }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      min-height: 100dvh;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-  #playBtn:hover {
-    background: #ffffff;
-    transform: scale(1.05);
-  }
+    body {
+      font-family: "DM Sans", "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.55;
+      padding: calc(18px + env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom));
+    }
 
-  #playBtn:active {
-    transform: scale(0.96);
-  }
+    main {
+      width: min(720px, 100%);
+      margin: 0 auto;
+    }
 
-  #playBtn svg {
-    fill: #0e0e10;
-  }
+    header {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      column-gap: 16px;
+      row-gap: 4px;
+      align-items: center;
+    }
 
-  .seek-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 320px;
-  }
+    .pfp {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      object-fit: cover;
+      grid-row: span 2;
+      border: 2px solid #3a2c31;
+      background: #2a2224;
+    }
 
-  #seek {
-    flex: 1;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 4px;
-    border-radius: 2px;
-    background: #3a3a3d;
-    outline: none;
-    cursor: pointer;
-  }
+    h1 {
+      margin: 0;
+      font-size: clamp(1.65rem, 5vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      color: var(--pink);
+      background: linear-gradient(100deg, #ffb3cc 0%, var(--pink) 48%, #ff7aa8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-  #seek::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #f2f2f2;
-    cursor: pointer;
-  }
+    .handle {
+      margin: -2px 0 0;
+      font-size: clamp(1.15rem, 3.5vw, 1.4rem);
+      font-weight: 500;
+      color: var(--text);
+    }
 
-  #seek::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
-    border: none;
-    border-radius: 50%;
-    background: #f2f2f2;
-    cursor: pointer;
-  }
+    .bio {
+      grid-column: 1 / -1;
+      margin: 22px 0 8px;
+      max-width: 38em;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
 
-  .time {
-    font-size: 12px;
-    color: #9a9a9e;
-    font-variant-numeric: tabular-nums;
-    width: 38px;
-    text-align: center;
-  }
-</style>
+    .folds {
+      margin-top: 4px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .fold {
+      border-top: 1px solid var(--line);
+    }
+
+    .fold:first-child {
+      border-top: 0;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 15px 2px;
+      font-size: 1.08rem;
+      font-weight: 600;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform 0.18s ease;
+      flex-shrink: 0;
+    }
+
+    details[open] summary {
+      color: var(--pink-2);
+    }
+
+    details[open] summary::after {
+      transform: rotate(225deg);
+      border-color: var(--pink);
+    }
+
+    .body {
+      padding: 0 2px 18px;
+      color: var(--muted);
+    }
+
+    .body h3, .media h2 {
+      margin: 14px 0 6px;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .media {
+      margin-top: 0;
+    }
+
+    .media-block + .media-block {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .media h2 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .media h3 {
+      margin: 18px 0 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .media h3:first-child { margin-top: 0; }
+
+    .music-group + .music-group { margin-top: 18px; }
+
+    .body h3:first-child { margin-top: 0; }
+
+    .body p { margin: 0 0 10px; }
+
+    a.ext {
+      color: var(--pink);
+      text-underline-offset: 3px;
+    }
+
+    a.ext:hover { color: var(--pink-2); }
+
+    .shelf-wrap { margin-top: 6px; }
+
+    .shelf {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 6px 2px 10px;
+      scrollbar-color: var(--pink) var(--panel);
+    }
+
+    .card {
+      flex: 0 0 auto;
+      width: 118px;
+    }
+
+    .frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--panel);
+      aspect-ratio: 2 / 3;
+      transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1);
+      transition: transform 0.28s ease;
+      will-change: transform;
+    }
+
+    .frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .frame.gone {
+      display: flex;
+      align-items: flex-end;
+      padding: 10px;
+      color: #8d7f7a;
+      font-size: 0.78rem;
+    }
+
+    .frame.gone img { display: none; }
+
+    .frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 32%, rgba(255, 210, 225, 0.24) 50%, transparent 68%);
+      transform: translateX(-120%);
+      pointer-events: none;
+    }
+
+    .card:hover .frame {
+      transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.045) translateY(-3px);
+    }
+
+    .card:hover .frame::after {
+      transform: translateX(120%);
+      transition: transform 0.42s ease;
+    }
+
+    .card span {
+      display: block;
+      margin-top: 7px;
+      font-size: 0.82rem;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .music-shelf .music-card {
+      width: 180px;
+      flex-basis: 180px;
+    }
+
+    .music-card {
+      flex: 0 0 auto;
+    }
+
+    .music-card iframe {
+      display: block;
+      width: 180px;
+      height: 152px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .music-unavailable {
+      width: 180px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 4px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .music-unavailable small {
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.2;
+    }
+
+    .music-card .music-title {
+      display: block;
+      margin-top: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      line-height: 1.25;
+    }
+
+    .music-card .music-title span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .music-shelf {
+      padding-bottom: 6px;
+    }
+
+    .music-embed {
+      position: relative;
+      overflow: hidden;
+      width: 180px;
+      height: 180px;
+      border-radius: 10px;
+      transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1);
+      transition: transform 0.28s ease;
+    }
+
+    .music-card:hover .music-embed {
+      transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.025) translateY(-2px);
+    }
+
+    @media (max-width: 420px) {
+      header {
+        grid-template-columns: 72px 1fr;
+      }
+      .pfp { width: 72px; height: 72px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
+  <main>
+    <header>
+      <img class="pfp" src="pfp.png" alt="Dexter Morgan" onerror="this.removeAttribute('src')">
+      <h1>Dexter Morgan</h1>
+      <p class="handle">@thegayharborboykisser</p>
+      <p class="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nisl sit amet lorem convallis tincidunt. Morbi eget nunc at sapien aliquet rutrum, et aenean lectus est. Pellentesque habitant morbi tristique senectus et netus.</p>
+    </header>
 
-<div class="player">
-  <button id="playBtn" aria-label="Play">
-    <svg id="playIcon" width="34" height="34" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-    <svg id="pauseIcon" width="34" height="34" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-  </button>
+    <div class="folds">
+      <details class="fold">
+        <summary>A little more</summary>
+        <div class="body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+          <h3>Small header</h3>
+          <p>Copy a block like the one above if you want another title inside a section. Keep it short or let it run. Either is fine.</p>
+        </div>
+      </details>
 
-  <div class="seek-row">
-    <span class="time" id="current">0:00</span>
-    <input type="range" id="seek" value="0" min="0" max="100" step="0.1">
-    <span class="time" id="duration">0:00</span>
-  </div>
-</div>
+      <details class="fold">
+        <summary>Links</summary>
+        <div class="body">
+          <p>Anything you want people to click can live here. Regular links open in a new tab.</p>
+          <h3>Around the web</h3>
+          <p>
+            <a class="ext" href="https://dextermorgan.gay" target="_blank" rel="noopener noreferrer">dextermorgan.gay</a><br>
+            <a class="ext" href="https://www.tiktok.com/@thegayharborboykisser" target="_blank" rel="noopener noreferrer">TikTok</a><br>
+            <a class="ext" href="https://discord.com/users/" target="_blank" rel="noopener noreferrer">Discord</a>
+          </p>
+        </div>
+      </details>
 
-<audio id="audio" src="audio.mp3" preload="metadata"></audio>
+      <details class="fold">
+        <summary>Right now</summary>
+        <div class="body">
+          <p>Lorem ipsum dolor sit amet. This one can be whatever you are into this week, a short rant, a song stuck in your head.</p>
+          <h3>Currently</h3>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+      </details>
 
-<script>
-  const audio = document.getElementById('audio');
-  const playBtn = document.getElementById('playBtn');
-  const playIcon = document.getElementById('playIcon');
-  const pauseIcon = document.getElementById('pauseIcon');
-  const seek = document.getElementById('seek');
-  const currentEl = document.getElementById('current');
-  const durationEl = document.getElementById('duration');
+      <details class="fold">
+        <summary>Notes</summary>
+        <div class="body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel nisi sit amet lorem tincidunt porttitor.</p>
+          <h3>A bit extra</h3>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+        </div>
+      </details>
 
-  audio.volume = 1;
+      <details class="fold">
+        <summary>Contact</summary>
+        <div class="body">
+          <p>If you actually need to reach me, Discord is the easy one. Swap this paragraph when you know what you want it to say.</p>
+          <h3>Best way</h3>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+      </details>
+    </div>
 
-  function formatTime(t) {
-    if (!isFinite(t)) return '0:00';
-    const m = Math.floor(t / 60);
-    const s = Math.floor(t % 60).toString().padStart(2, '0');
-    return `${m}:${s}`;
-  }
+      <details class="fold media-fold">
+        <summary>TV shows, Movies, Music &amp; Games</summary>
+        <div class="body media">
+          <section class="media-block">
+            <h2>TV shows</h2>
+            <div class="shelf" id="shows"></div>
+          </section>
 
-  playBtn.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play();
-    } else {
-      audio.pause();
+          <section class="media-block">
+            <h2>Movies</h2>
+            <div class="shelf" id="movies"></div>
+          </section>
+
+          <section class="media-block">
+            <h2>Music</h2>
+            <div class="music-group">
+              <h3>Michael Jackson</h3>
+              <div class="shelf music-shelf" id="music-mj"></div>
+            </div>
+            <div class="music-group">
+              <h3>80s / classics</h3>
+              <div class="shelf music-shelf" id="music-classics"></div>
+            </div>
+            <div class="music-group">
+              <h3>Pop / dance</h3>
+              <div class="shelf music-shelf" id="music-pop"></div>
+            </div>
+            <div class="music-group">
+              <h3>Tame Impala / indie</h3>
+              <div class="shelf music-shelf" id="music-indie"></div>
+            </div>
+            <div class="music-group">
+              <h3>Slowed / alt</h3>
+              <div class="shelf music-shelf" id="music-alt"></div>
+            </div>
+          </section>
+
+          <section class="media-block">
+            <h2>Games</h2>
+            <div class="shelf" id="games"></div>
+          </section>
+        </div>
+      </details>
+  </main>
+
+  <script>
+    var games = [
+      ["game1.png", "Game 1"],
+      ["game2.png", "Game 2"],
+      ["game3.png", "Game 3"],
+      ["game4.png", "Game 4"],
+      ["game5.png", "Game 5"]
+    ];
+
+    var movies = [
+      ["movie1.png", "Movie 1"],
+      ["movie2.png", "Movie 2"],
+      ["movie3.png", "Movie 3"],
+      ["movie4.png", "Movie 4"],
+      ["movie5.png", "Movie 5"]
+    ];
+
+    var shows = [
+      ["tv1.png", "TV Show 1"],
+      ["tv2.png", "TV Show 2"],
+      ["tv3.png", "TV Show 3"],
+      ["tv4.png", "TV Show 4"],
+      ["tv5.png", "TV Show 5"]
+    ];
+
+    /* Spotify embeds: real Spotify players only. */
+    var musicGroups = {
+      "music-mj": [
+        ["Billie Jean", "Michael Jackson", "track", "1Rt3oh7shVSWj6q2MieDHa"],
+        ["Thriller", "Michael Jackson", "album", "2ANVost0y2y52ema1E9xAZ"],
+        ["Beat It", "Michael Jackson", "track", "3X9R7v8mJ1au8gDqfHKbnm"],
+        ["Smooth Criminal (Radio Edit)", "Michael Jackson", "track", "3Qqefdfw2gWGwLJisprqE8"],
+        ["Bad", "Michael Jackson", "track", "1PFuMplfyEtFQGGl1359sW"],
+        ["They Don't Care About Us", "Michael Jackson", "track", "0sESwMFXTMhvZUfjKKnKz1"],
+        ["Black Or White", "Michael Jackson", "track", "5QV4Jdgi69Y3FLmsUZfftB"]
+      ],
+      "music-classics": [
+        ["Everything She Wants", "Wham!", "track", "5hXEcqQhEjfZdbIZLO8mf2"],
+        ["Eye of the Tiger", "Survivor", "track", "7kZS30ejAopKtmJN3JBLda"],
+        ["I'm Still Standing", "Elton John", "track", "0lzpfrTARexLFXEACKSXTh"],
+        ["I Was Made For Lovin' You", "KISS", "track", "1dVd6BEOhhn9IKdthU8CKD"],
+        ["Burning Heart", "Survivor", "track", "2avaSeKHI5l4sLruVfLdi2"],
+        ["It's My Life", "Bon Jovi", "track", "0v1XpBHnsbkCn7iJ9Ucr1l"],
+        ["Uptown Girl", "Billy Joel", "track", "4Wl0E2btqhCJVmIQJYWgjE"],
+        ["Stayin' Alive", "Bee Gees", "track", "2xSXw1EqGSAKc1e4TPaQvV"]
+      ],
+      "music-pop": [
+        ["Counting Stars", "OneRepublic", "track", "0QLg7FnwdX3Ud5YJIgIEV7"],
+        ["High Hopes", "Panic! At The Disco", "track", "3ZfDLRo0NzEpcDT2Yg5UJi"],
+        ["Poker Face", "Lady Gaga", "track", "6rHTPcAlGJoK2sxfUtqMr7"],
+        ["Rockabye (feat. Sean Paul & Anne-Marie)", "Clean Bandit, Sean Paul, Anne-Marie", "track", "29LAxrFTnln2yr5QgMYP0R"],
+        ["Just Dance", "Lady Gaga, Colby O'Donis", "track", "1CK4cysjAXazotGBl11PkV"],
+        ["Give Me Everything (feat. Nayer)", "Pitbull, AFROJACK, Ne-Yo, Nayer", "track", "3QFbOgWOqXEtOD02FMcX7K"],
+        ["Can't Hold Us (feat. Ray Dalton)", "Macklemore & Ryan Lewis, Ray Dalton", "track", "0V9p8zmOlUHc72a5lRew2A"],
+        ["You Belong With Me", "Taylor Swift", "track", "1GEBsLDvJGw7kviySRI6GX"],
+        ["Call Me Maybe", "Carly Rae Jepsen", "track", "6J31PvdQWH51dLhpu7sK4C"],
+        ["That's What I Want", "Lil Nas X", "spotify-search-needed", null],
+        ["INDUSTRY BABY", "Lil Nas X, Jack Harlow", "track", "0Dkviqf6u4mfF44MXCsvs6"],
+        ["As It Was", "Harry Styles", "track", "4Dvkj6JhhA12EX05fT7y2e"],
+        ["Sweet but Psycho", "Ava Max", "track", "7eJUKvmg9Q8wVY8UNo8Q9N"],
+        ["Timber", "Pitbull, Kesha", "track", "3cHyrEgdyYRjgJKSOiOtcS"],
+        ["One Kiss (with Dua Lipa)", "Calvin Harris, Dua Lipa", "track", "76dIZzTdrNO15mGBrU3MHi"],
+        ["Levitating (feat. DaBaby)", "Dua Lipa, DaBaby", "track", "4ilQ8Gj49nptzso9T4uz9G"]
+      ],
+      "music-indie": [
+        ["Let It Happen", "Tame Impala", "track", "7uARi9Dk8wQ5gU4kOG1GeW"],
+        ["The Less I Know The Better", "Tame Impala", "track", "22yKDHVR2o5O0s2oL02UcE"],
+        ["Borderline", "Tame Impala", "track", "5hM5arv9KDbCHS0k9uqwjr"],
+        ["Borderline", "6arelyhuman", "spotify-search-needed", null],
+        ["Somebody That I Used To Know", "Gotye, Kimbra", "track", "6NT1jkthh6pIqDX8i0WteZ"]
+      ],
+      "music-alt": [
+        ["FALL FROM THE SKY PT. 2 - SLOWED", "RomancePlanet, STAKILLAZ", "track", "7bDjNi0Jj26PRFSziZJphr"],
+        ["Faster n Harder - Slowed & Reverbed", "Sassy Scene, 6arelyhuman", "track", "1qIX2OmGYMuo0qdXVnADP9"],
+        ["did i tell u that i miss u", "adore", "album", "0pedkI7nWlHCeiluBRLF7O"],
+        ["Versatile - Slowed", "LP Rythm", "spotify-search-needed", null],
+        ["Monolith", "Twin Tribes", "track", "4T1oZ3UAFKbraSp5JAISWW"],
+        ["tesla - slowed electro mix", "Fixupboy", "album", "1gTkWCaSwTE1HJI723Z3E2"],
+        ["Nope your too late i already died", "wifiskeleton, i wanna be a jack-o-lantern", "album", "16g3MJk9OmtNXwRrrPMPUK"]
+      ]
+    };
+
+    function fillShelf(id, items) {
+      var root = document.getElementById(id);
+      if (!root) return;
+      root.innerHTML = "";
+      items.forEach(function (item) {
+        var card = document.createElement("article");
+        card.className = "card";
+
+        var frame = document.createElement("div");
+        frame.className = "frame";
+
+        var img = document.createElement("img");
+        img.src = item[0];
+        img.alt = item[1];
+        img.addEventListener("error", function () {
+          frame.classList.add("gone");
+          frame.appendChild(document.createTextNode("add " + item[0]));
+        });
+
+        var name = document.createElement("span");
+        name.textContent = item[1];
+
+        frame.appendChild(img);
+        card.appendChild(frame);
+        card.appendChild(name);
+        root.appendChild(card);
+      });
+      addTiltHandlers(root);
     }
-  });
 
-  audio.addEventListener('play', () => {
-    playIcon.style.display = 'none';
-    pauseIcon.style.display = '';
-    playBtn.setAttribute('aria-label', 'Pause');
-  });
+    function fillMusicShelf(id, items) {
+      var root = document.getElementById(id);
+      if (!root || root.dataset.filled === "1") return;
+      root.dataset.filled = "1";
 
-  audio.addEventListener('pause', () => {
-    playIcon.style.display = '';
-    pauseIcon.style.display = 'none';
-    playBtn.setAttribute('aria-label', 'Play');
-  });
+      items.forEach(function (item) {
+        var title = item[0];
+        var artist = item[1];
+        var type = item[2];
+        var spotifyId = item[3];
+        var card = document.createElement("article");
+        card.className = "music-card";
 
-  audio.addEventListener('loadedmetadata', () => {
-    seek.max = audio.duration;
-    durationEl.textContent = formatTime(audio.duration);
-  });
+        if (type === "track" || type === "album") {
+          var embed = document.createElement("div");
+          embed.className = "music-embed";
 
-  audio.addEventListener('timeupdate', () => {
-    if (!seek.matches(':active')) {
-      seek.value = audio.currentTime;
+          var iframe = document.createElement("iframe");
+          var uriType = type === "album" ? "album" : "track";
+          // This is Spotify's normal generated embed player, not a link to the track page.
+          iframe.src = "https://open.spotify.com/embed/" + uriType + "/" + spotifyId + "?utm_source=generator&theme=0";
+          iframe.width = "180";
+          iframe.height = "152";
+          iframe.frameBorder = "0";
+          iframe.title = title + " — " + artist;
+          iframe.loading = "lazy";
+          iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share";
+          iframe.setAttribute("allowfullscreen", "");
+          embed.appendChild(iframe);
+          card.appendChild(embed);
+        } else {
+          var unavailable = document.createElement("div");
+          unavailable.className = "music-unavailable";
+          unavailable.innerHTML = '<strong>' + htmlEscape(title) + '</strong><small>Spotify direct embed not found</small>';
+          card.appendChild(unavailable);
+        }
+
+        root.appendChild(card);
+      });
     }
-    currentEl.textContent = formatTime(audio.currentTime);
-  });
 
-  seek.addEventListener('input', () => {
-    audio.currentTime = seek.value;
-    currentEl.textContent = formatTime(seek.value);
-  });
-</script>
+    function htmlEscape(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
 
+    function addTiltHandlers(root) {
+      root.querySelectorAll(".card, .music-card").forEach(function (card) {
+        var frame = card.querySelector(".frame, .music-embed, .music-link-card");
+        if (!frame || card.dataset.tiltReady === "1") return;
+        card.dataset.tiltReady = "1";
+        card.addEventListener("mousemove", function (e) {
+          var r = frame.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width;
+          var y = (e.clientY - r.top) / r.height;
+          frame.style.setProperty("--ry", ((0.5 - x) * 5).toFixed(2) + "deg");
+          frame.style.setProperty("--rx", ((y - 0.5) * 5).toFixed(2) + "deg");
+        });
+        card.addEventListener("mouseleave", function () {
+          frame.style.setProperty("--rx", "0deg");
+          frame.style.setProperty("--ry", "0deg");
+        });
+      });
+    }
+
+    fillShelf("games", games);
+    fillShelf("movies", movies);
+    fillShelf("shows", shows);
+
+    var mediaFold = document.querySelector(".media-fold");
+    if (mediaFold) {
+      mediaFold.addEventListener("toggle", function () {
+        if (!mediaFold.open) return;
+        Object.keys(musicGroups).forEach(function (id) {
+          fillMusicShelf(id, musicGroups[id]);
+        });
+        addTiltHandlers(mediaFold);
+      });
+    }
+
+    document.querySelectorAll("details").forEach(function (d) {
+      d.open = false;
+    });
+  </script>
 </body>
 </html>
