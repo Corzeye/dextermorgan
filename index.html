@@ -187,6 +187,52 @@
 
     a.ext:hover { color: var(--pink-2); }
 
+    .channel-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .channel {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 64px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .channel:hover {
+      background: rgba(255, 255, 255, 0.035);
+      transform: translateX(3px);
+    }
+
+    .channel-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex: 0 0 48px;
+      border: 1px solid #3a2c31;
+      background: var(--panel);
+    }
+
+    .channel-name {
+      min-width: 0;
+      color: var(--text);
+      font-size: 0.94rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .channel-sub {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
     .shelf-wrap { margin-top: 6px; }
 
     .shelf {
@@ -195,6 +241,23 @@
       overflow-x: auto;
       padding: 6px 2px 10px;
       scrollbar-color: var(--pink) var(--panel);
+    }
+
+    .tv-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px 14px;
+      overflow: visible;
+      padding: 4px 0 8px;
+    }
+
+    .tv-grid .card {
+      width: auto;
+      min-width: 0;
+    }
+
+    .tv-grid .card span {
+      font-size: 0.78rem;
     }
 
     .card {
@@ -256,9 +319,16 @@
       line-height: 1.25;
     }
 
+    .music-shelf {
+      gap: 14px;
+      padding: 4px 2px 10px;
+      scroll-snap-type: x proximity;
+    }
+
     .music-shelf .music-card {
-      width: 180px;
-      flex-basis: 180px;
+      width: 280px;
+      flex: 0 0 280px;
+      scroll-snap-align: start;
     }
 
     .music-card {
@@ -267,32 +337,12 @@
 
     .music-card iframe {
       display: block;
-      width: 180px;
+      width: 100%;
       height: 152px;
       border: 0;
-      border-radius: 10px;
+      border-radius: 12px;
       background: var(--panel);
       overflow: hidden;
-    }
-
-    .music-unavailable {
-      width: 180px;
-      height: 180px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      gap: 4px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--panel);
-      color: var(--text);
-    }
-
-    .music-unavailable small {
-      color: var(--muted);
-      font-size: 0.74rem;
-      line-height: 1.2;
     }
 
     .music-card .music-title {
@@ -310,22 +360,31 @@
       font-size: 0.76rem;
     }
 
-    .music-shelf {
-      padding-bottom: 6px;
-    }
-
     .music-embed {
       position: relative;
       overflow: hidden;
-      width: 180px;
-      height: 180px;
-      border-radius: 10px;
+      width: 100%;
+      height: 152px;
+      border-radius: 12px;
       transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1);
       transition: transform 0.28s ease;
+      will-change: transform;
     }
 
     .music-card:hover .music-embed {
-      transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.025) translateY(-2px);
+      transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.02) translateY(-2px);
+    }
+
+    @media (max-width: 560px) {
+      .music-shelf .music-card {
+        width: 240px;
+        flex-basis: 240px;
+      }
+
+      .tv-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px 12px;
+      }
     }
 
     @media (max-width: 420px) {
@@ -333,6 +392,11 @@
         grid-template-columns: 72px 1fr;
       }
       .pfp { width: 72px; height: 72px; }
+
+      .tv-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 10px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -404,14 +468,19 @@
     </div>
 
       <details class="fold media-fold">
-        <summary>TV shows, Movies, Music &amp; Games</summary>
+        <summary>YouTubers, TV shows &amp; Music</summary>
         <div class="body media">
           <section class="media-block">
-            <h2>TV shows</h2>
-            <div class="shelf" id="shows"></div>
+            <h2>YouTubers</h2>
+            <div class="channel-list" id="youtubers"></div>
           </section>
 
           <section class="media-block">
+            <h2>TV shows</h2>
+            <div class="shelf tv-grid" id="shows"></div>
+          </section>
+
+          <section class="media-block" id="movies-section">
             <h2>Movies</h2>
             <div class="shelf" id="movies"></div>
           </section>
@@ -440,44 +509,50 @@
             </div>
           </section>
 
-          <section class="media-block">
-            <h2>Games</h2>
-            <div class="shelf" id="games"></div>
-          </section>
         </div>
       </details>
   </main>
 
   <script>
-    var games = [
-      ["game1.png", "Game 1"],
-      ["game2.png", "Game 2"],
-      ["game3.png", "Game 3"],
-      ["game4.png", "Game 4"],
-      ["game5.png", "Game 5"]
+    var youtubers = [
+      ["8bitryan.png", "8-BitRyan"],
+      ["chadoy.png", "Chadoy"],
+      ["dougdoug.png", "DougDoug"],
+      ["familyfriendlyyt.png", "FamilyFriendlyYT"],
+      ["joebartolozzi.png", "Joe Bartolozzi"],
+      ["letsgameitout.png", "Let's Game It Out"],
+      ["markiplier.png", "Markiplier"],
+      ["martincitopants.png", "martincitopants"],
+      ["sb737.png", "SB737"],
+      ["tranium.png", "Tranium"],
+      ["vivilly.png", "Vivilly"]
     ];
 
-    var movies = [
-      ["movie1.png", "Movie 1"],
-      ["movie2.png", "Movie 2"],
-      ["movie3.png", "Movie 3"],
-      ["movie4.png", "Movie 4"],
-      ["movie5.png", "Movie 5"]
-    ];
+    var movies = [];
 
     var shows = [
-      ["tv1.png", "TV Show 1"],
-      ["tv2.png", "TV Show 2"],
-      ["tv3.png", "TV Show 3"],
-      ["tv4.png", "TV Show 4"],
-      ["tv5.png", "TV Show 5"]
+      ["strangerthings.png", "Stranger Things"],
+      ["breakingbad.png", "Breaking Bad"],
+      ["theboys.png", "The Boys"],
+      ["thewalkingdead.png", "The Walking Dead"],
+      ["bettercallsaul.png", "Better Call Saul"],
+      ["supernatural.png", "Supernatural"],
+      ["dexter.png", "Dexter"],
+      ["theoffice.png", "The Office"],
+      ["thesopranos.png", "The Sopranos"],
+      ["you.png", "You"],
+      ["13reasonswhy.png", "13 Reasons Why"],
+      ["youngsheldon.png", "Young Sheldon"],
+      ["thementalist.png", "The Mentalist"],
+      ["severance.png", "Severance"],
+      ["theendofthefuckingworld.webp", "The End of the F***ing World"]
     ];
 
     /* Spotify embeds: real Spotify players only. */
     var musicGroups = {
       "music-mj": [
         ["Billie Jean", "Michael Jackson", "track", "1Rt3oh7shVSWj6q2MieDHa"],
-        ["Thriller", "Michael Jackson", "album", "2ANVost0y2y52ema1E9xAZ"],
+        ["Thriller", "Michael Jackson", "track", "2LlQb7Uoj1kKyGhlkBf9aC"],
         ["Beat It", "Michael Jackson", "track", "3X9R7v8mJ1au8gDqfHKbnm"],
         ["Smooth Criminal (Radio Edit)", "Michael Jackson", "track", "3Qqefdfw2gWGwLJisprqE8"],
         ["Bad", "Michael Jackson", "track", "1PFuMplfyEtFQGGl1359sW"],
@@ -504,7 +579,7 @@
         ["Can't Hold Us (feat. Ray Dalton)", "Macklemore & Ryan Lewis, Ray Dalton", "track", "0V9p8zmOlUHc72a5lRew2A"],
         ["You Belong With Me", "Taylor Swift", "track", "1GEBsLDvJGw7kviySRI6GX"],
         ["Call Me Maybe", "Carly Rae Jepsen", "track", "6J31PvdQWH51dLhpu7sK4C"],
-        ["That's What I Want", "Lil Nas X", "spotify-search-needed", null],
+        ["That's What I Want", "Lil Nas X", "track", "0e8nrvls4Qqv5Rfa2UhqmO"],
         ["INDUSTRY BABY", "Lil Nas X, Jack Harlow", "track", "0Dkviqf6u4mfF44MXCsvs6"],
         ["As It Was", "Harry Styles", "track", "4Dvkj6JhhA12EX05fT7y2e"],
         ["Sweet but Psycho", "Ava Max", "track", "7eJUKvmg9Q8wVY8UNo8Q9N"],
@@ -516,19 +591,50 @@
         ["Let It Happen", "Tame Impala", "track", "7uARi9Dk8wQ5gU4kOG1GeW"],
         ["The Less I Know The Better", "Tame Impala", "track", "22yKDHVR2o5O0s2oL02UcE"],
         ["Borderline", "Tame Impala", "track", "5hM5arv9KDbCHS0k9uqwjr"],
-        ["Borderline", "6arelyhuman", "spotify-search-needed", null],
         ["Somebody That I Used To Know", "Gotye, Kimbra", "track", "6NT1jkthh6pIqDX8i0WteZ"]
       ],
       "music-alt": [
         ["FALL FROM THE SKY PT. 2 - SLOWED", "RomancePlanet, STAKILLAZ", "track", "7bDjNi0Jj26PRFSziZJphr"],
         ["Faster n Harder - Slowed & Reverbed", "Sassy Scene, 6arelyhuman", "track", "1qIX2OmGYMuo0qdXVnADP9"],
-        ["did i tell u that i miss u", "adore", "album", "0pedkI7nWlHCeiluBRLF7O"],
+        ["did i tell u that i miss u", "adore", "track", "20pHAF3KUkAys9uaFJDUIv"],
         ["Versatile - Slowed", "LP Rythm", "spotify-search-needed", null],
         ["Monolith", "Twin Tribes", "track", "4T1oZ3UAFKbraSp5JAISWW"],
         ["tesla - slowed electro mix", "Fixupboy", "album", "1gTkWCaSwTE1HJI723Z3E2"],
-        ["Nope your too late i already died", "wifiskeleton, i wanna be a jack-o-lantern", "album", "16g3MJk9OmtNXwRrrPMPUK"]
+        ["Nope your too late i already died", "wifiskeleton, i wanna be a jack-o-lantern", "track", "0hta2Lb2zKJ7kEnAEZEE3G"]
       ]
     };
+
+    function fillChannels(id, items) {
+      var root = document.getElementById(id);
+      if (!root) return;
+      root.innerHTML = "";
+      items.forEach(function (item) {
+        var row = document.createElement("article");
+        row.className = "channel";
+
+        var avatar = document.createElement("img");
+        avatar.className = "channel-avatar";
+        avatar.src = item[0];
+        avatar.alt = item[1];
+        avatar.addEventListener("error", function () {
+          avatar.style.visibility = "hidden";
+        });
+
+        var info = document.createElement("div");
+        var name = document.createElement("div");
+        name.className = "channel-name";
+        name.textContent = item[1];
+        var sub = document.createElement("div");
+        sub.className = "channel-sub";
+        sub.textContent = "Subscribed";
+        info.appendChild(name);
+        info.appendChild(sub);
+
+        row.appendChild(avatar);
+        row.appendChild(info);
+        root.appendChild(row);
+      });
+    }
 
     function fillShelf(id, items) {
       var root = document.getElementById(id);
@@ -573,30 +679,24 @@
         var card = document.createElement("article");
         card.className = "music-card";
 
-        if (type === "track" || type === "album") {
-          var embed = document.createElement("div");
-          embed.className = "music-embed";
+        if (type !== "track" && type !== "album") return;
 
-          var iframe = document.createElement("iframe");
-          var uriType = type === "album" ? "album" : "track";
-          // This is Spotify's normal generated embed player, not a link to the track page.
-          iframe.src = "https://open.spotify.com/embed/" + uriType + "/" + spotifyId + "?utm_source=generator&theme=0";
-          iframe.width = "180";
-          iframe.height = "152";
-          iframe.frameBorder = "0";
-          iframe.title = title + " — " + artist;
-          iframe.loading = "lazy";
-          iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share";
-          iframe.setAttribute("allowfullscreen", "");
-          embed.appendChild(iframe);
-          card.appendChild(embed);
-        } else {
-          var unavailable = document.createElement("div");
-          unavailable.className = "music-unavailable";
-          unavailable.innerHTML = '<strong>' + htmlEscape(title) + '</strong><small>Spotify direct embed not found</small>';
-          card.appendChild(unavailable);
-        }
+        var embed = document.createElement("div");
+        embed.className = "music-embed";
 
+        var iframe = document.createElement("iframe");
+        var uriType = type === "album" ? "album" : "track";
+        // Spotify's generated Embed player. The player stays on this page.
+        iframe.src = "https://open.spotify.com/embed/" + uriType + "/" + spotifyId + "?utm_source=generator&theme=0";
+        iframe.width = "100%";
+        iframe.height = "152";
+        iframe.frameBorder = "0";
+        iframe.title = title + " — " + artist;
+        iframe.loading = "lazy";
+        iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share";
+        iframe.setAttribute("allowfullscreen", "");
+        embed.appendChild(iframe);
+        card.appendChild(embed);
         root.appendChild(card);
       });
     }
@@ -629,8 +729,13 @@
       });
     }
 
-    fillShelf("games", games);
-    fillShelf("movies", movies);
+    fillChannels("youtubers", youtubers);
+    if (movies.length) {
+      fillShelf("movies", movies);
+    } else {
+      var moviesSection = document.getElementById("movies-section");
+      if (moviesSection) moviesSection.remove();
+    }
     fillShelf("shows", shows);
 
     var mediaFold = document.querySelector(".media-fold");
