@@ -90,6 +90,47 @@
       font-size: 0.98rem;
     }
 
+
+    .term {
+      position: relative;
+      text-decoration: underline dotted #b6aaa4 1.5px;
+      text-underline-offset: 4px;
+      cursor: help;
+      color: inherit;
+      outline-offset: 3px;
+    }
+    .term::after {
+      content: attr(data-definition);
+      position: absolute;
+      z-index: 20;
+      left: 50%;
+      bottom: calc(100% + 10px);
+      transform: translate(-50%, 4px);
+      width: min(260px, 78vw);
+      padding: 9px 11px;
+      border: 1px solid #514642;
+      border-radius: 8px;
+      background: #292321;
+      color: #f3ece8;
+      font-size: 0.78rem;
+      font-weight: 400;
+      line-height: 1.4;
+      text-align: left;
+      white-space: normal;
+      box-shadow: 0 8px 24px rgba(0,0,0,.28);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .12s ease, transform .12s ease, visibility .12s ease;
+    }
+    .term:hover::after, .term:focus-visible::after, .term.definition-open::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+    .bio p { margin: 0 0 10px; }
+    .fold .body p { margin-bottom: 12px; }
+
     .folds {
       margin-top: 4px;
       border-top: 1px solid var(--line);
@@ -413,59 +454,83 @@
       <img class="pfp" src="pfp.png" alt="Dexter Morgan" onerror="this.removeAttribute('src')">
       <h1>Dexter Morgan</h1>
       <p class="handle">@thegayharborboykisser</p>
-      <p class="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nisl sit amet lorem convallis tincidunt. Morbi eget nunc at sapien aliquet rutrum, et aenean lectus est. Pellentesque habitant morbi tristique senectus et netus.</p>
+      <div class="bio"><p>Moiii :3</p><p>Oon seitsemäntoistavuotias homo <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Cis-mies on mies, jonka sukupuoli-identiteetti on mies ja vastaa syntymässä määriteltyä sukupuolta.">cis mies</span>, syntynyt ja kasvatettu Suomessa, ja asun tällä hetkellä pk-seudulla, mutta lapsena asuin Raaseporissa. Mä etsin pitkäaikaista ja vakavaa <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Monogaminen suhde tarkoittaa tässä yhtä romanttista kumppania. Kumppanit voivat sopia keskenään omista rajoistaan ja siitä, mikä on heidän suhteessaan ok.">monogamista</span> suhdetta.</p><p>Tämä sivusto on olemassa vaan sitä varten, että jos mä laitan sulle DM:n tai sä laitat mulle, niin voit käydä lukasee ja varmistaa, ettet ole heti "nope", ettei tarvii käyttää aikaa yapattamiseen, jos siitä ei tuu ikinä olee yhtään mitään.</p><p>Tärkeitä asioita minulle:</p></div>
     </header>
 
     <div class="folds">
-      <details class="fold">
-        <summary>A little more</summary>
-        <div class="body">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
-          <h3>Small header</h3>
-          <p>Copy a block like the one above if you want another title inside a section. Keep it short or let it run. Either is fine.</p>
-        </div>
-      </details>
-
-      <details class="fold">
-        <summary>Links</summary>
-        <div class="body">
-          <p>Anything you want people to click can live here. Regular links open in a new tab.</p>
-          <h3>Around the web</h3>
-          <p>
-            <a class="ext" href="https://dextermorgan.gay" target="_blank" rel="noopener noreferrer">dextermorgan.gay</a><br>
-            <a class="ext" href="https://www.tiktok.com/@thegayharborboykisser" target="_blank" rel="noopener noreferrer">TikTok</a><br>
-            <a class="ext" href="https://discord.com/users/" target="_blank" rel="noopener noreferrer">Discord</a>
-          </p>
-        </div>
-      </details>
-
-      <details class="fold">
-        <summary>Right now</summary>
-        <div class="body">
-          <p>Lorem ipsum dolor sit amet. This one can be whatever you are into this week, a short rant, a song stuck in your head.</p>
-          <h3>Currently</h3>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-      </details>
-
-      <details class="fold">
-        <summary>Notes</summary>
-        <div class="body">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel nisi sit amet lorem tincidunt porttitor.</p>
-          <h3>A bit extra</h3>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
-        </div>
-      </details>
-
-      <details class="fold">
-        <summary>Contact</summary>
-        <div class="body">
-          <p>If you actually need to reach me, Discord is the easy one. Swap this paragraph when you know what you want it to say.</p>
-          <h3>Best way</h3>
-          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        </div>
-      </details>
+  <details class="fold">
+    <summary>KAIKISTA NÄISTÄ TÄRKEIN</summary>
+    <div class="body">
+      <p>Totuudenmukaisuus! Kerrotaan asioista toisille, vaikka toinen suuttuisi, vaikka toisella olisi hyvä mieli, whatever. Ja myös yhtä tärkeänä, rakentavat väittelyt. Ig toi käy järkeen, mutta tarkotan siis niinkun healthy arguments. Aka, ei että heitetään haukkumasanoja toista kohti ees taas, vaan sitä että "hei, sä teit näin ja näin ja mulla oli tosi epämukava olo sen takia" tai whatever. Argumentteja tulee aina olemaan, niin might as well tehdä ne oikein.</p>
     </div>
+  </details>
+  <details class="fold">
+    <summary>Luottamus ja introverttius</summary>
+    <div class="body">
+      <p>Mä en luota ihmisiin heti. Mulla kestää yleensä aika kauan ennen kun oikeesti luotan ihmiseen ja avaudun kunnolla. Voin kyllä sanoa vulnerable asioita aika helposti, mutta se tulee enemmän information antamisen paikasta kun mistään muualta. Eli jos vaikutan aluksi vähän etäiseltä tai varautuneelta, se ei välttämättä tarkoita ettenkö tykkäisi susta. Oon myös aika introvertti, ja vaikka yritänkin päästä eroon social anxietysta, en oikeestaan halua kumppanikseni mitään super outgoing ihmistä, jonka pitää olla koko ajan menossa ja ihmisten kanssa.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Kiinnostus ja keskustelu</summary>
+    <div class="body">
+      <p>Tykkään siitä, että toinen oikeesti osoittaa kiinnostusta muhun. Jos mä kysyn sulta asioita, niin kysy säkin multa :sob: En halua olla aina se, joka yrittää keksiä jotain sanottavaa ja pitää keskustelua hengissä. Tykkään ihmisistä, jotka oikeesti kuuntelee ja haluaa tietää musta enemmän. Tässä tarkotan nyt niiku Discordissa puhutaan viesteillä. Mutta todennäköisesti eka voice chat ja eka irl tapaaminen tulee olee ihan vitun awkward koska oon anxious mutta kuitenki.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Fyysinen läheisyys</summary>
+    <div class="body">
+      <p>Fyysinen läheisyys on mulle tosi tärkeetä. Oon tosi läheisyydenhakuinen ja avoin uusille asioille. En tarkoita tällä sitä, että pitäisi kiirehtiä mihinkään, vaan että haluan kumppanin, joka itsekin tykkää läheisyydestä ja hellyydestä. En oo ikinä ollut missään oikeessa suhteessa kylläkään, joten toivoisin myös että kumppani lähestyisi uusia asioita rauhallisesti ekoina kertoina.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Oma rauha ja yhdessäolo</summary>
+    <div class="body">
+      <p>Vaikka haluan paljon läheisyyttä, tarviin myös omaa rauhaa. En halua suhdetta, jossa ollaan ihan koko ajan yhdessä, vaikka haluan kyllä suurimmaksi osaksi yhdessä. Ja että päätetään ja suunnitellaan asioita yhdessä ect eikä vaan eletä omia elämiä. Haluaisin enemmän sellaisen tasapainon, että ollaan läheisiä ja tehdään asioita yhdessä, mutta molemmilla on myös omat jutut.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Persoonallisuus ja huumori</summary>
+    <div class="body">
+      <p>Jossain määrin haluaisin, että voitais puhua ihan mistä tahansa ja olla toistemme kanssa täysin omia itsejämme. Mun mielestä olisi aika peak, jos toinen olisi sellainen ihminen, jonka kanssa voi välillä puhua ihan vitun tyhmistä asioista ja viisi minuuttia myöhemmin jostain oikeesti filosofisesta :sob:</p><p>Mä tykkään tyhmästä, absurdista, kaoottisesta ja välillä aika synkästäkin huumorista. Oon itse netissä yleensä paljon enemmän silleen "silly" ja randomimpi ja unfiltered kuin mitä ehkä aluksi vaikutan. Saatan sanoa jotain ihan vitun tyhmää ilman mitään syytä, mutta osaan kyllä olla myös erittäin totinen ja filosofinen. Tykkäisin siitä, että näitä molempia voi olla saman ihmisen kanssa.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Furry ja pukeutuminen</summary>
+    <div class="body">
+      <p>Oon turri siis, en mitenkään silleen SUPER MEGA turri mut jonkin verran kuitenki. Mul ei ees oo fursonaa tai mitään mutta oon silleen "into the aesthetic" tai whatever, ja jos raha riittäis ostaisin kyl varmasti fursuitin myös. Sama femboyissa ig, vaikken tiiä lasketaanko mut virallisesti, vaikken kyllä myöskään kiinnosta lasketaanko mut virallisesti. Tykkään useimmiten pitää semmosia perus miesten vaatteita, huppari, farkut, ect. Mutta myös naisellisia vaatteita, ainaki kodin turvassa, esim hameita tai jotain ect. Ei mul oo oikeen mitään muuta vielä mut mun äiti teki mulle sen hameen :3</p><p>Nii en kyllä niin laskis itteäni femboyiksi, enemmän vaan siksi että koko termi miesten ja naisten vaatteista (ja töistä ja rooleista ect) on aivan paskaa ja jos joku haluu pitää vittu hametta niin siitä vaan! Ketään ei kiinnosta. Paitsi jos omassa elämässä ei tapahdu tarpeeksi mitään ja vihaa itseään niin pitää laittaa muita alas että oma ego nousee.</p><p>NIIN, toivoisin että olet ainakin vähän molempia myös :3</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Uskonto</summary>
+    <div class="body">
+      <p>Mä oon todella uskonnonvastainen ja ateisti. Ilmeisesti virallinen termi olisi <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Antiteismi on vastustus tai torjuva suhtautuminen teismiin eli jumaluskoon; termiä käytetään eri tavoin.">antitheist</span>. Jos oot vaan ateisti tai <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Agnostinen ateisti ei usko jumalaan tai jumaliin, mutta ei väitä tietävänsä varmasti, ettei niitä ole olemassa.">agnostic atheist</span>, niin mulle sopii, mutta en pystyisi olemaan uskovaisen ihmisen kanssa, enkä rupee nyt selittää miksi en.</p><p>Periaatteessa mäkin oon agnostic atheist, koska en voi nyt tästä vaan todistaa että jumala ei ole olemassa, mutta uskon todennäköisemmin että jos alan kaivaa reikää mun takapihassa lapiolla, niin vastaan tulee maata, jotain kiviä, ja ehkä mato tai kaks, mutta ei kultaharkkoja. Ja vaikka jumala olisikin olemassa, olettaen että hän on all powerful, niin en silti worshippaisi häntä. Jos mä palan helvetissä sen takia että tykkään pojista niin laita mut helvettiin sit, en haluu taivaaseen jossa oon vaan koska hylkäsin osan itsestäni joka on harmiton.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Ulkonäkö</summary>
+    <div class="body">
+      <p>Mua ei oikeestaan kiinnosta vittuakaan miltä mun kumppani näyttää. Jos ei nyt ihan joku gremlin kuitenkaan yknow :sob: Mut mul ei oo myöskään hirveesti varaa sanoa :pray: Enkä osaa sanoo oonko chubby vai ihan läski, mutta oon semi isokokoinen. Pystyn kävellä ja nousta sängystä ihan normaalisti, suurin osa huppareista on kai XL, et emmä NIIN iso oo mut kuitenki. Tarkotuksena oisi tämä paino menettää tulevaisuudessa, mutta jos se on sulle hirvee turn off niin ei vrm tuu toimii </3 Mä en silleen haittaa jos oot semmone mun kokonen, mut en hyvin todennäkösesti pystyis olemaan kenenkään super ison kanssa.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Politiikka</summary>
+    <div class="body">
+      <p>Mä en oikeestaan tiedä politiikasta vittuakaan mitään, ja aina kun tutkin politiikkaa niin mun henkinen terveys menee down the drain, vaikka silleen jossain määrin tykkään politiikasta. Mutta sillä pienellä tiedolla asioista mitä tiedän niin tällä hetkellä laskisin itseni <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Kommunismi on poliittinen ja taloudellinen aatesuunta, joka tavoittelee yhteisomistukseen perustuvaa yhteiskuntaa ja luokatonta järjestelmää. Käytännön tulkintoja on useita.">kommunistiksi</span>. Ainakin jossain määrin. Jos tämä on hirveä ongelma ja olet super kapitalistinen, niin tämä ei tule toimimaan. Vaikka kyllä olen jossain määrin ehkä vähän kapitalistinen, esim että tykkään ideasta että mulla olisi tarpeeksi rahaa siihen että voin elää mukavasti ja ostaa mitä whatever bullshittiä tulee mieleen. Mutta vihaan miljardöörejä. Jos kellään ei täydellä mulkulla ois niin paljon rahaa ne käyttäis siitä ison osan että lapset ei kuole nälkään ect.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Mielenkiinnot</summary>
+    <div class="body">
+      <p>Mä rakastan editoida ja tehdä YouTube-videoita. Oon periaatteessa editoinut 7-vuotiaasta asti. Ja mä oon myös alkanut kiinnostumaan shakista. Koodauskin oisi varmaan ihan kivaa jos osaisin. (Tää sivuston koodi on kokonaan AI:n kirjoittama siis :Sob: :pray: Käytin vaan kirjoitusvirheiden korjaamisessa ja sanotuksen auttamisessa. Teksti on kokonaan mun ofc.) Ja oon silleen kiinnostunut myös niiku cinematografiasta, ja varmasti en vihaisi elokuvaa kirjoittaa tai näytellä tai directaa tai tämmöstä. Ois kiva jos ois jotain samankaltasia mielenkiintoja, kun en tiedä mitä vittua sit tehtäis yhessä :Sob: mut kuitenki.</p><p>Mulla on diagnosoitu ADHD ja (lievä) Tourette, ja tutkitaan myös autismia ja OCD:tä. (Uskon ite että molemmat.) Niin nää asiat saattaa tehdä jostain rutiini asioista vaikeampia, niin jos sul on itellä esim ADHD niin kiva, ja jos ei oo niin varoitus että mulla on. Touretesta sen verran, suurin osa ihmisistä ei varmaan ees huomaa että mulla se on. En huutele mitään tai tee mitään liian ilmiselviä liikkeitä. Usein se voi olla silmien räpyttelyä tai käsien venyttelyä ect. mutta piilottelen niitä tosi hyvin ja moni ei varmaan edes huomaisi.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Tulevaisuus</summary>
+    <div class="body">
+      <p>Jos mietin nyt vaikka, noh, emt 5 vuotta tulevaisuuteen. (Tietenki nyt ku molemmat ei oo aikuisia (sun pitäis olla tällä hetkellä ihan vähintään 15v ja enintään vrm about joku 19v) NIIN sanotaan nyt et 4 vuoden päästä, mä oon 21 ja sä oot 20. Ideal maailmassa mä varmaan tekisin kotoa töitä. Ja sä teet mitä nyt teet, whatever. Mutta vapaa-ajalla. Mä tuun varmaankin tarviimaan hiukkasen myös omaa rauhaa kyllä, mutta semmonen yhdessä hengaaminen ois tärkeetä. Vaikka ei aina ees tehtäis mitään yhdessä, sekin vaan et molemmat on sohvalla ja toinen on puhelimel ja toinen kattoo telkkarii ois peak. Tietenkin vrm useimmiten tehtäis samaa asiaa mut kuitenki.</p>
+    </div>
+  </details>
+</div>
 
       <details class="fold media-fold">
         <summary>YouTubers, TV shows &amp; Music</summary>
@@ -728,6 +793,39 @@
         });
       });
     }
+
+
+    // Definition hints: hover on desktop, tap/click on touch screens.
+    document.querySelectorAll(".term").forEach(function (term) {
+      term.addEventListener("click", function (event) {
+        event.stopPropagation();
+        var wasOpen = term.classList.contains("definition-open");
+        document.querySelectorAll(".term.definition-open").forEach(function (other) {
+          other.classList.remove("definition-open");
+          other.setAttribute("aria-expanded", "false");
+        });
+        if (!wasOpen) {
+          term.classList.add("definition-open");
+          term.setAttribute("aria-expanded", "true");
+        }
+      });
+      term.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          term.click();
+        }
+        if (event.key === "Escape") {
+          term.classList.remove("definition-open");
+          term.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+    document.addEventListener("click", function () {
+      document.querySelectorAll(".term.definition-open").forEach(function (term) {
+        term.classList.remove("definition-open");
+        term.setAttribute("aria-expanded", "false");
+      });
+    });
 
     fillChannels("youtubers", youtubers);
     if (movies.length) {
