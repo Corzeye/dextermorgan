@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="notranslate">
 <head>
+<meta name="google" content="notranslate">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#12100f">
@@ -268,6 +269,12 @@
       line-height: 1.25;
     }
 
+
+    .julien-channel { position: relative; cursor: pointer; }
+    .julien-channel .channel-name { color: #d4af37; }
+    .julien-channel .julien-text { display: none; margin-top: 5px; color: var(--muted); font-size: 0.76rem; line-height: 1.4; }
+    .julien-channel.channel-open .julien-text { display: block; }
+    .julien-channel .channel-name::after { content: "  ›"; color: #d4af37; font-size: 1rem; }
     .channel-sub {
       margin-top: 2px;
       color: var(--muted);
@@ -454,7 +461,7 @@
       <img class="pfp" src="pfp.png" alt="Dexter Morgan" onerror="this.removeAttribute('src')">
       <h1>Dexter Morgan</h1>
       <p class="handle">@thegayharborboykisser</p>
-      <div class="bio"><p>Moiii :3</p><p>Oon seitsemäntoistavuotias homo <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Cis-mies on mies, jonka sukupuoli-identiteetti on mies ja vastaa syntymässä määriteltyä sukupuolta.">cis mies</span>, syntynyt ja kasvatettu Suomessa, ja asun tällä hetkellä pk-seudulla, mutta lapsena asuin Raaseporissa. Mä etsin pitkäaikaista ja vakavaa <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Monogaminen suhde tarkoittaa tässä yhtä romanttista kumppania. Kumppanit voivat sopia keskenään omista rajoistaan ja siitä, mikä on heidän suhteessaan ok.">monogamista</span> suhdetta.</p><p>Tämä sivusto on olemassa vaan sitä varten, että jos mä laitan sulle DM:n tai sä laitat mulle, niin voit käydä lukasee ja varmistaa, ettet ole heti "nope", ettei tarvii käyttää aikaa yapattamiseen, jos siitä ei tuu ikinä olee yhtään mitään.</p><p>Tärkeitä asioita minulle:</p></div>
+      <div class="bio"><p>Moiii :3</p><p>Oon seitsemäntoistavuotias homo <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Cisgender tarkoittaa henkilöä, jonka sukupuoli-identiteetti vastaa syntymässä määriteltyä sukupuolta.">cis mies</span>, syntynyt ja kasvatettu Suomessa, ja asun tällä hetkellä pk-seudulla, mutta lapsena asuin Raaseporissa. Mä etsin pitkäaikaista ja vakavaa <span class="term" tabindex="0" role="button" aria-expanded="false" data-definition="Monogaminen tarkoittaa sitä, että henkilöllä on yksi romanttinen kumppani.">monogamista</span> suhdetta.</p><p>Tämä sivusto on olemassa vaan sitä varten, että jos mä laitan sulle DM:n tai sä laitat mulle, niin voit käydä lukasee ja varmistaa, ettet ole heti "nope", ettei tarvii käyttää aikaa yapattamiseen, jos siitä ei tuu ikinä olee yhtään mitään.</p><p>Tässä lisää tärkeitä asioita:</p></div>
     </header>
 
     <div class="folds">
@@ -521,13 +528,21 @@
   <details class="fold">
     <summary>Mielenkiinnot</summary>
     <div class="body">
-      <p>Mä rakastan editoida ja tehdä YouTube-videoita. Oon periaatteessa editoinut 7-vuotiaasta asti. Ja mä oon myös alkanut kiinnostumaan shakista. Koodauskin oisi varmaan ihan kivaa jos osaisin. (Tää sivuston koodi on kokonaan AI:n kirjoittama siis :Sob: :pray: Käytin vaan kirjoitusvirheiden korjaamisessa ja sanotuksen auttamisessa. Teksti on kokonaan mun ofc.) Ja oon silleen kiinnostunut myös niiku cinematografiasta, ja varmasti en vihaisi elokuvaa kirjoittaa tai näytellä tai directaa tai tämmöstä. Ois kiva jos ois jotain samankaltasia mielenkiintoja, kun en tiedä mitä vittua sit tehtäis yhessä :Sob: mut kuitenki.</p><p>Mulla on diagnosoitu ADHD ja (lievä) Tourette, ja tutkitaan myös autismia ja OCD:tä. (Uskon ite että molemmat.) Niin nää asiat saattaa tehdä jostain rutiini asioista vaikeampia, niin jos sul on itellä esim ADHD niin kiva, ja jos ei oo niin varoitus että mulla on. Touretesta sen verran, suurin osa ihmisistä ei varmaan ees huomaa että mulla se on. En huutele mitään tai tee mitään liian ilmiselviä liikkeitä. Usein se voi olla silmien räpyttelyä tai käsien venyttelyä ect. mutta piilottelen niitä tosi hyvin ja moni ei varmaan edes huomaisi.</p>
+      <p>Mä rakastan editoida ja tehdä YouTube-videoita. Oon periaatteessa editoinut 7-vuotiaasta asti. Ja mä oon myös alkanut kiinnostumaan shakista. Koodauskin oisi varmaan ihan kivaa jos osaisin. (Tää sivuston koodi on kokonaan AI:n kirjoittama siis :Sob: :pray: Käytin vaan kirjoitusvirheiden korjaamisessa ja sanotuksen auttamisessa. Teksti on kokonaan mun ofc.) Ja oon silleen kiinnostunut myös niiku cinematografiasta, ja varmasti en vihaisi elokuvaa kirjoittaa tai näytellä tai directaa tai tämmöstä. Ois kiva jos ois jotain samankaltasia mielenkiintoja, kun en tiedä mitä vittua sit tehtäis yhessä :Sob: mut kuitenki.</p><p>Tykkään myös tehä semmosii edittejä, esim <a class="ext" href="https://www.tiktok.com/@corzeye/video/7690325504511020310" target="_blank" rel="noopener">tää</a>.</p>
+    </div>
+  </details>
+  <details class="fold">
+    <summary>Mielenterveys</summary>
+    <div class="body">
+      <p>Mulla on diagnosoitu ADHD ja (lievä) Tourette, ja tutkitaan myös autismia ja OCD:tä. (Uskon ite että molemmat.) Niin nää asiat saattaa tehdä jostain rutiini asioista vaikeampia, niin jos sul on itellä esim ADHD niin kiva, ja jos ei oo niin varoitus että mulla on. Touretesta sen verran, suurin osa ihmisistä ei varmaan ees huomaa että mulla se on. En huutele mitään tai tee mitään liian ilmiselviä liikkeitä. Usein se voi olla silmien räpyttelyä tai käsien venyttelyä ect. mutta piilottelen niitä tosi hyvin ja moni ei varmaan edes huomaisi.</p>
+      <p>Ja noin vuosi sitten oli diagnotisoitu myös vakava masennus, johtuen yläasteella tapahtuneista kiusaamisista, uhkailuista, vainoaamisesta, mielivaltaisesta väkivallasta ja kiristyksestä. Nyt ei ole enää vakava, mutta en silti pysty oikein käydä koulussa.</p>
     </div>
   </details>
   <details class="fold">
     <summary>Tulevaisuus</summary>
     <div class="body">
       <p>Jos mietin nyt vaikka, noh, emt 5 vuotta tulevaisuuteen. (Tietenki nyt ku molemmat ei oo aikuisia (sun pitäis olla tällä hetkellä ihan vähintään 15v ja enintään vrm about joku 19v) NIIN sanotaan nyt et 4 vuoden päästä, mä oon 21 ja sä oot 20. Ideal maailmassa mä varmaan tekisin kotoa töitä. Ja sä teet mitä nyt teet, whatever. Mutta vapaa-ajalla. Mä tuun varmaankin tarviimaan hiukkasen myös omaa rauhaa kyllä, mutta semmonen yhdessä hengaaminen ois tärkeetä. Vaikka ei aina ees tehtäis mitään yhdessä, sekin vaan et molemmat on sohvalla ja toinen on puhelimel ja toinen kattoo telkkarii ois peak. Tietenkin vrm useimmiten tehtäis samaa asiaa mut kuitenki.</p>
+      <p>ainakin nyt haluaisin adoptoida lapsen tai lapsia, varmaan yhen vaan kuitenki, poika mielellään.</p>
     </div>
   </details>
 </div>
@@ -569,7 +584,7 @@
               <div class="shelf music-shelf" id="music-indie"></div>
             </div>
             <div class="music-group">
-              <h3>Slowed / alt</h3>
+              <h3>Muut</h3>
               <div class="shelf music-shelf" id="music-alt"></div>
             </div>
           </section>
@@ -580,6 +595,8 @@
 
   <script>
     var youtubers = [
+      ["julienhimself.png", "JulienHimself"],
+      ["gothamchess.png", "GothamChess"],
       ["8bitryan.png", "8-BitRyan"],
       ["chadoy.png", "Chadoy"],
       ["dougdoug.png", "DougDoug"],
@@ -665,7 +682,9 @@
         ["Versatile - Slowed", "LP Rythm", "spotify-search-needed", null],
         ["Monolith", "Twin Tribes", "track", "4T1oZ3UAFKbraSp5JAISWW"],
         ["tesla - slowed electro mix", "Fixupboy", "album", "1gTkWCaSwTE1HJI723Z3E2"],
-        ["Nope your too late i already died", "wifiskeleton, i wanna be a jack-o-lantern", "track", "0hta2Lb2zKJ7kEnAEZEE3G"]
+        ["Nope your too late i already died", "wifiskeleton, i wanna be a jack-o-lantern", "track", "0hta2Lb2zKJ7kEnAEZEE3G"],
+        ["Spotify track", "", "track", "5UMlH5dtVl43h0k2aIdqwi"],
+        ["Spotify track", "", "track", "3iDSf2Bfr4Rkf3RUJPDyLb"]
       ]
     };
 
@@ -689,11 +708,29 @@
         var name = document.createElement("div");
         name.className = "channel-name";
         name.textContent = item[1];
-        var sub = document.createElement("div");
-        sub.className = "channel-sub";
-        sub.textContent = "Subscribed";
-        info.appendChild(name);
-        info.appendChild(sub);
+        if (item[1] === "JulienHimself") {
+          row.classList.add("julien-channel");
+          row.setAttribute("role", "button");
+          row.setAttribute("tabindex", "0");
+          row.setAttribute("aria-expanded", "false");
+          row.addEventListener("click", function () {
+            var open = row.classList.toggle("channel-open");
+            row.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+          row.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              row.click();
+            }
+          });
+          var extra = document.createElement("div");
+          extra.className = "julien-text";
+          extra.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+          info.appendChild(name);
+          info.appendChild(extra);
+        } else {
+          info.appendChild(name);
+        }
 
         row.appendChild(avatar);
         row.appendChild(info);
@@ -756,7 +793,7 @@
         iframe.width = "100%";
         iframe.height = "152";
         iframe.frameBorder = "0";
-        iframe.title = title + " — " + artist;
+        iframe.title = title + " - " + artist;
         iframe.loading = "lazy";
         iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share";
         iframe.setAttribute("allowfullscreen", "");
