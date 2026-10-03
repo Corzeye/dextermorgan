@@ -453,6 +453,59 @@
         transition: none !important;
       }
     }
+
+    .video-link {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+
+    .video-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.82);
+      box-sizing: border-box;
+    }
+
+    .video-modal.open {
+      display: flex;
+    }
+
+    .video-modal video {
+      display: block;
+      width: min(92vw, 520px);
+      max-width: 100%;
+      max-height: 92vh;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #000;
+    }
+
+    @media (max-width: 600px) {
+      .video-modal {
+        padding: 10px;
+      }
+
+      .video-modal video {
+        width: min(96vw, 520px);
+        max-height: 94vh;
+        border-radius: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -528,7 +581,7 @@
   <details class="fold">
     <summary>Mielenkiinnot</summary>
     <div class="body">
-      <p>Mä rakastan editoida ja tehdä YouTube-videoita. Oon periaatteessa editoinut 7-vuotiaasta asti. Ja mä oon myös alkanut kiinnostumaan shakista. Koodauskin oisi varmaan ihan kivaa jos osaisin. (Tää sivuston koodi on kokonaan AI:n kirjoittama siis :Sob: :pray: Käytin vaan kirjoitusvirheiden korjaamisessa ja sanotuksen auttamisessa. Teksti on kokonaan mun ofc.) Ja oon silleen kiinnostunut myös niiku cinematografiasta, ja varmasti en vihaisi elokuvaa kirjoittaa tai näytellä tai directaa tai tämmöstä. Ois kiva jos ois jotain samankaltasia mielenkiintoja, kun en tiedä mitä vittua sit tehtäis yhessä :Sob: mut kuitenki.</p><p>Tykkään myös tehä semmosii edittejä, esim <a class="ext" href="https://www.tiktok.com/@corzeye/video/7690325504511020310" target="_blank" rel="noopener">tää</a>.</p>
+      <p>Mä rakastan editoida ja tehdä YouTube-videoita. Oon periaatteessa editoinut 7-vuotiaasta asti. Ja mä oon myös alkanut kiinnostumaan shakista. Koodauskin oisi varmaan ihan kivaa jos osaisin. (Tää sivuston koodi on kokonaan AI:n kirjoittama siis :Sob: :pray: Käytin vaan kirjoitusvirheiden korjaamisessa ja sanotuksen auttamisessa. Teksti on kokonaan mun ofc.) Ja oon silleen kiinnostunut myös niiku cinematografiasta, ja varmasti en vihaisi elokuvaa kirjoittaa tai näytellä tai directaa tai tämmöstä. Ois kiva jos ois jotain samankaltasia mielenkiintoja, kun en tiedä mitä vittua sit tehtäis yhessä :Sob: mut kuitenki.</p><p>Tykkään myös tehä semmosii edittejä, esim <a class="ext" href="https://www.tiktok.com/@corzeye/video/7690325504511020310" target="_blank" rel="noopener">tää</a>. Mulla oli myös kauan sit aika suosittu (<a class="ext" href="https://www.tiktok.com/@lakkocentral" target="_blank" rel="noopener">suomenkielinen TikTok editti kanava</a>). tässä <button class="video-link" type="button" id="proof-video-open">todiste että se on mun</button>.</p>
     </div>
   </details>
   <details class="fold">
@@ -595,8 +648,8 @@
 
   <script>
     var youtubers = [
-      ["julienhimself.jpg", "JulienHimself"],
-      ["gothamchess.jpg", "GothamChess"],
+      ["julienhimself.png", "JulienHimself"],
+      ["gothamchess.png", "GothamChess"],
       ["8bitryan.png", "8-BitRyan"],
       ["chadoy.png", "Chadoy"],
       ["dougdoug.png", "DougDoug"],
@@ -884,9 +937,45 @@
       });
     }
 
+
+    var proofVideoOpen = document.getElementById("proof-video-open");
+    var proofVideoModal = document.getElementById("proof-video-modal");
+    var proofVideo = document.getElementById("proof-video");
+
+    function closeProofVideo() {
+      proofVideoModal.classList.remove("open");
+      proofVideoModal.setAttribute("aria-hidden", "true");
+      proofVideo.pause();
+      proofVideo.currentTime = 0;
+    }
+
+    proofVideoOpen.addEventListener("click", function (event) {
+      event.stopPropagation();
+      proofVideoModal.classList.add("open");
+      proofVideoModal.setAttribute("aria-hidden", "false");
+    });
+
+    proofVideoModal.addEventListener("click", function (event) {
+      if (event.target === proofVideoModal) {
+        closeProofVideo();
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && proofVideoModal.classList.contains("open")) {
+        closeProofVideo();
+      }
+    });
+
     document.querySelectorAll("details").forEach(function (d) {
       d.open = false;
     });
   </script>
+
+  <div class="video-modal" id="proof-video-modal" aria-hidden="true">
+    <video id="proof-video" controls playsinline preload="metadata">
+      <source src="lakkotiktok.mp4" type="video/mp4">
+    </video>
+  </div>
 </body>
 </html>
