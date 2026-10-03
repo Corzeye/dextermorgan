@@ -938,33 +938,35 @@
     }
 
 
-    var proofVideoOpen = document.getElementById("proof-video-open");
-    var proofVideoModal = document.getElementById("proof-video-modal");
-    var proofVideo = document.getElementById("proof-video");
+    document.addEventListener("DOMContentLoaded", function () {
+      var proofVideoOpen = document.getElementById("proof-video-open");
+      var proofVideoModal = document.getElementById("proof-video-modal");
+      var proofVideo = document.getElementById("proof-video");
 
-    function closeProofVideo() {
-      proofVideoModal.classList.remove("open");
-      proofVideoModal.setAttribute("aria-hidden", "true");
-      proofVideo.pause();
-      proofVideo.currentTime = 0;
-    }
-
-    proofVideoOpen.addEventListener("click", function (event) {
-      event.stopPropagation();
-      proofVideoModal.classList.add("open");
-      proofVideoModal.setAttribute("aria-hidden", "false");
-    });
-
-    proofVideoModal.addEventListener("click", function (event) {
-      if (event.target === proofVideoModal) {
-        closeProofVideo();
+      function closeProofVideo() {
+        proofVideoModal.classList.remove("open");
+        proofVideoModal.setAttribute("aria-hidden", "true");
+        proofVideo.pause();
+        proofVideo.currentTime = 0;
       }
-    });
 
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && proofVideoModal.classList.contains("open")) {
-        closeProofVideo();
-      }
+      proofVideoOpen.addEventListener("click", function (event) {
+        event.stopPropagation();
+        proofVideoModal.classList.add("open");
+        proofVideoModal.setAttribute("aria-hidden", "false");
+      });
+
+      proofVideoModal.addEventListener("click", function (event) {
+        if (event.target === proofVideoModal) {
+          closeProofVideo();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && proofVideoModal.classList.contains("open")) {
+          closeProofVideo();
+        }
+      });
     });
 
     document.querySelectorAll("details").forEach(function (d) {
